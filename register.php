@@ -3,8 +3,18 @@
 
     if(!empty($_POST)){
         try{
-            $user = new User()
+            $user = new User();
+            $user->setFirstname($_POST['firstname']);
+            $user->setLastname($_POST['lastname']);
             $user->setEmail($_POST['email']);
+            $user->setPassword($_POST['password']);
+
+            $user->checkDuplicate();
+            $user->submit();
+            $success = "it worked!";
+        }
+        catch (\Throwable $th) {
+            $error = $th->getMessage();
         }
     }
 
@@ -17,6 +27,14 @@
 </head>
 <body>
     <main>
+        <?php if(isset($error)): ?>
+            <div class="error" style="color: red;"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <?php if(isset($success)) : ?>
+            <div class="success"><?php echo $success;?></div>
+        <?php endif; ?>
+
         <form action="" method="post">
             <div>
                 <label for="Firstname">Firstname</label>

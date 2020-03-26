@@ -22,6 +22,9 @@ class User{
      */ 
     public function setFirstname($firstname)
     {
+        if(empty($firstname)){
+            throw new Exception("Firstname cannot be empty");
+        }
         $this->firstname = $firstname;
 
         return $this;
@@ -42,6 +45,9 @@ class User{
      */ 
     public function setLastname($lastname)
     {
+        if(empty($lastname)){
+            throw new Exception("Lastname cannot be empty");
+        }
         $this->lastname = $lastname;
 
         return $this;
@@ -62,6 +68,13 @@ class User{
      */ 
     public function setEmail($email)
     {
+        if(empty($email)){
+            throw new Exception("Email cannot be empty");
+        }
+
+        if(!preg_match('/@student.thomasmore.be/', $email)){
+            throw new Exception("You must have a Thomas More student email adress");
+        }
         $this->email = $email;
 
         return $this;
@@ -82,6 +95,12 @@ class User{
      */ 
     public function setPassword($password)
     {
+        if(empty($password)){
+            throw new Exception("Please enter a password");
+        }
+        if(!isset($error)){
+            $password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 14]);
+        }
         $this->password = $password;
 
         return $this;
@@ -90,12 +109,12 @@ class User{
     public function submit(){
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("insert into tl_user (firstname, lastname, email, password) values (:firstname, :lastname, :email)");
+        $statement = $conn->prepare("insert into tl_user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
 
         $firstname = $this->getFirstname();
         $lastname = $this->getLastname();
         $email = $this->getEmail();
-        $password = $this-> getEmail();
+        $password = $this-> getPassword();
 
         $statement->bindValue(":firstname", $firstname);
         $statement->bindValue(":lastname", $lastname);
@@ -105,6 +124,25 @@ class User{
         $result = $statement->execute();
 
         return $result;
+    }
+
+    public function checkDuplicate(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select email from tl_user where  email = '" . $_POST['email'] . "'");
+        $statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $statement->execute();
+
+        if($statement->fetchColumn()){ 
+            throw new Exception("Please use a different email address");
+        }
+    }
+
+    public function encrypt($error){
+        if(!isset($error)){
+            echo 'ready to encrypt';
+            //$password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 14]);
+        }
     }
 }
 
