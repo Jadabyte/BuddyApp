@@ -11,7 +11,7 @@
 
             $user->checkDuplicate();
             $user->submit();
-            $success = "it worked!";
+            $success = "Account Created!";
         }
         catch (\Throwable $th) {
             $error = $th->getMessage();
