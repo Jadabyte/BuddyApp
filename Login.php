@@ -5,7 +5,7 @@
     // Wachtwoord: hhh
 
 
-    include_once(__DIR__ . "/Classes/User.php");
+    include_once(__DIR__ . "/classes/User.php");
 
 
 if (!empty($_POST)) {// Wanneer form is gesubmit
@@ -18,7 +18,7 @@ if (!empty($_POST)) {// Wanneer form is gesubmit
             session_start();
             $_SESSION["user"] = $email;
 
-            header('Location: index.php');
+            header('Location: completeProfile.php');
         } else {
             // user+pass don't match
             // show error
@@ -40,7 +40,7 @@ if (!empty($_POST)) {// Wanneer form is gesubmit
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 <body>

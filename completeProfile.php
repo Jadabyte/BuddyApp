@@ -26,7 +26,7 @@ if (isset ($_POST['insert'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy App</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 <body>

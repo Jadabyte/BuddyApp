@@ -8,6 +8,7 @@
             $user->setLastname($_POST['lastname']);
             $user->setEmail($_POST['email']);
             $user->setPassword($_POST['password']);
+            $user->setUsername($_POST['username']);
 
             $user->checkDuplicate();
             $user->submit();
@@ -47,13 +48,18 @@
             </div>
 
             <div>
+                <label for="Username">Username</label>
+                <input type="text" id="Username" name="username">
+            </div>
+
+            <div>
                 <label for="Email">Email</label>
                 <input type="text" id="Email" name="email">
             </div>
 
             <div>
                 <label for="Password">Password</label>
-                <input type="text" id="Password" name="password">
+                <input type="password" id="Password" name="password">
             </div>
 
             <div>

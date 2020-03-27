@@ -6,6 +6,7 @@ class User{
     private $lastname;
     private $email;
     private $password;
+    private $username;
 
     /**
      * Get the value of firstname
@@ -93,6 +94,30 @@ class User{
      *
      * @return  self
      */ 
+
+    /**
+     * Get the value of username
+     */ 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of username
+     *
+     * @return  self
+     */ 
+    public function setUsername($username)
+    {
+        if(empty($username)){
+            throw new Exception("Username cannot be empty");
+        }
+        $this->username = $username;
+
+        return $this;
+    }
+
     public function setPassword($password)
     {
         if(empty($password)){
@@ -109,17 +134,19 @@ class User{
     public function submit(){
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("insert into tl_user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
+        $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
 
         $firstname = $this->getFirstname();
         $lastname = $this->getLastname();
         $email = $this->getEmail();
         $password = $this-> getPassword();
+        $username = $this-> getUsername();
 
         $statement->bindValue(":firstname", $firstname);
         $statement->bindValue(":lastname", $lastname);
         $statement->bindValue(":email", $email);
         $statement->bindValue(":password", $password);
+        $statement->bindValue(":username", $username);
 
         $result = $statement->execute();
 
@@ -129,7 +156,7 @@ class User{
     public function checkDuplicate(){
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("select email from tl_user where  email = '" . $_POST['email'] . "'");
+        $statement = $conn->prepare("select email from users where  email = '" . $_POST['email'] . "'");
         $statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
         $statement->execute();
 
@@ -138,12 +165,26 @@ class User{
         }
     }
 
-    public function encrypt($error){
-        if(!isset($error)){
-            echo 'ready to encrypt';
-            //$password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 14]);
+    public function canLogin($email, $password)
+    {
+        // Connectie maken met database
+        $conn = new mysqli("localhost", "root", "root", "BuddyApp");
+        $email = $conn->real_escape_string($email);
+        $sql = "select * from users where email = '$email'";
+        $result = $conn->query($sql);
+
+        //Kijken of het gevonden wordt in de database
+        if ($result->num_rows != 1) {
+            return false;
+        }
+        $user = $result->fetch_assoc();
+        $hash = $user['password'];
+        
+        if (password_verify($password, $hash)) {
+            return true;
+        } else { 
+            return false;
         }
     }
 }
-
 ?>
