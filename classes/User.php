@@ -15,7 +15,7 @@ class User{
     {
         return $this->firstname;
     }
-
+ 
     /**
      * Set the value of firstname
      *
