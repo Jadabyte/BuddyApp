@@ -18,7 +18,7 @@ if (!empty($_POST)) {// Wanneer form is gesubmit
             session_start();
             $_SESSION["user"] = $email;
 
-            header('Location: completeProfile.php');
+            header('Location: index.php');
         } else {
             // user+pass don't match
             // show error

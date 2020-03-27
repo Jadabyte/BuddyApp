@@ -13,6 +13,7 @@
             $user->checkDuplicate();
             $user->submit();
             $success = "Account Created!";
+            header('Location: index.php');
         }
         catch (\Throwable $th) {
             $error = $th->getMessage();
@@ -24,12 +25,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMD Buddy App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/register.css">
+    <title>Register</title>
 </head>
 <body>
     <main>
+        <h2>Register for the IMD Buddy App</h2>
         <?php if(isset($error)): ?>
-            <div class="error" style="color: red;"><?php echo $error; ?></div>
+            <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
 
         <?php if(isset($success)) : ?>
@@ -38,32 +42,32 @@
 
         <form action="" method="post">
             <div>
-                <label for="Firstname">Firstname</label>
-                <input type="text" id="Firstname" name="firstname">
+                <label for="Firstname"></label>
+                <input type="text" id="Firstname" name="firstname" placeholder="Firstname">
             </div>
 
             <div>
-                <label for="Lastname">Lastname</label>
-                <input type="text" id="Lastname" name="lastname">
+                <label for="Lastname"></label>
+                <input type="text" id="Lastname" name="lastname" placeholder="Lastname">
             </div>
 
             <div>
-                <label for="Username">Username</label>
-                <input type="text" id="Username" name="username">
+                <label for="Username"></label>
+                <input type="text" id="Username" name="username" placeholder="Username">
             </div>
 
             <div>
-                <label for="Email">Email</label>
-                <input type="text" id="Email" name="email">
+                <label for="Email"></label>
+                <input type="text" id="Email" name="email" placeholder="Email">
             </div>
 
             <div>
-                <label for="Password">Password</label>
-                <input type="password" id="Password" name="password">
+                <label for="Password"></label>
+                <input type="password" id="Password" name="password" placeholder="Password">
             </div>
 
             <div>
-                <input type="submit" value="Sign Up">
+                <input id="submit" type="submit" value="Sign Up">
             </div>
         </form>
     </main>
