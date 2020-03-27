@@ -1,22 +1,10 @@
 <?php
 
-if (isset ($_POST['insert'])){
-  
-  $conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
+include_once(__DIR__ . "/Classes/Interesse.php")
+//include_once(__DIR__ . "/Db.php")
 
-  $klas=$_POST['klas'];
-  $muziek=$_POST['muziek'];
-  $film=$_POST['film'];
-  $hobby=$_POST['hobby'];
-  $favoriet=$_POST['favoriet'];
-
-  //var_dump($klas); var_dump($muziek); var_dump($filmsmaak); var_dump($hobby);var_dump($favoriet);
-
-  $sql=$conn-> prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES ( '$klas', '$muziek', '$film', '$hobby', '$favoriet')");
-
-  $result=$sql->execute();
-}
 ?>
+ 
 
 
 <!DOCTYPE html>
@@ -25,8 +13,6 @@ if (isset ($_POST['insert'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy App</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 <body>
