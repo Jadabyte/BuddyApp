@@ -7,6 +7,12 @@ class User{
     private $email;
     private $password;
     private $username;
+    private $klas;
+    private $muziek;
+    private $film;
+    private $hobby;
+    private $favoriet;
+
 
     /**
      * Get the value of firstname
@@ -186,5 +192,135 @@ class User{
             return false;
         }
     }
+
+    /**
+     * Get the value of klas
+     */ 
+    public function getKlas()
+    {
+        return $this->klas;
+    }
+
+    /**
+     * Set the value of klas
+     *
+     * @return  self
+     */ 
+    public function setKlas($klas)
+    {
+        $this->klas = $klas;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of muziek
+     */ 
+    public function getMuziek()
+    {
+        return $this->muziek;
+    }
+
+    /**
+     * Set the value of muziek
+     *
+     * @return  self
+     */ 
+    public function setMuziek($muziek)
+    {
+        $this->muziek = $muziek;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of film
+     */ 
+    public function getFilm()
+    {
+        return $this->film;
+    }
+
+    /**
+     * Set the value of film
+     *
+     * @return  self
+     */ 
+    public function setFilm($film)
+    {
+        $this->film = $film;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hobby
+     */ 
+    public function getHobby()
+    {
+        return $this->hobby;
+    }
+
+    /**
+     * Set the value of hobby
+     *
+     * @return  self
+     */ 
+    public function setHobby($hobby)
+    {
+        $this->hobby = $hobby;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of favoriet
+     */ 
+    public function getFavoriet()
+    {
+        return $this->favoriet;
+    }
+
+    /**
+     * Set the value of favoriet
+     *
+     * @return  self
+     */ 
+    public function setFavoriet($favoriet)
+    {
+        $this->favoriet = $favoriet;
+
+        return $this;
+    }
+
+    public function submitInteresses(){
+        $conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
+       
+        
+     if($_POST['klas'] === 'default' or $_POST['muziek'] === 'default' or $_POST['film'] === 'default' or $_POST['hobby'] === 'default' or $_POST['favoriet'] === 'default'){
+         throw new Exception("Vul het vakje in");
+
+    }else{
+         $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
+
+     $klas = $this->getKlas();
+     $muziek = $this->getMuziek();
+     $film = $this->getFilm();
+     $hobby = $this-> getHobby();
+     $favoriet = $this-> getFavoriet();
+
+     $statement->bindValue(":klas", $klas);
+     $statement->bindValue(":muziek", $muziek);
+     $statement->bindValue(":film", $film);
+     $statement->bindValue(":hobby", $hobby);
+     $statement->bindValue(":favoriet", $favoriet);
+
+     $result = $statement->execute();
+
+
+     return $result;
+    }
+ }
+
 }
 ?>

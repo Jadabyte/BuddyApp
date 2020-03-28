@@ -1,21 +1,24 @@
 <?php
 
-if (isset ($_POST['insert'])){
-  
-  $conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
+include_once(__DIR__ . "/Classes/User.php");
 
-  $klas=$_POST['klas'];
-  $muziek=$_POST['muziek'];
-  $film=$_POST['film'];
-  $hobby=$_POST['hobby'];
-  $favoriet=$_POST['favoriet'];
+if(!empty($_POST)){
+    try{
+        $user = new User();
+        $user->setKlas($_POST['klas']);
+        $user->setMuziek($_POST['muziek']);
+        $user->setFilm($_POST['film']);
+        $user->setHobby($_POST['hobby']);
+        $user->setFavoriet($_POST['favoriet']);
 
-  //var_dump($klas); var_dump($muziek); var_dump($filmsmaak); var_dump($hobby);var_dump($favoriet);
-
-  $sql=$conn-> prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES ( '$klas', '$muziek', '$film', '$hobby', '$favoriet')");
-
-  $result=$sql->execute();
+        $user->submitInteresses();
+        $success = "Interesses zijn toegevoegd!";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }
 }
+
 ?>
 
 
@@ -33,11 +36,23 @@ if (isset ($_POST['insert'])){
 <h1>Vervolledig Je Account</h1>
 <h2>Door een paar vragen te beantwoorden</h2>
 
+<br>
+<?php if(isset($error)): ?>
+            <div class="error" style="color: red;"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <?php if(isset($success)) : ?>
+            <div class="success"><?php echo $success;?></div>
+        <?php endif; ?>
+<br>
+<br>
+
+
 <div id="form">
     <form action="" method="post">
       <label>In welke klas zit je?</label><br>
       <select name="klas">
-        <option disabled selected>--Maak een keuze--</option>
+        <option value="default">--Maak een keuze--</option>
         <option value="1IMDA">1IMDA</option>
         <option value="1IMDB">1IMDB</option>
         <option value="1IMDC">1IMDC</option>
@@ -50,7 +65,7 @@ if (isset ($_POST['insert'])){
 
       <label>Van wat voor soort muziek houdt je?</label><br>
       <select name="muziek">
-        <option disabled selected>--Maak een keuze--</option>
+        <option value="default">--Maak een keuze--</option>
         <option value="rap">Rap</option>
         <option value="pop">Pop</option>
         <option value="jazz">Jazz</option>
@@ -63,7 +78,7 @@ if (isset ($_POST['insert'])){
 
       <label>Van wat voor soort films houdt je?</label><br>
       <select name="film">
-        <option disabled selected>--Maak een keuze--</option>
+        <option  value="default">--Maak een keuze--</option>
         <option value="horror">Horror</option>
         <option value="comic">Komedie</option>
         <option value="actie">Actie</option>
@@ -78,7 +93,7 @@ if (isset ($_POST['insert'])){
 
       <label>Wat doet je in uw vrije tijd?</label><br>
       <select name="hobby">
-        <option disabled selected>--Maak een keuze--</option>
+        <option  value="default">--Maak een keuze--</option>
         <option value="sporten">Sporten</option>
         <option value="netflixen">Netflixen</option>
         <option value="uitgaan">Uitgaan</option>
@@ -92,7 +107,7 @@ if (isset ($_POST['insert'])){
       <h4>Last but not least🤣</h4>
         <label>Wie zijn de beste?</label><br>
         <select name="favoriet" >
-          <option disabled selected>--Maak een keuze--</option>
+          <option  value="default">--Maak een keuze--</option>
           <option value="designer">Designer</option>
           <option value="developer">Developer</option>
         </select>
