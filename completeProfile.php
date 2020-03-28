@@ -11,7 +11,7 @@ if(!empty($_POST)){
         $user->setHobby($_POST['hobby']);
         $user->setFavoriet($_POST['favoriet']);
 
-        $user->submitInteresses();
+        $user->submitIntresses();
         $success = "Interesses zijn toegevoegd!";
     }
     catch (\Throwable $th) {
