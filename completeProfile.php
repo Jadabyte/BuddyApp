@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/Classes/User.php");
+include_once(__DIR__ . "/classes/User.php");
 
 if(!empty($_POST)){
     try{
