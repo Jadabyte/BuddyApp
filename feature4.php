@@ -1,10 +1,25 @@
 <?php
 
-include_once(__DIR__ . "/Classes/Interesse.php")
-//include_once(__DIR__ . "/Db.php")
+include_once(__DIR__ . "/Classes/");
+
+if(!empty($_POST)){
+    try{
+        $user = new User();
+        $user->setKlas($_POST['klas']);
+        $user->setMuziek($_POST['muziek']);
+        $user->setFilm($_POST['film']);
+        $user->setHobby($_POST['hobby']);
+        $user->setFavoriet($_POST['favoriet']);
+
+        $user->submitIntresses();
+        $success = "Interesses zijn toegevoegd!";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }
+}
 
 ?>
- 
 
 
 <!DOCTYPE html>
@@ -19,11 +34,19 @@ include_once(__DIR__ . "/Classes/Interesse.php")
 <h1>Vervolledig Je Account</h1>
 <h2>Door een paar vragen te beantwoorden</h2>
 
+<?php if(isset($error)): ?>
+            <div class="error" style="color: red;"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <?php if(isset($success)) : ?>
+            <div class="success"><?php echo $success;?></div>
+        <?php endif; ?>
+
 <div id="form">
     <form action="" method="post">
       <label>In welke klas zit je?</label><br>
       <select name="klas">
-        <option disabled selected>--Maak een keuze--</option>
+        <option value="default">--Maak een keuze--</option>
         <option value="1IMDA">1IMDA</option>
         <option value="1IMDB">1IMDB</option>
         <option value="1IMDC">1IMDC</option>
@@ -36,7 +59,7 @@ include_once(__DIR__ . "/Classes/Interesse.php")
 
       <label>Van wat voor soort muziek houdt je?</label><br>
       <select name="muziek">
-        <option disabled selected>--Maak een keuze--</option>
+        <option value="default">--Maak een keuze--</option>
         <option value="rap">Rap</option>
         <option value="pop">Pop</option>
         <option value="jazz">Jazz</option>
@@ -49,7 +72,7 @@ include_once(__DIR__ . "/Classes/Interesse.php")
 
       <label>Van wat voor soort films houdt je?</label><br>
       <select name="film">
-        <option disabled selected>--Maak een keuze--</option>
+        <option  value="default">--Maak een keuze--</option>
         <option value="horror">Horror</option>
         <option value="comic">Komedie</option>
         <option value="actie">Actie</option>
@@ -64,7 +87,7 @@ include_once(__DIR__ . "/Classes/Interesse.php")
 
       <label>Wat doet je in uw vrije tijd?</label><br>
       <select name="hobby">
-        <option disabled selected>--Maak een keuze--</option>
+        <option  value="default">--Maak een keuze--</option>
         <option value="sporten">Sporten</option>
         <option value="netflixen">Netflixen</option>
         <option value="uitgaan">Uitgaan</option>
@@ -78,7 +101,7 @@ include_once(__DIR__ . "/Classes/Interesse.php")
       <h4>Last but not least🤣</h4>
         <label>Wie zijn de beste?</label><br>
         <select name="favoriet" >
-          <option disabled selected>--Maak een keuze--</option>
+          <option  value="default">--Maak een keuze--</option>
           <option value="designer">Designer</option>
           <option value="developer">Developer</option>
         </select>
