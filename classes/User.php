@@ -294,8 +294,8 @@ class User{
     }
 
     public function submitIntresses(){
-        $conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
-       
+        //$conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
+        $conn = Db::getConnection();
         
      if($_POST['klas'] === 'default' or $_POST['muziek'] === 'default' or $_POST['film'] === 'default' or $_POST['hobby'] === 'default' or $_POST['favoriet'] === 'default'){
          throw new Exception("Vul het vakje in");
