@@ -1,6 +1,13 @@
 <?php
+include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/interface/iProfile.php");
+
+if(!empty($_POST)){
+    $user = $_POST['user'];
+    $file = fopen("Db.php", "r+");
+    fwrite($file, $user . "\n"); //op windows: \n\r
+    fclose($file); //handle
 
 try {
     $user1 = new User();
@@ -77,6 +84,4 @@ try {
 
     ?>
 </body>
-
 </html>
-
