@@ -14,9 +14,10 @@ include_once(__DIR__ . "/classes/Db.php");
 <body>
     <h1>See your friends</h1>
 
-    <?php foreach ($friends as $friend): ?>
-    <li><?php echo $friend['firstname' . ' ' . 'lastname']?></li>
-    <?php endforeach; ?>
+  <!--  <//?php foreach ($friends as $friend): ?>
+    <li><//?php echo $friend['firstname' . ' ' . 'lastname']?></li>
+    <//?php endforeach; ?>
+     -->
 </body>
 </html>
 
