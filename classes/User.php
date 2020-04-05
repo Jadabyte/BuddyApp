@@ -322,5 +322,16 @@ class User{
     }
  }
 
+
+ public function pullUpFriends(){
+
+    $conn = Db::getConnection();
+
+    $statement =$conn->prepare("SELECT u.username FROM `friend` f INNER JOIN users u on f.user_id = u.user_id WHERE friend_id = '1'");
+
+    $statement->execute();
+    $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $friends;
+ }
 }
 ?>
