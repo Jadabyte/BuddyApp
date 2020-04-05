@@ -3,6 +3,9 @@
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 
+session_start();
+echo $_SESSION['email'];
+
 if(isset($_POST['search'])){
     $results = null;
     try {
@@ -20,6 +23,9 @@ if(isset($_POST['search'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
     <title>Document</title>
 </head>
 <body>

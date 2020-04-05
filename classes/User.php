@@ -12,6 +12,7 @@ class User{
     private $film;
     private $hobby;
     private $favoriet;
+    private $buddy;
 
 
     /**
@@ -322,5 +323,47 @@ class User{
         }
     }
 
+
+    /**
+     * Get the value of buddy
+     */ 
+    public function getBuddy()
+    {
+        return $this->buddy;
+    }
+
+    /**
+     * Set the value of buddy
+     *
+     * @return  self
+     */ 
+    public function setBuddy($buddy)
+    {
+        if(empty($buddy)){
+            throw new Exception("Username cannot be empty");
+        }
+        $this->buddy = $buddy;
+
+        return $this;
+    }
+
+    public function buddyChoice(){
+        $conn = Db::getConnection();
+
+        $buddy = $this->getBuddy();
+        $email = $this->getEmail();
+
+        if($buddy == 'beBuddy'){
+            $statement = $conn->prepare("UPDATE Users SET beBuddy = 1, findBuddy = 0 WHERE email = :email");
+        }
+        else if($buddy == 'findBuddy'){
+            $statement = $conn->prepare("UPDATE Users SET beBuddy = 0, findBuddy = 1 WHERE email = :email");
+        }
+
+        $statement->bindParam(":email", $email);
+
+        $result = $statement->execute();
+        return $result;
+    }
 }
 ?>
