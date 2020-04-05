@@ -303,24 +303,24 @@ class User{
     }else{
          $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
 
-     $klas = $this->getKlas();
-     $muziek = $this->getMuziek();
-     $film = $this->getFilm();
-     $hobby = $this-> getHobby();
-     $favoriet = $this-> getFavoriet();
+        $klas = $this->getKlas();
+        $muziek = $this->getMuziek();
+        $film = $this->getFilm();
+        $hobby = $this-> getHobby();
+        $favoriet = $this-> getFavoriet();
 
-     $statement->bindValue(":klas", $klas);
-     $statement->bindValue(":muziek", $muziek);
-     $statement->bindValue(":film", $film);
-     $statement->bindValue(":hobby", $hobby);
-     $statement->bindValue(":favoriet", $favoriet);
+        $statement->bindValue(":klas", $klas);
+        $statement->bindValue(":muziek", $muziek);
+        $statement->bindValue(":film", $film);
+        $statement->bindValue(":hobby", $hobby);
+        $statement->bindValue(":favoriet", $favoriet);
 
-     $result = $statement->execute();
+        $result = $statement->execute();
 
 
-     return $result;
+        return $result;
+        }
     }
- }
 
 }
 ?>
