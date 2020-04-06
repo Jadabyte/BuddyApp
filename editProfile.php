@@ -10,9 +10,7 @@
             $user->setBuddy($_POST['buddy']);
             $user->setEmail($email);
             $user->buddyChoice();
-
-            header('Location: home.php');
-
+            $success = "Profile Updated!";
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }
@@ -26,6 +24,7 @@
 </head>
 <body>
     <p><?php if(isset($error)){ echo $error; }?></p>
+    <p><?php if(isset($success)){ echo $success; }?></p>
     <form action="" method="post">
         <div>
             <input type="radio" id="findBuddy" name="buddy" value="findBuddy">

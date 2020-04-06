@@ -3,9 +3,6 @@
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 
-session_start();
-echo $_SESSION['email'];
-
 if(isset($_POST['search'])){
     $results = null;
     try {
