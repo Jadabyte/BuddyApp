@@ -28,6 +28,9 @@ include_once(__DIR__ . "/classes/Db.php");
 <body>
 
 <br>
+<form action="home.php">
+         <button type="submit">Go Back</button>
+      </form>
 <br>
 
 <br>
