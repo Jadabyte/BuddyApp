@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+    <h3>Chat with your new buddy</h3>
+    <form class="submit_msg" action="buddychat.php" method="POST">
+        <input type="text" name="message" id="msg_input">
+    </form>
+    </div>
+
+    <script>
+        var input = document.getElementById("msg_input");
+        input.addEventListener("keyup", function(e){
+            if(event.keyCode === 13){
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

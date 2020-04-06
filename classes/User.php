@@ -323,26 +323,27 @@ class User{
         }
     }
 
-        public function pullUpFriends(){
+    public function pullUpFriends(){
 
-                $conn = Db::getConnection();
+        $conn = Db::getConnection();
 
-                session_start();
-                $reg_no = $_SESSION['email'];
-                $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
-                    
-                    //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
+        session_start();
+        $reg_no = $_SESSION['email'];
+        $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
+                  
+            // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
+            //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
 
-                var_dump($statement);
-                $statement->execute();
-                $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
-               // var_dump($friends);
+        var_dump($statement);
+        $statement->execute();
+        $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($friends);
 
-                return $friends; 
+        return $friends; 
 
-            }
+    }
 
-
+    
     /**
      * Get the value of buddy
      */ 
