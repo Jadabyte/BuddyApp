@@ -30,8 +30,13 @@ include_once(__DIR__ . "/classes/Db.php");
 <br>
 <br>
 
+<br>
 
-  <?php if(isset($error)): ?>
+    <h1>Here are all the buddies</h1>
+
+    <br>
+
+     <?php if(isset($error)): ?>
             <div class="error" style="color: red;"><?php echo $error; ?></div>
         <?php endif; ?>
 
@@ -39,10 +44,7 @@ include_once(__DIR__ . "/classes/Db.php");
             <div class="success"><?php echo $success;?></div>
         <?php endif; ?>
 
-
-<br>
-
-    <h1>Here are all the buddies</h1>
+        <br>
 
     <?php foreach ($friends as $friend) : ?>
 
