@@ -14,6 +14,7 @@
 ?><nav class="navbar">
     <a href="index.php">Home</a>
     <a href="mylist.php">Profile</a>
+    <a href="seeFriends.php">View Buddies</a>
     
     <!--<form action="" method="post">
       <input type="text" placeholder="Search for people or interests" name="search">

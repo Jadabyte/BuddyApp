@@ -18,7 +18,7 @@ if(!empty($_POST)){
         session_start();
         $_SESSION['email'] = $_POST['email'];
         
-        header('Location: home.php');
+        header('Location: completeProfile.php');
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
