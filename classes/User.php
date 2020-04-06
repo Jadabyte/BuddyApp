@@ -329,11 +329,11 @@ class User{
 
                 session_start();
                 $reg_no = $_SESSION['email'];
-                $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID");
+                $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
                     
                     //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
 
-                //var_dump($statement);
+                var_dump($statement);
                 $statement->execute();
                 $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
                // var_dump($friends);
