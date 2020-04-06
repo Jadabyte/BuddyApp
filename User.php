@@ -12,7 +12,6 @@ class User{
     private $film;
     private $hobby;
     private $favoriet;
-    private $buddy;
 
 
     /**
@@ -304,78 +303,24 @@ class User{
     }else{
          $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
 
-        $klas = $this->getKlas();
-        $muziek = $this->getMuziek();
-        $film = $this->getFilm();
-        $hobby = $this-> getHobby();
-        $favoriet = $this-> getFavoriet();
+     $klas = $this->getKlas();
+     $muziek = $this->getMuziek();
+     $film = $this->getFilm();
+     $hobby = $this-> getHobby();
+     $favoriet = $this-> getFavoriet();
 
-        $statement->bindValue(":klas", $klas);
-        $statement->bindValue(":muziek", $muziek);
-        $statement->bindValue(":film", $film);
-        $statement->bindValue(":hobby", $hobby);
-        $statement->bindValue(":favoriet", $favoriet);
+     $statement->bindValue(":klas", $klas);
+     $statement->bindValue(":muziek", $muziek);
+     $statement->bindValue(":film", $film);
+     $statement->bindValue(":hobby", $hobby);
+     $statement->bindValue(":favoriet", $favoriet);
 
-        $result = $statement->execute();
+     $result = $statement->execute();
 
 
-        return $result;
-        }
+     return $result;
     }
+ }
 
-        public function pullUpFriends(){
-
-            $conn = Db::getConnection();
-
-            $statement =$conn->prepare("SELECT u.username FROM `friend` f INNER JOIN users u on f.user_id = u.user_id WHERE friend_id = '1'");
-
-            $statement->execute();
-            $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
-            return $friends;
-        }
-        
-    /**
-     * Get the value of buddy
-     */ 
-    public function getBuddy()
-    {
-        return $this->buddy;
-    }
-
-
- 
-    /**
-     * Set the value of buddy
-     *
-     * @return  self
-     */ 
-    public function setBuddy($buddy)
-    {
-        if(empty($buddy)){
-            throw new Exception("Username cannot be empty");
-        }
-        $this->buddy = $buddy;
-
-        return $this;
-    }
-
-    public function buddyChoice(){
-        $conn = Db::getConnection();
-
-        $buddy = $this->getBuddy();
-        $email = $this->getEmail();
-
-        if($buddy == 'beBuddy'){
-            $statement = $conn->prepare("UPDATE Users SET beBuddy = 1, findBuddy = 0 WHERE email = :email");
-        }
-        else if($buddy == 'findBuddy'){
-            $statement = $conn->prepare("UPDATE Users SET beBuddy = 0, findBuddy = 1 WHERE email = :email");
-        }
-
-        $statement->bindParam(":email", $email);
-
-        $result = $statement->execute();
-        return $result;
-    }
 }
 ?>

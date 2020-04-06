@@ -1,32 +1,39 @@
 <?php
-    include_once(__DIR__ . "/classes/User.php");
 
-    if(!empty($_POST)){
-        try{
-            $user = new User();
-            $user->setFirstname($_POST['firstname']);
-            $user->setLastname($_POST['lastname']);
-            $user->setEmail($_POST['email']);
-            $user->setPassword($_POST['password']);
-            $user->setUsername($_POST['username']);
+include_once(__DIR__ . "/classes/User.php");
 
-            $user->checkDuplicate();
-            $user->submit();
-            $success = "Account Created!";
-            header('Location: index.php');
-        }
-        catch (\Throwable $th) {
-            $error = $th->getMessage();
-        }
+if(!empty($_POST)){
+    try{
+        $user = new User();
+        $user->setFirstname($_POST['firstname']);
+        $user->setLastname($_POST['lastname']);
+        $user->setEmail($_POST['email']);
+        $user->setPassword($_POST['password']);
+        $user->setUsername($_POST['username']);
+
+        $user->checkDuplicate();
+        $user->submit();
+        $success = "Account Created!";
+        
+        session_start();
+        $_SESSION['email'] = $_POST['email'];
+        
+        header('Location: home.php');
     }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="css/register">
     <title>Register</title>
 </head>
 <body>
