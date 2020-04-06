@@ -7,7 +7,7 @@ include_once(__DIR__ . "/classes/Db.php");
       try{
          
       $friends=User::pullUpFriends();
-      $success = "Hier zijn je vrienden!";
+      $success = "Je hebt nog geen buddies!";
       }
       catch (\Throwable $th) {
           $error = $th->getMessage();

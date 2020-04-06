@@ -10,6 +10,9 @@
             $user->setBuddy($_POST['buddy']);
             $user->setEmail($email);
             $user->buddyChoice();
+
+            header('Location: home.php');
+
         } catch (\Throwable $th) {
             $error = $th->getMessage();
         }

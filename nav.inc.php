@@ -13,7 +13,7 @@
 
 ?><nav class="navbar">
     <a href="index.php">Home</a>
-    <a href="mylist.php">Profile</a>
+    <a href="editProfile">Profile</a>
     <a href="seeFriends.php">View Buddies</a>
     
     <!--<form action="" method="post">

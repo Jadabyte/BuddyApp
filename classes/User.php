@@ -334,7 +334,7 @@ class User{
             // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
             //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
 
-        var_dump($statement);
+        //var_dump($statement);
         $statement->execute();
         $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
         // var_dump($friends);
