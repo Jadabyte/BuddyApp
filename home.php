@@ -35,7 +35,9 @@ if(isset($_POST['search'])){
     </form>
     
     <ul>
-        <?php if(isset($_POST['search'])) { foreach($results as $result) :?>
+        <?php if(isset($_POST['search'])) { ?>
+            <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_POST['search'])); ?></p>
+            <?php foreach($results as $result) :?>
             <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
         <?php endforeach; };?>
     </ul>

@@ -29,17 +29,15 @@ class Search{
     public function find(){
         $conn = Db::getConnection();
         $statement = $conn->prepare(
-            "select * from users where firstname like :searchItem 
-                OR lastname like :searchItem");
-            
-            /*UNION
-        
-            select * from interesses where klas like :searchItem 
-                OR muziek like :searchItem 
-                OR film like :searchItem 
-                OR hobby like :searchItem 
-                OR favoriet like :searchItem*/
-    
+            "select * from users, interesses 
+                where firstname like :searchItem
+	            OR lastname like :searchItem
+                OR users.interessesId = interesses.id AND muziek like :searchItem
+                OR users.interessesId = interesses.id AND film like :searchItem
+                OR users.interessesId = interesses.id AND hobby like :searchItem
+                OR users.interessesId = interesses.id AND favoriet like :searchItem
+                group by users.id");
+
         $searchItem = $this->getSearchItem();
         $statement->bindValue(":searchItem", '%' . $searchItem . '%', PDO::PARAM_STR);
 
