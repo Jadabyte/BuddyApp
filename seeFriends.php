@@ -21,6 +21,9 @@ include_once(__DIR__ . "/classes/Db.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
 </head>
 <body>
 
@@ -39,11 +42,11 @@ include_once(__DIR__ . "/classes/Db.php");
 
 <br>
 
-    <h1>See your friends</h1>
+    <h1>Here are all the buddies</h1>
 
     <?php foreach ($friends as $friend) : ?>
 
-        <li class="username"> <?php echo $friend['username']?></li>
+        <li class="username"> <?php echo $friend['name']?></li>
       
     <?php endforeach; ?>
 
@@ -51,20 +54,3 @@ include_once(__DIR__ . "/classes/Db.php");
 </body>
 </html>
 
-
- <!--  <//?php foreach ($friends as $friend): ?>
-    <li><//?php echo $friend['firstname' . ' ' . 'lastname']?></li>
-    <//?php endforeach; ?>
-     -->
-
-<!-- Laat een lijst zien van all je buddies
-            * haal de namen uit de databank 
-            * echo ze in een lijst
-
-            * ("SELECT firstName, lastName FROM friends_tb WHERE id_user = '(de id van de user die zich net heeft aangemeld)')
-                        of WHERE firstName_user = "$firstName" && lastName_user = $lastName
-
-            *een foreach loop
-
-
- -->

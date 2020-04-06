@@ -15,6 +15,9 @@ if(!empty($_POST)){
 
         $user->submitIntresses();
         $success = "Interesses zijn toegevoegd!";
+
+        header('Location: home.php');
+
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
@@ -30,8 +33,9 @@ if(!empty($_POST)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buddy App</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
 
 </head>
 <body>
