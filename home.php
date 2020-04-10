@@ -2,6 +2,8 @@
 
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
+include_once(__DIR__ . "/classes/User.php");
+
 
 if(isset($_POST['search'])){
     $results = null;
@@ -14,6 +16,22 @@ if(isset($_POST['search'])){
         $error = $th->getMessage();
     }
 }
+
+try{      
+    $usersCount=User::seeUsers();
+    $success = "Dit zijn alle users";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }
+
+try{      
+    $buddiesCount=User::seeBuddies();
+    $success = "Dit zijn alle buddies";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }    
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -38,5 +56,13 @@ if(isset($_POST['search'])){
             <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
         <?php endforeach; };?>
     </ul>
+
+    <div>
+
+        <p>At the moment there are <?php echo $usersCount ?> registered.</p>
+
+        <p>At the moment there are <?php echo $buddiesCount ?> buddies.</p>
+
+    </div>
 </body>
 </html>

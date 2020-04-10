@@ -387,5 +387,27 @@ class User{
         $result = $statement->execute();
         return $result;
     }
+
+    public function seeUsers(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT count(*) FROM users");
+        $statement->execute();
+        $countUsers = $statement->fetch(PDO::FETCH_NUM);;
+
+        return reset($countUsers);
+        }
+
+    public function seeBuddies(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT count(*) FROM friend");
+        $statement->execute();
+        $countBuddies = $statement->fetch(PDO::FETCH_NUM);;
+
+        return reset($countBuddies);
+        }    
+
+    
 }
 ?>
