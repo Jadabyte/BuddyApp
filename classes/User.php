@@ -5,8 +5,60 @@ include_once(__DIR__ . "/Db.php");
 class User{
     private $email;
     private $password;
-   
-    
+    private $username;
+    private $klas;
+    private $muziek;
+    private $film;
+    private $hobby;
+    private $favoriet;
+    private $buddy;
+
+
+    /**
+     * Get the value of firstname
+     */ 
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+ 
+    /**
+     * Set the value of firstname
+     *
+     * @return  self
+     */ 
+    public function setFirstname($firstname)
+    {
+        if(empty($firstname)){
+            throw new Exception("Firstname cannot be empty");
+        }
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lastname
+     */ 
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set the value of lastname
+     *
+     * @return  self
+     */ 
+    public function setLastname($lastname)
+    {
+        if(empty($lastname)){
+            throw new Exception("Lastname cannot be empty");
+        }
+        $this->lastname = $lastname;
+
+        return $this;
+    }
 
     /**
      * Get the value of email
@@ -106,6 +158,98 @@ function canLogin($email, $password){
     }
     }
 
+    public function submitIntresses(){
+        //$conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
+        $conn = Db::getConnection();
+        
+     if($_POST['klas'] === 'default' or $_POST['muziek'] === 'default' or $_POST['film'] === 'default' or $_POST['hobby'] === 'default' or $_POST['favoriet'] === 'default'){
+         throw new Exception("Vul het vakje in");
+
+    }else{
+         $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
+
+        $klas = $this->getKlas();
+        $muziek = $this->getMuziek();
+        $film = $this->getFilm();
+        $hobby = $this-> getHobby();
+        $favoriet = $this-> getFavoriet();
+
+        $statement->bindValue(":klas", $klas);
+        $statement->bindValue(":muziek", $muziek);
+        $statement->bindValue(":film", $film);
+        $statement->bindValue(":hobby", $hobby);
+        $statement->bindValue(":favoriet", $favoriet);
+
+        $result = $statement->execute();
 
 
+        return $result;
+        }
+    }
+
+    public function pullUpFriends(){
+
+        $conn = Db::getConnection();
+
+        session_start();
+        $reg_no = $_SESSION['email'];
+        $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
+                  
+            // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
+            //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
+
+        //var_dump($statement);
+        $statement->execute();
+        $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($friends);
+
+        return $friends; 
+
+    }
+
+    
+    /**
+     * Get the value of buddy
+     */ 
+    public function getBuddy()
+    {
+        return $this->buddy;
+    }
+
+
+ 
+    /**
+     * Set the value of buddy
+     *
+     * @return  self
+     */ 
+    public function setBuddy($buddy)
+    {
+        if(empty($buddy)){
+            throw new Exception("Username cannot be empty");
+        }
+        $this->buddy = $buddy;
+
+        return $this;
+    }
+
+    public function buddyChoice(){
+        $conn = Db::getConnection();
+
+        $buddy = $this->getBuddy();
+        $email = $this->getEmail();
+
+        if($buddy == 'beBuddy'){
+            $statement = $conn->prepare("UPDATE Users SET beBuddy = 1, findBuddy = 0 WHERE email = :email");
+        }
+        else if($buddy == 'findBuddy'){
+            $statement = $conn->prepare("UPDATE Users SET beBuddy = 0, findBuddy = 1 WHERE email = :email");
+        }
+
+        $statement->bindParam(":email", $email);
+
+        $result = $statement->execute();
+        return $result;
+    }
+}
 ?>

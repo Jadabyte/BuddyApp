@@ -1,6 +1,13 @@
 <?php
+include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/interface/iProfile.php");
+
+if(!empty($_POST)){
+    $user = $_POST['user'];
+    $file = fopen("Db.php", "r+");
+    fwrite($file, $user . "\n"); //op windows: \n\r
+    fclose($file); //handle
 
 try {
     $user1 = new User();
@@ -66,56 +73,13 @@ try {
     }
 
     // Allow certain file formats
-    if (
-        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif"
-    ) {
+    if ( $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
         echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
     }
-
+}
 
     ?>
+
 </body>
-
 </html>
-
-<?php
-//1
-//avatar foto uploaden en aanpassen
-/*- opladen van foto / avatar
-          - Beperk de bestandstypes en bestandsgrootte
-          - Geef gebruiksvriendelijke feedback als de update mislukt, maar ook als                     
-             die lukt
-- Beschrijving / korte profieltekst (emoji’s bewaren moet mogelijk zijn)
-- Wachtwoord wijzigen lukt
-          - Wat is een veilige manier om dit te doen? Overleg met je team.
-- Email adres wijzigen
-          - Hoe kan je dit veilig toelaten? (wat als je even van je laptop weg bent 
-            en iemand je wachtwoord wijzigt?) Idem voor wachtwoord wijzigen.
-- Zorg dat je hier aantoont dat je hebt nagedacht over een veilige procedure 
- */
-
-
-//2
-//beschrijving profielfoto's, emojis mogelijk om te bewaren
-//ww wijzigen lukt
-/* - opladen van foto / avatar
-          - Beperk de bestandstypes en bestandsgrootte
-          - Geef gebruiksvriendelijke feedback als de update mislukt, maar ook als                     
-             die lukt
-- Beschrijving / korte profieltekst (emoji’s bewaren moet mogelijk zijn)
-- Wachtwoord wijzigen lukt
-          - Wat is een veilige manier om dit te doen? Overleg met je team.
-- Email adres wijzigen
-          - Hoe kan je dit veilig toelaten? (wat als je even van je laptop weg bent 
-            en iemand je wachtwoord wijzigt?) Idem voor wachtwoord wijzigen.
-- Zorg dat je hier aantoont dat je hebt nagedacht over een veilige procedure 
-*/
-
-
-//3
-//email adres wijzigen
-
-
-?>
