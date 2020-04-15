@@ -1,17 +1,15 @@
 <?php
 
-include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/Db.php");
+include_once __DIR__ . "/classes/User.php";
+include_once __DIR__ . "/classes/Db.php";
 
+try {
 
-      try{
-         
-      $friends=User::pullUpFriends();
-      $success = "Je hebt nog geen buddies!";
-      }
-      catch (\Throwable $th) {
-          $error = $th->getMessage();
-      }
+    $friends = User::pullUpFriends();
+    $success = "Je hebt nog geen buddies!";
+} catch (\Throwable $th) {
+    $error = $th->getMessage();
+}
 
 ?>
 
@@ -39,23 +37,23 @@ include_once(__DIR__ . "/classes/Db.php");
 
     <br>
 
-     <?php if(isset($error)): ?>
+     <?php if (isset($error)): ?>
             <div class="error" style="color: red;"><?php echo $error; ?></div>
-        <?php endif; ?>
+        <?php endif;?>
 
-        <?php if(isset($success)) : ?>
-            <div class="success"><?php echo $success;?></div>
-        <?php endif; ?>
+        <?php if (isset($success)): ?>
+            <div class="success"><?php echo $success; ?></div>
+        <?php endif;?>
 
         <br>
 
-    <?php foreach ($friends as $friend) : ?>
+    <?php foreach ($friends as $friend): ?>
 
-        <li class="username"> <?php echo $friend['name']?></li>
-      
-    <?php endforeach; ?>
+        <li class="username"> <?php echo $friend['name'] ?></li>
 
-        
+    <?php endforeach;?>
+
+
 </body>
 </html>
 

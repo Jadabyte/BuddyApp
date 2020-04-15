@@ -1,8 +1,16 @@
-<?php 
+<?php
+include_once __DIR__ . "/classes/User.php";
 
-$naam = "Leander"; 
-
-
+session_start();
+if (isset($_POST['submit'])) {
+   $reason = $_POST["reden"];
+   echo $reason;
+   if($_POST[accept]){
+       echo "accept";
+   } else if($_POST[deny]){
+       echo "deny";
+   }
+} 
 
 ?>
 
@@ -14,16 +22,16 @@ $naam = "Leander";
     <title>Buddy-verzoek</title>
 </head>
 <body>
-   <h1>U heeft een buddy-verzoek van <?php echo $naam ?> gekregen!</h1> 
-   <form action="">
+   <h1>U heeft een buddy-verzoek van <?php echo $email ?> gekregen!</h1>
+   <form action="" method="post">
    <input type="radio" id="accept" name="accept" value="accept">
    <label for="accept">Accepteren</label><br>
-   <input type="radio" id="denie" name="denie" value="denie">
-   <label for="denie">Afwijzen</label>
+   <input type="radio" id="deny" name="deny" value="deny">
+   <label for="deny">Afwijzen</label>
    <br>
 
-    <textarea name="reden" id="reden" cols="30" rows="10" placeholder="Geef eventueel een reden"></textarea>
-   
+    <textarea name="reden" id="reden" cols="30" rows="10" placeholder="Geef eventueel een reden"></textarea><br>
+    <input type="submit" name="submit">
    </form>
 </body>
 </html>
