@@ -3,6 +3,9 @@
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/Mail.php");
+
+
 
 
 if(isset($_POST['search'])){
@@ -32,6 +35,21 @@ try{
     catch (\Throwable $th) {
         $error = $th->getMessage();
     }   
+
+    if(isset($_POST['sendmail'])){
+
+        try{
+        $email = 'lieselottekeuleers@hotmail.com'; //code nog vinden om het vanzichzelf te laten doen
+        $subject = 'Testing PHP Mail';
+        $message = 'This mail is sent using the PHP mail function';
+        $headers = 'From: mateinimd@gmail.com';
+        mail($email,$subject,$message, $headers);
+        $succes_mail=  "Mail has been send";
+        }catch(\Throwable $th) {
+            $error_mail = $th->getMessage();
+        }
+    }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -70,7 +88,22 @@ try{
     <br>
     <br>
 
-    <button type="submit" name='sendemail'>email</button>
+<form method="post"action="">
+
+<?php if(isset($error_mail)): ?>
+            <div class="error_mail"><?php echo $error_mail; ?></div>
+        <?php endif; ?>
+
+<?php if(isset($succes_mail)) : ?>
+            <div class="succes_mail"><?php echo $succes_mail;?></div>
+        <?php endif; ?>
+
+<input type="submit" name="sendmail" value="Send Message">
+
+
+</form>
+
+
 
 </body>
 </html>
