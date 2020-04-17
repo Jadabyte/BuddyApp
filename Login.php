@@ -8,31 +8,32 @@
     include_once(__DIR__ . "/classes/User.php");
 
 
-if (!empty($_POST)) {// Wanneer form is gesubmit
-    // Kijken of alle velden zijn ingevuld
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    if (!empty($email) && !empty($password)) {
-        // Kijken of email en wachtwoord overeenkomen met database
-        if (canLogin($email, $password)) {
-            session_start();
-            $_SESSION["user"] = $email;
-
-            header('Location: index.php');
+    if (!empty($_POST)) {// Wanneer form is gesubmit
+        // Kijken of alle velden zijn ingevuld
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        if (!empty($email) && !empty($password)) {
+            
+            // Kijken of email en wachtwoord overeenkomen met database
+            if (canLogin($email, $password)) {
+                
+                session_start();
+                $_SESSION["user"] = $email;
+    
+                header('Location: index.php');
+            } else {
+                // user+pass don't match
+                // show error
+                $error = "⚠️ Uw email of wachtwoord is onjuist ⚠️";
+            }
+    
         } else {
-            // user+pass don't match
-            // show error
-            $error = "⚠️ Uw email of wachtwoord is onjuist ⚠️";
+            $error = "⚠️ Alle velden moeten ingevuld zijn ⚠️";
         }
-
-    } else {
-        $error = "⚠️ Alle velden moeten ingevuld zijn ⚠️";
     }
-
-}
- 
-?>
-
+    
+     
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
