@@ -14,6 +14,128 @@ class User{
     private $buddy;
 
 
+/**
+     * Get the value of email
+     */ 
+    public function getFavoriet()
+    {
+        return $this->favoriet;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setFavoriet($favoriet)
+    {
+        $this->favoriet = $favoriet;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     */ 
+    public function getHobby()
+    {
+        return $this->hobby;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setHobby($hobby)
+    {
+        $this->hobby = $hobby;
+
+        return $this;
+    }
+
+
+     /**
+     * Get the value of email
+     */ 
+    public function getFilm()
+    {
+        return $this->film;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setFilm($film)
+    {
+        $this->film = $film;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of email
+     */ 
+    public function getMuziek()
+    {
+        return $this->muziek;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setMuziek($muziek)
+    {
+        $this->muziek = $muziek;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of email
+     */ 
+    public function getKlas()
+    {
+        return $this->klas;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setKlas($klas)
+    {
+        $this->klas = $klas;
+
+        return $this;
+    }
+
+ /**
+     * Get the value of email
+     */ 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     /**
      * Get the value of firstname
      */ 
@@ -103,7 +225,7 @@ class User{
     
 function matchHobby(){
       $conn =Db::getConnection();
-      $statement = $conn->prepare("SELECT * FROM users where e")
+      $statement = $conn->prepare("SELECT * FROM users where e");
 }
 
 /*
@@ -135,7 +257,7 @@ function matchHobby(){
             return $perfectMatch;
         }
     }*/
-}
+
 
 function canLogin($email, $password){
     // Connectie maken met database
