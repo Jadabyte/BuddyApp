@@ -1,5 +1,4 @@
 <?php
-    
 
 include_once(__DIR__ . "/classes/User.php");
 
@@ -12,8 +11,8 @@ if(!empty($_POST)){
         $user->setPassword($_POST['password']);
         $user->setUsername($_POST['username']);
 
-        $user->checkDuplicate();
-        $user->submit();
+        //$user->checkDuplicate();
+        //$user->submit();
         $success = "Account Created!";
         
         session_start();

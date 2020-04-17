@@ -56,7 +56,9 @@ try{
             <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
         <?php endforeach; };?>
     </ul>
-
+<br>
+<br>
+<br>
     <div>
 
         <p>At the moment there are <?php echo $usersCount ?> registered.</p>
@@ -64,5 +66,7 @@ try{
         <p>At the moment there are <?php echo $buddiesCount ?> buddies.</p>
 
     </div>
+
+    <button type="submit">email</button>
 </body>
 </html>
