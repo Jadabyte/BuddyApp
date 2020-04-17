@@ -31,7 +31,7 @@ try{
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
-    }    
+    }   
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -66,6 +66,10 @@ try{
         <p>At the moment there are <?php echo $buddiesCount ?> buddies.</p>
 
     </div>
+
+    <br>
+    <br>
+
     <button type="submit" name='sendemail'>email</button>
 
 </body>
