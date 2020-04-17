@@ -3,8 +3,8 @@
 
     if(!empty($_POST)){
         $l = new Like();
-        $l -> setMessageId($_POST['messageId']);
-        $l -> setUserId(1);
+       $l -> setMessageId($_POST['messageId']);
+        $l-> setUserId(1);
 
         $l->save();
 
