@@ -40,14 +40,6 @@ if(isset($_POST['search'])){
     </ul>
 
     <br>
-<br>
-<br>
-    <div>
-
-        <p>At the moment there are <?php echo $usersCount ?> registered.</p>
-
-        <p>At the moment there are <?php echo $buddiesCount ?> buddies.</p>
-
-    </div>
+    
 </body>
 </html>
