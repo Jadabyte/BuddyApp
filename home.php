@@ -39,7 +39,7 @@ try{
     if(isset($_POST['sendmail'])){
 
         try{
-        $email = 'lieselottekeuleers@hotmail.com'; //code nog vinden om het vanzichzelf te laten doen
+        $email = 'r0760718@student.thomasmore.be'; //code nog vinden om het vanzichzelf te laten doen
         $subject = 'Testing PHP Mail';
         $message = 'This mail is sent using the PHP mail function';
         $headers = 'From: mateinimd@gmail.com';
