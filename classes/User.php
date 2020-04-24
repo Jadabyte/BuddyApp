@@ -1,7 +1,6 @@
 <?php
 
 include_once(__DIR__ . "/Db.php");
-
 class User{
     private $firstname;
     private $lastname;
@@ -125,6 +124,30 @@ class User{
      *
      * @return  self
      */ 
+
+    /**
+     * Get the value of username
+     */ 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of username
+     *
+     * @return  self
+     */ 
+    public function setUsername($username)
+    {
+        if(empty($username)){
+            throw new Exception("Username cannot be empty");
+        }
+        $this->username = $username;
+
+        return $this;
+    }
+
     public function setPassword($password)
     {
         if(empty($password)){
@@ -138,7 +161,11 @@ class User{
         return $this;
     }
 
+<<<<<<< HEAD
+    public function submit(){
+=======
     public function createUser(){
+>>>>>>> 348b73aad73f9924405eaee0ff61ccb2690aec86
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
@@ -159,6 +186,8 @@ class User{
 
         return $result;
     }
+<<<<<<< HEAD
+=======
 
     public function checkDuplicate(){
         $conn = Db::getConnection();
@@ -181,33 +210,47 @@ class User{
         $conn =Db::getConnection();
         $statement = $conn->prepare("SELECT * FROM users where e");
     }
+>>>>>>> 348b73aad73f9924405eaee0ff61ccb2690aec86
 
-/*
-    public function findOthers($email){
+    public function checkDuplicate(){
         $conn = Db::getConnection();
-        $statement = $conn("SELECT * FROM users where email != :email");
-        $statement->bindValue(":email", $email);
-        $statement->execute();
-        $others = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $others;
+        $statement = $conn->prepare("select email from users where  email = :email"); //change get and post here
+
+        $email = $this->getEmail();
+        $statement->bindValue(":email", $email);
+
+        //$statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $statement->execute();
+
+        if($statement->fetchColumn()){ 
+            throw new Exception("Please use a different email address");
+        }
     }
 
-    public function findPerfectMatch($others){
-        $others = $this->findOthers();
-        foreach ($others as $other => $value) {
-            $conn = Db::getConnection();
-            $statement = $conn->prepare("SELECT * FROM users where email != :email AND muziek = :muziek AND klas = :klas AND film = :film AND hobby = :hobby AND favoriet = :favoriet");
+    
 
-            $statement->bindValue(":email", $other["email"]);
-            $statement->bindValue(":muziek", $other["muziek"]);
-            $statement->bindValue(":klas", $other["klas"]);
-            $statement->bindValue(":film", $other["film"]);
-            $statement->bindValue(":hobby", $other["hobby"]);
-            $statement->bindValue(":favoriet", $other["favoriet"]);
-            $statement->execute();
-            $perfectMatch = $statement->fetchAll(PDO::FETCH_ASSOC);
+    /**
+     * Get the value of klas
+     */ 
+    public function getKlas()
+    {
+        return $this->klas;
+    }
 
+<<<<<<< HEAD
+    /**
+     * Set the value of klas
+     *
+     * @return  self
+     */ 
+    public function setKlas($klas)
+    {
+        $this->klas = $klas;
+
+        return $this;
+    }
+=======
             return $perfectMatch;
         }
     }*/
@@ -219,19 +262,86 @@ class User{
     $email = $conn->real_escape_string($email);
     $sql = "select * from users where email = '$email'";
     $result = $conn->query($sql);
+>>>>>>> 348b73aad73f9924405eaee0ff61ccb2690aec86
 
-    //Kijken of het gevonden wordt in de database
-    if ($result->num_rows != 1) {
-        return false;
+    /**
+     * Get the value of muziek
+     */ 
+    public function getMuziek()
+    {
+        return $this->muziek;
     }
-    $user = $result->fetch_assoc();
-    $hash = $user['password'];
-    
-    if (password_verify($password, $hash)) {
-        return true;
-    } else { 
-        return false;
+
+    /**
+     * Set the value of muziek
+     *
+     * @return  self
+     */ 
+    public function setMuziek($muziek)
+    {
+        $this->muziek = $muziek;
+
+        return $this;
     }
+
+    /**
+     * Get the value of film
+     */ 
+    public function getFilm()
+    {
+        return $this->film;
+    }
+
+    /**
+     * Set the value of film
+     *
+     * @return  self
+     */ 
+    public function setFilm($film)
+    {
+        $this->film = $film;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hobby
+     */ 
+    public function getHobby()
+    {
+        return $this->hobby;
+    }
+
+    /**
+     * Set the value of hobby
+     *
+     * @return  self
+     */ 
+    public function setHobby($hobby)
+    {
+        $this->hobby = $hobby;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of favoriet
+     */ 
+    public function getFavoriet()
+    {
+        return $this->favoriet;
+    }
+
+    /**
+     * Set the value of favoriet
+     *
+     * @return  self
+     */ 
+    public function setFavoriet($favoriet)
+    {
+        $this->favoriet = $favoriet;
+
+        return $this;
     }
     
     /**
@@ -463,4 +573,26 @@ class User{
 
     }
 }
+
+function canLogin($email, $password)
+    {
+        // Connectie maken met database
+        $conn = new mysqli("localhost", "root", "root", "BuddyApp");
+        $email = $conn->real_escape_string($email);
+        $sql = "select * from users where email = '$email'";
+        $result = $conn->query($sql);
+
+        //Kijken of het gevonden wordt in de database
+        if ($result->num_rows != 1) {
+            return false;
+        }
+        $user = $result->fetch_assoc();
+        $hash = $user['password'];
+        
+        if (password_verify($password, $hash)) {
+            return true;
+        } else { 
+            return false;
+        }
+    }
 ?>
