@@ -163,8 +163,12 @@ class User{
     public function checkDuplicate(){
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("select email from users where  email = '" . $_POST['email'] . "'");
-        $statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $statement = $conn->prepare("select email from users where  email = :email"); //change get and post here
+
+        $email = $this->getEmail();
+        $statement->bindValue(":email", $email);
+
+        //$statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
         $statement->execute();
 
         if($statement->fetchColumn()){ 
@@ -386,6 +390,44 @@ class User{
 
         $result = $statement->execute();
         return $result;
+    }
+
+    public function fetchUser(){
+        //this fetches the user details and their interests
+
+        $conn = Db::getConnection();
+
+        $email = $this->getEmail();
+        $statement = $conn->prepare("SELECT * FROM interesses JOIN users ON users.email = :email AND users.interessesId = interesses.id");
+
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public function fetchFriend(){
+        //this function fetches the most recent friend the user has made
+
+        $conn = Db::getConnection();
+
+        $email = $this->getEmail();
+        $statement =$conn->prepare("select friends.user_id_2 from friends inner join users on users.email = :email AND users.id = friends.user_id_1 ORDER BY friends.user_id_2 DESC");
+
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        $friendId = $result['user_id_2'];
+        $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
+
+        $statement->bindParam(":friendId", $friendId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result; 
+
     }
 }
 ?>
