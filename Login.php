@@ -1,15 +1,16 @@
 <?php
 
-//Om in te loggen:
-    // Email: leandernelissen@gmail.com
-    // Wachtwoord: hhh
-
 
     include_once(__DIR__ . "/classes/User.php");
 
 
     if (!empty($_POST)) {// Wanneer form is gesubmit
         // Kijken of alle velden zijn ingevuld
+
+        session_start();
+        if($_POST['captcha'] != $_SESSION['digit']) die("Sorry, u heeft de verkeerde Captcha ingegeven.");
+        session_destroy();
+
         $email = $_POST['email'];
         $password = $_POST['password'];
         if (!empty($email) && !empty($password)) {
@@ -44,8 +45,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
-<body>
-    
+<body
 
     <div id="login">
     <h1>Welkom bij de IMD Buddy App</h1>
@@ -68,6 +68,10 @@
                         <label for="Password">Password</label>
                         <input type="password" id="Password" name="password">
                     </div>
+
+                    <p><img src="captcha.php" width="120" height="30" border="1" alt="CAPTCHA"></p>
+                    <p><input type="text" size="6" maxlength="5" name="captcha" value=""><br>
+                    Schrijf hier de cijfers van hierboven in</p>
 
                     <div class="submit">
                         <input type="submit" value="Sign in" class="btn btn--primary">

@@ -26,7 +26,7 @@ class Search{
         return $this;
     }
 
-    public function find(){
+    public function findUser(){
         $conn = Db::getConnection();
         $statement = $conn->prepare(
             "select * from users, interesses 
@@ -37,6 +37,26 @@ class Search{
                 OR users.interessesId = interesses.id AND hobby like :searchItem
                 OR users.interessesId = interesses.id AND favoriet like :searchItem
                 group by users.id");
+
+        $searchItem = $this->getSearchItem();
+        $statement->bindValue(":searchItem", '%' . $searchItem . '%', PDO::PARAM_STR);
+
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        //var_dump($searchItem);
+        //var_dump($results);
+        
+        return $results;
+    }
+
+    public function findClassroom(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare(
+            "select * from classrooms 
+                where name like :searchItem
+	            OR campus like :searchItem
+                OR floor like :searchItem");
 
         $searchItem = $this->getSearchItem();
         $statement->bindValue(":searchItem", '%' . $searchItem . '%', PDO::PARAM_STR);
