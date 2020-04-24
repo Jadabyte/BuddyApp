@@ -89,29 +89,6 @@ class User{
     }
 
     /**
-     * Get the value of username
-     */ 
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set the value of username
-     *
-     * @return  self
-     */ 
-    public function setUsername($username)
-    {
-        if(empty($username)){
-            throw new Exception("Username cannot be empty");
-        }
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
      * Get the value of password
      */ 
     public function getPassword()
@@ -161,11 +138,8 @@ class User{
         return $this;
     }
 
-<<<<<<< HEAD
-    public function submit(){
-=======
+
     public function createUser(){
->>>>>>> 348b73aad73f9924405eaee0ff61ccb2690aec86
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
@@ -186,8 +160,6 @@ class User{
 
         return $result;
     }
-<<<<<<< HEAD
-=======
 
     public function checkDuplicate(){
         $conn = Db::getConnection();
@@ -210,51 +182,8 @@ class User{
         $conn =Db::getConnection();
         $statement = $conn->prepare("SELECT * FROM users where e");
     }
->>>>>>> 348b73aad73f9924405eaee0ff61ccb2690aec86
-
-    public function checkDuplicate(){
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("select email from users where  email = :email"); //change get and post here
-
-        $email = $this->getEmail();
-        $statement->bindValue(":email", $email);
-
-        //$statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
-        $statement->execute();
-
-        if($statement->fetchColumn()){ 
-            throw new Exception("Please use a different email address");
-        }
-    }
 
     
-
-    /**
-     * Get the value of klas
-     */ 
-    public function getKlas()
-    {
-        return $this->klas;
-    }
-
-<<<<<<< HEAD
-    /**
-     * Set the value of klas
-     *
-     * @return  self
-     */ 
-    public function setKlas($klas)
-    {
-        $this->klas = $klas;
-
-        return $this;
-    }
-=======
-            return $perfectMatch;
-        }
-    }*/
-
 
     public function canLogin($email, $password){
     // Connectie maken met database
@@ -262,88 +191,9 @@ class User{
     $email = $conn->real_escape_string($email);
     $sql = "select * from users where email = '$email'";
     $result = $conn->query($sql);
->>>>>>> 348b73aad73f9924405eaee0ff61ccb2690aec86
-
-    /**
-     * Get the value of muziek
-     */ 
-    public function getMuziek()
-    {
-        return $this->muziek;
     }
 
-    /**
-     * Set the value of muziek
-     *
-     * @return  self
-     */ 
-    public function setMuziek($muziek)
-    {
-        $this->muziek = $muziek;
 
-        return $this;
-    }
-
-    /**
-     * Get the value of film
-     */ 
-    public function getFilm()
-    {
-        return $this->film;
-    }
-
-    /**
-     * Set the value of film
-     *
-     * @return  self
-     */ 
-    public function setFilm($film)
-    {
-        $this->film = $film;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of hobby
-     */ 
-    public function getHobby()
-    {
-        return $this->hobby;
-    }
-
-    /**
-     * Set the value of hobby
-     *
-     * @return  self
-     */ 
-    public function setHobby($hobby)
-    {
-        $this->hobby = $hobby;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of favoriet
-     */ 
-    public function getFavoriet()
-    {
-        return $this->favoriet;
-    }
-
-    /**
-     * Set the value of favoriet
-     *
-     * @return  self
-     */ 
-    public function setFavoriet($favoriet)
-    {
-        $this->favoriet = $favoriet;
-
-        return $this;
-    }
-    
     /**
      * Get the value of klas
      */ 
@@ -480,8 +330,8 @@ class User{
         session_start();
         $reg_no = $_SESSION['email'];
         $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
-                  
-            // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
+-                
+            // moet nog een friends tabel gemaakt worden (of whatever de persoon maakt met de feature 7-8) 
             //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
 
         //var_dump($statement);
@@ -535,6 +385,27 @@ class User{
         return $result;
     }
 
+    public function seeUsers(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT count(*) FROM users");
+        $statement->execute();
+        $countUsers = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return reset($countUsers);
+        }
+
+    public function seeBuddies(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT count(*) FROM friends");
+        $statement->execute();
+        $countBuddies = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return reset($countBuddies);
+        }    
+
+    
     public function fetchUser(){
         //this fetches the user details and their interests
 

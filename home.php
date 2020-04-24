@@ -2,6 +2,11 @@
 
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/Mail.php");
+
+
+
 
 if(isset($_POST['search'])){
     $results = null;
@@ -14,6 +19,39 @@ if(isset($_POST['search'])){
         $error = $th->getMessage();
     }
 }
+
+try{      
+    $usersCount=User::seeUsers();
+    $success = "Dit zijn alle users";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }
+
+try{      
+    $buddiesCount=User::seeBuddies();
+    $success = "Dit zijn alle buddies";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }   
+
+    if(isset($_POST['sendmail'])){
+
+        try{
+
+        session_start();
+        $email = $_SESSION['email']; //code nog vinden om het vanzichzelf te laten doen
+        $subject = 'Testing PHP Mail';
+        $message = 'This mail is sent using the PHP mail function';
+        $headers = 'From: mateinimd@gmail.com';
+        mail($email,$subject,$message, $headers);
+        $succes_mail=  "Mail has been send";
+        }catch(\Throwable $th) {
+            $error_mail = $th->getMessage();
+        }
+    }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -38,8 +76,36 @@ if(isset($_POST['search'])){
                 <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
         <?php endforeach; endif;?>
     </ul>
+<br>
+<br>
+<br>
+    <div>
+
+        <p>At the moment there are <?php echo $usersCount ?> registered.</p>
+
+        <p>At the moment there are <?php echo $buddiesCount ?> buddies.</p>
+
+    </div>
 
     <br>
-    
+    <br>
+
+<form method="post"action="">
+
+<?php if(isset($error_mail)): ?>
+            <div class="error_mail"><?php echo $error_mail; ?></div>
+        <?php endif; ?>
+
+<?php if(isset($succes_mail)) : ?>
+            <div class="succes_mail"><?php echo $succes_mail;?></div>
+        <?php endif; ?>
+
+<input type="submit" name="sendmail" value="Send Message">
+
+
+</form>
+
+
+
 </body>
 </html>
