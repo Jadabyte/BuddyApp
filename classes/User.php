@@ -101,10 +101,10 @@ class User{
     }
 
     
-function matchHobby(){
-      $conn =Db::getConnection();
-      $statement = $conn->prepare("SELECT * FROM users where e")
-}
+    function matchHobby(){
+        $conn =Db::getConnection();
+        $statement = $conn->prepare("SELECT * FROM users where e");
+    }
 
 /*
     public function findOthers($email){
@@ -135,9 +135,9 @@ function matchHobby(){
             return $perfectMatch;
         }
     }*/
-}
 
-function canLogin($email, $password){
+
+    public function canLogin($email, $password){
     // Connectie maken met database
     $conn = new mysqli("localhost", "root", "root", "BuddyApp");
     $email = $conn->real_escape_string($email);
