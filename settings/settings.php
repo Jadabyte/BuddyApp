@@ -4,7 +4,7 @@
             "user"      => "root",
             "password"  => "root",
             "host"      => "localhost",
-            "database"  => "ba_feature9"
+            "database"  => "ba_feature9_test"
         ]
     ];
 

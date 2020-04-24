@@ -444,7 +444,7 @@ class User{
 
         $statement = $conn->prepare("SELECT count(*) FROM users");
         $statement->execute();
-        $countUsers = $statement->fetch(PDO::FETCH_NUM);;
+        $countUsers = $statement->fetch(PDO::FETCH_ASSOC);
 
         return reset($countUsers);
         }
@@ -452,9 +452,9 @@ class User{
     public function seeBuddies(){
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("SELECT count(*) FROM friend");
+        $statement = $conn->prepare("SELECT count(*) FROM friends");
         $statement->execute();
-        $countBuddies = $statement->fetch(PDO::FETCH_NUM);;
+        $countBuddies = $statement->fetch(PDO::FETCH_ASSOC);
 
         return reset($countBuddies);
         }    
