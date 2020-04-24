@@ -111,7 +111,7 @@ class User{
 
         return $this;
     }
-    
+
     /**
      * Get the value of password
      */ 
@@ -138,7 +138,7 @@ class User{
         return $this;
     }
 
-    public function submit(){
+    public function createUser(){
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
@@ -401,9 +401,6 @@ class User{
      */ 
     public function setBuddy($buddy)
     {
-        if(empty($buddy)){
-            throw new Exception("Username cannot be empty");
-        }
         $this->buddy = $buddy;
 
         return $this;

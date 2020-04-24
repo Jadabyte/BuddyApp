@@ -2,7 +2,6 @@
     include_once(__DIR__ . "/classes/User.php");
 
     session_start();
-    $_SESSION['email'] = 'thibaud@student.thomasmore.be';
     $email = $_SESSION['email'];
 
     if(isset($_POST['buddy'])){
