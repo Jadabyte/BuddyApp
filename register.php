@@ -1,11 +1,7 @@
 <?php
-<<<<<<< HEAD
-    include_once(__DIR__ . "/classes/User.php");
-    
-=======
->>>>>>> 85052552ff9f51a9ab0dcecf41f3d3afaa30deb0
 
 include_once(__DIR__ . "/classes/User.php");
+
 
 if(!empty($_POST)){
     try{
@@ -24,6 +20,8 @@ if(!empty($_POST)){
         $_SESSION['email'] = $_POST['email'];
         
         header('Location: completeProfile.php');
+
+        
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
@@ -38,11 +36,15 @@ if(!empty($_POST)){
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="css/register">
+    <link rel="stylesheet" href="css/register.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <title>Register</title>
 </head>
 <body>
+
+
     <main>
+     
         <h2>Register for the IMD Buddy App</h2>
         <?php if(isset($error)): ?>
             <div class="error"><?php echo $error; ?></div>
@@ -66,6 +68,7 @@ if(!empty($_POST)){
             <div>
                 <label for="Username"></label>
                 <input type="text" id="Username" name="username" placeholder="Username">
+                <span id="availability"></span>
             </div>
 
             <div>
@@ -82,6 +85,37 @@ if(!empty($_POST)){
                 <input id="submit" type="submit" value="Sign Up">
             </div>
         </form>
+       
     </main>
+
+<script>
+$(document).ready(function(){
+   $('#Username').blur(function(){
+
+     var username = $(this).val();
+
+     $.ajax({
+      url:'checkUsername.php',
+      method:"POST",
+      data:{user_name:username},
+      success:function(data)
+      {
+       if(data != '0')
+       {
+        $('#availability').html('<span class="text-danger">Username niet beschikbaar</span>');
+        $('#submit').attr("disabled", true);
+       }
+       else
+       {
+        $('#availability').html('<span class="text-success">Username beschikbaar</span>');
+        $('#submit').attr("disabled", false);
+       }
+      }
+     })
+
+  });
+ });
+</script>
+
 </body>
 </html>
