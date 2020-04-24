@@ -9,7 +9,7 @@ if(isset($_POST['search'])){
         $search = new Search();
         $search->setSearchItem($_POST['search']); //change this to get, it's easier to put it in the URL
         //var_dump($_POST['search']);
-        $results = $search->findUser();
+        $results = $search->findClassroom();
     } catch (\Throwable $th) {
         $error = $th->getMessage();
     }
@@ -23,20 +23,24 @@ if(isset($_POST['search'])){
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
-    <title>Document</title>
+    <title>Lokaal Vinder</title>
 </head>
 <body>
     <form action="" method="post">
-        <input type="text" placeholder="Search for people or interests" name="search">
+        <input type="text" placeholder="Search for a classroom name or campus" name="search">
         <input type="submit" value="Search" name="submitSearch">
     </form>
     
-    <ul>
-        <?php if(isset($_POST['search'])) : ?>
-            <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_POST['search'])); ?></p>
-            <?php foreach($results as $result) :?>
-                <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
-        <?php endforeach; endif;?>
-    </ul>
+    <?php if(isset($_POST['search'])) : ?>
+        <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_POST['search'])); ?></p>
+        <?php foreach($results as $result) :?>
+            <ul>
+                <li>Classroom Name: <?php echo htmlspecialchars($result['name'])?></li>
+                <li>Campus: <?php echo htmlspecialchars($result['campus'])?></li>
+                <li>Floor: <?php echo htmlspecialchars($result['floor'])?></li>
+                <li>Location Description: <?php echo htmlspecialchars($result['description'])?></li>
+            </ul>
+    <?php endforeach; endif;?>
+    
 </body>
 </html>

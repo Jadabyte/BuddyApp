@@ -3,6 +3,8 @@
 include_once(__DIR__ . "/Db.php");
 
 class User{
+    private $firstname;
+    private $lastname;
     private $email;
     private $password;
     private $username;
@@ -75,11 +77,41 @@ class User{
      */ 
     public function setEmail($email)
     {
+        if(empty($email)){
+            throw new Exception("Email cannot be empty");
+        }
+
+        if(!preg_match('/@student.thomasmore.be/', $email)){
+            throw new Exception("You must have a Thomas More student email adress");
+        }
         $this->email = $email;
 
         return $this;
     }
 
+    /**
+     * Get the value of username
+     */ 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of username
+     *
+     * @return  self
+     */ 
+    public function setUsername($username)
+    {
+        if(empty($username)){
+            throw new Exception("Username cannot be empty");
+        }
+        $this->username = $username;
+
+        return $this;
+    }
+    
     /**
      * Get the value of password
      */ 
@@ -95,9 +127,53 @@ class User{
      */ 
     public function setPassword($password)
     {
+        if(empty($password)){
+            throw new Exception("Please enter a password");
+        }
+        if(!isset($error)){
+            $password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 14]);
+        }
         $this->password = $password;
 
         return $this;
+    }
+
+    public function submit(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
+
+        $firstname = $this->getFirstname();
+        $lastname = $this->getLastname();
+        $email = $this->getEmail();
+        $password = $this-> getPassword();
+        $username = $this-> getUsername();
+
+        $statement->bindValue(":firstname", $firstname);
+        $statement->bindValue(":lastname", $lastname);
+        $statement->bindValue(":email", $email);
+        $statement->bindValue(":password", $password);
+        $statement->bindValue(":username", $username);
+
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    public function checkDuplicate(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select email from users where  email = :email"); //change get and post here
+
+        $email = $this->getEmail();
+        $statement->bindValue(":email", $email);
+
+        //$statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $statement->execute();
+
+        if($statement->fetchColumn()){ 
+            throw new Exception("Please use a different email address");
+        }
     }
 
     
@@ -156,6 +232,106 @@ class User{
     } else { 
         return false;
     }
+    }
+    
+    /**
+     * Get the value of klas
+     */ 
+    public function getKlas()
+    {
+        return $this->klas;
+    }
+
+    /**
+     * Set the value of klas
+     *
+     * @return  self
+     */ 
+    public function setKlas($klas)
+    {
+        $this->klas = $klas;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of muziek
+     */ 
+    public function getMuziek()
+    {
+        return $this->muziek;
+    }
+
+    /**
+     * Set the value of muziek
+     *
+     * @return  self
+     */ 
+    public function setMuziek($muziek)
+    {
+        $this->muziek = $muziek;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of film
+     */ 
+    public function getFilm()
+    {
+        return $this->film;
+    }
+
+    /**
+     * Set the value of film
+     *
+     * @return  self
+     */ 
+    public function setFilm($film)
+    {
+        $this->film = $film;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hobby
+     */ 
+    public function getHobby()
+    {
+        return $this->hobby;
+    }
+
+    /**
+     * Set the value of hobby
+     *
+     * @return  self
+     */ 
+    public function setHobby($hobby)
+    {
+        $this->hobby = $hobby;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of favoriet
+     */ 
+    public function getFavoriet()
+    {
+        return $this->favoriet;
+    }
+
+    /**
+     * Set the value of favoriet
+     *
+     * @return  self
+     */ 
+    public function setFavoriet($favoriet)
+    {
+        $this->favoriet = $favoriet;
+
+        return $this;
     }
 
     public function submitIntresses(){
@@ -250,6 +426,44 @@ class User{
 
         $result = $statement->execute();
         return $result;
+    }
+
+    public function fetchUser(){
+        //this fetches the user details and their interests
+
+        $conn = Db::getConnection();
+
+        $email = $this->getEmail();
+        $statement = $conn->prepare("SELECT * FROM interesses JOIN users ON users.email = :email AND users.interessesId = interesses.id");
+
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public function fetchFriend(){
+        //this function fetches the most recent friend the user has made
+
+        $conn = Db::getConnection();
+
+        $email = $this->getEmail();
+        $statement =$conn->prepare("select friends.user_id_2 from friends inner join users on users.email = :email AND users.id = friends.user_id_1 ORDER BY friends.user_id_2 DESC");
+
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        $friendId = $result['user_id_2'];
+        $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
+
+        $statement->bindParam(":friendId", $friendId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result; 
+
     }
 }
 ?>
