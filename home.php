@@ -12,9 +12,9 @@ if(isset($_POST['search'])){
     $results = null;
     try {
         $search = new Search();
-        $search->setSearchItem($_POST['search']);
+        $search->setSearchItem($_POST['search']); //change this to get, it's easier to put it in the URL
         //var_dump($_POST['search']);
-        $results = $search->find();
+        $results = $search->findUser();
     } catch (\Throwable $th) {
         $error = $th->getMessage();
     }
@@ -70,11 +70,11 @@ try{
     </form>
     
     <ul>
-        <?php if(isset($_POST['search'])) { ?>
+        <?php if(isset($_POST['search'])) : ?>
             <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_POST['search'])); ?></p>
             <?php foreach($results as $result) :?>
-            <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
-        <?php endforeach; };?>
+                <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
+        <?php endforeach; endif;?>
     </ul>
 <br>
 <br>

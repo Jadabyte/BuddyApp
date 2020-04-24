@@ -12,7 +12,7 @@ if(!empty($_POST)){
         $user->setUsername($_POST['username']);
 
         $user->checkDuplicate();
-        $user->submit();
+        $user->createUser();
         $success = "Account Created!";
         
         session_start();

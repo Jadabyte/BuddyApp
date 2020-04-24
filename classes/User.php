@@ -3,6 +3,8 @@
 include_once(__DIR__ . "/Db.php");
 
 class User{
+    private $firstname;
+    private $lastname;
     private $email;
     private $password;
     private $username;
@@ -137,7 +139,8 @@ class User{
         return $this;
     }
 
-    public function submit(){
+    //public function submit(){
+    public function createUser(){
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
@@ -175,8 +178,55 @@ class User{
         }
     }
 
+    
+    function matchHobby(){
+        $conn =Db::getConnection();
+        $statement = $conn->prepare("SELECT * FROM users where e");
+    }
 
-function canLogin($email, $password){
+/*
+    public function findOthers($email){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("insert into users (firstname, lastname, email, password, username) values (:firstname, :lastname, :email, :password, :username)");
+
+        $firstname = $this->getFirstname();
+        $lastname = $this->getLastname();
+        $email = $this->getEmail();
+        $password = $this-> getPassword();
+        $username = $this-> getUsername();
+
+        $statement->bindValue(":firstname", $firstname);
+        $statement->bindValue(":lastname", $lastname);
+        $statement->bindValue(":email", $email);
+        $statement->bindValue(":password", $password);
+        $statement->bindValue(":username", $username);
+
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    public function checkDuplicate(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select email from users where  email = :email"); //change get and post here
+
+        $email = $this->getEmail();
+        $statement->bindValue(":email", $email);
+
+        //$statement->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $statement->execute();
+
+        if($statement->fetchColumn()){ 
+            throw new Exception("Please use a different email address");
+        }
+    }
+
+    }*/
+
+
+    public function canLogin($email, $password){
     // Connectie maken met database
     $conn = new mysqli("localhost", "root", "root", "BuddyApp");
     $email = $conn->real_escape_string($email);
@@ -196,6 +246,7 @@ function canLogin($email, $password){
         return false;
     }
     }
+
 
     /**
      * Get the value of klas
@@ -364,9 +415,6 @@ function canLogin($email, $password){
      */ 
     public function setBuddy($buddy)
     {
-        if(empty($buddy)){
-            throw new Exception("Username cannot be empty");
-        }
         $this->buddy = $buddy;
 
         return $this;
@@ -412,5 +460,42 @@ function canLogin($email, $password){
         }    
 
     
+    public function fetchUser(){
+        //this fetches the user details and their interests
+
+        $conn = Db::getConnection();
+
+        $email = $this->getEmail();
+        $statement = $conn->prepare("SELECT * FROM interesses JOIN users ON users.email = :email AND users.interessesId = interesses.id");
+
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public function fetchFriend(){
+        //this function fetches the most recent friend the user has made
+
+        $conn = Db::getConnection();
+
+        $email = $this->getEmail();
+        $statement =$conn->prepare("select friends.user_id_2 from friends inner join users on users.email = :email AND users.id = friends.user_id_1 ORDER BY friends.user_id_2 DESC");
+
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        $friendId = $result['user_id_2'];
+        $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
+
+        $statement->bindParam(":friendId", $friendId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result; 
+
+    }
 }
 ?>

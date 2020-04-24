@@ -1,5 +1,5 @@
 <?php
-    include_once(__DIR__ . "/likeclass.php");
+    include_once(__DIR__ . "classes/likeclass.php");
 
     if(!empty($_POST)){
         $l = new Like();
