@@ -42,8 +42,8 @@ try{
 
         session_start();
         $email = $_SESSION['email']; //code nog vinden om het vanzichzelf te laten doen
-        $subject = 'Testing PHP Mail';
-        $message = 'This mail is sent using the PHP mail function';
+        $subject = 'Buddy Request';
+        $message = 'You just got send a buddy request! Go to the app to find out who wants to be your friend!';
         $headers = 'From: mateinimd@gmail.com';
         mail($email,$subject,$message, $headers);
         $succes_mail=  "Mail has been send";
