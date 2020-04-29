@@ -65,9 +65,35 @@ try{
 </head>
 <body>
     <form action="" method="post">
-        <input type="text" placeholder="Search for people or interests" name="search">
+        <input type="text" placeholder="Search for people or interests" name="search" class="search">
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+            <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>    
+            
+                <style>
+                .search{
+                    width:40%;
+                    border:2px solid #ccc;
+                    border-radius:4px;
+                    font-size:16px;
+                    padding:12px 20px 12px 40px;
+                }
+                </style>
+
+                <script>
+                    $(function(){
+                        $('.search').autocomplete({
+                        source: 'autoComplete.php',
+                        minLength: 2
+
+                        });
+                    });
+            </script>
+
         <input type="submit" value="Search" name="submitSearch">
+
     </form>
+
+    
     
     <ul>
         <?php if(isset($_POST['search'])) : ?>
