@@ -4,6 +4,7 @@ include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Mail.php");
+//include_once(__DIR__ . "/classes/autoComplete.php");
 
 
 
@@ -61,40 +62,31 @@ try{
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+
     <title>Document</title>
 </head>
 <body>
     <form action="" method="post">
-        <input type="text" placeholder="Search for people or interests" name="search" class="search">
-            <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-            <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>    
-            
-                <style>
-                .search{
-                    width:40%;
-                    border:2px solid #ccc;
-                    border-radius:4px;
-                    font-size:16px;
-                    padding:12px 20px 12px 40px;
-                }
-                </style>
-
-                <script>
-                    $(function(){
-                        $('.search').autocomplete({
-                        source: 'autoComplete.php',
-                        minLength: 2
-
-                        });
-                    });
-            </script>
-
+        <input type="text" placeholder="Search for people or interests" name="search" class='auto'>
         <input type="submit" value="Search" name="submitSearch">
+    </form> 
 
-    </form>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
 
-    
-    
+        <script type="text/javascript">
+            $(function() {
+            
+            //autocomplete
+            $(".auto").autocomplete({
+                source: "autoComplete.php",
+                minLength: 1
+            });                
+
+        });
+    </script>
+
     <ul>
         <?php if(isset($_POST['search'])) : ?>
             <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_POST['search'])); ?></p>

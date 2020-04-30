@@ -1,20 +1,29 @@
 <?php
-include_once(__DIR__ . "/Db.php");
+//include("/xampp/htdocs/GitHub/BuddyApp/classes/Db.php");
+include_once(__DIR__ . "/classes/Db.php");
 
-$term = $_GET['term'];
+if (isset($_GET['term'])){
+    $return_arr = array();
 
-$conn = Db::getConnection();
+    try {
+        $conn = Db::getConnection();
+        
+        $stmt = $conn->prepare('SELECT firstname, lastname FROM users WHERE firstname LIKE :term');
+        
+        $stmt->execute(array('term' => '%'.$_GET['term'].'%'));
+        
+        while($row = $stmt->fetch()) {
+            $return_arr[] =  $row['firstname'];
 
-$statement=$conn->prepare("SELECT username FROM users WHERE username LIKE '%$term%'");
-$statement->execute();
+            //$return_arr[] =  $row['firstname'] . " " .  $row['lastname'];
+        }
 
-$arr=$statement->fetchAll(PDO::FETCH_ASSOC);
-$data=array();
+    } catch(PDOException $e) {
+        echo 'ERROR: ' . $e->getMessage();
+    }
 
-foreach ($arr as $key=>$val){
-    $data[]=$val['username'];
 
-    var_dump($data);
+    /* Toss back results as json encoded array. */
+    echo json_encode($return_arr);
 }
-    echo json_encode($data);
 
