@@ -1,5 +1,4 @@
 <?php
-//include("/xampp/htdocs/GitHub/BuddyApp/classes/Db.php");
 include_once(__DIR__ . "/classes/Db.php");
 
 if (isset($_GET['term'])){
