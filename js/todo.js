@@ -1,4 +1,4 @@
-document.querySelector("$btnAddTodo").addEventListener("click", function (){
+document.querySelector("#btnAddTodo").addEventListener("click", function (){
     let text = document.querySelector("#todoContent").value;
 
     let formData = new FormData();
