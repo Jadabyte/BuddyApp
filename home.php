@@ -6,8 +6,7 @@ include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Mail.php");
 
 
-session_start();
-var_dump($_SESSION['email']);
+
 if(isset($_POST['search'])){
     $results = null;
     try {
