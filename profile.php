@@ -1,5 +1,8 @@
 <?php
     include_once(__DIR__ . "/classes/User.php");
+    include_once(__DIR__ . "/classes/Posts.php");
+
+    $posts = Posts::getAllPosts();
 
     session_start();
     //$_SESSION['email'] = 't.j@student.thomasmore.be';
@@ -31,10 +34,23 @@
             <li>IMD Preference: <?php echo htmlspecialchars($userCreds['favoriet'])?></li>
         </ul>
     </div>
+    <ul class="posts">
+        <?php foreach($posts as $post): ?>
+            <li> <?php echo $post['text']; ?></li>
+        <?php endforeach; ?>
+    </ul>
 
     <div>
-        <p><?php echo htmlspecialchars($userCreds['firstname'] . " is now friends with:" )?></p>
-        <h4><?php echo htmlspecialchars($userFriends['firstname'] . " " . $userFriends['lastname'])?></h4>
+        <input type="text" id="postContent" placeholder="Write a new post">
+        <a href="#" id="btnAddPost">Add</a>
     </div>
+    
+    <?php if($userFriends == true) : ?>
+        <div>
+            <p><?php echo htmlspecialchars($userCreds['firstname'] . " is now friends with:" )?></p>
+            <h4><?php echo htmlspecialchars($userFriends['firstname'] . " " . $userFriends['lastname'])?></h4>
+        </div>
+    <?php endif; ?>
+    <script src="js/post.js"></script>
 </body>
 </html>

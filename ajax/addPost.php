@@ -1,11 +1,11 @@
 <?php
-    include_once(__DIR__ . "/../classes/Todo.php");
+    include_once(__DIR__ . "/../classes/Posts.php");
 
     if(!empty($_POST)){
-        $todo = new Todo();
-        $todo->setContent($_POST['text']);
+        $post = new Posts();
+        $post->setContent($_POST['text']);
 
-        $todo->saveTodo();
+        $post->savePost();
 
         $response = [
             'status' => 'success',

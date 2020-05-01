@@ -1,6 +1,6 @@
 <?php
     include_once(__DIR__ . "/Db.php");
-    class Todo{
+    class Posts{
         private $content;
         private $user;
 
@@ -43,22 +43,33 @@
 
                 return $this;
         }
-        public function saveTodo(){
+        public function savePost(){
             $conn = Db::getConnection();
-            $statement = $conn->prepare("insert into todo (text, active) values (:content, '1')");
+            $statement = $conn->prepare("insert into posts (text, active, user_id) values (:content, '1', :id)");
 
+            $user = $this->getUser();
             $content = $this->getContent();
+            $statement->bindValue(":id", $user);
             $statement->bindValue(":content", $content);
 
             $result = $statement->execute();
             return $result;
         }
 
-        public static function getAllTodo(){
+        public static function getAllPosts(){
             $conn = Db::getConnection();
-            $statement = $conn->prepare("select * from todo");
+            $statement = $conn->prepare("select * from posts where active = '1'");
 
             $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public static function getId($user){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select id from users where email = :email");
+            $statement->bindValue(":email", $user);
+
+            $result = $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
     }
