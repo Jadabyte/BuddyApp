@@ -1,12 +1,11 @@
 <?php
-include_once(__DIR__ . "/Post.php");
-include_once(__DIR__ . "/Db.php");
-include_once(__DIR__ . "/Answer.php");
+include_once(__DIR__ . "/classes/forumPost.php");
+include_once(__DIR__ . "/classes/Db.php");
+include_once(__DIR__ . "/classes/forumAnswer.php");
 
 if(isset($_POST['qstsubmit'])){
     try{
         $post = new Post();
-        $post->setUsername($_POST['username']);
         $post->setQuestion($_POST['question']);
 
         $post->submitPost();
@@ -57,6 +56,10 @@ if(isset($_POST['btnsubmit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+   
 </head>
 <body>
 
@@ -76,8 +79,6 @@ if(isset($_POST['btnsubmit'])){
         
 <div style="background-color:lightgrey;">
 <form method="post">
-  <label for="username">Name:</label><br>
-  <input type="text" id="username" name="username"><br>
   <label for="question">Question:</label><br>
   <input type="text" id="question" name="question">
   <br>
@@ -93,26 +94,29 @@ if(isset($_POST['btnsubmit'])){
     <?php foreach ($seepost as $posts) : ?>
         <div style="background-color:powderblue;">
 
-                <p> <?php echo $posts['username']  .  "-->" . $posts['post_input'] ?></p>
+                <p> <?php echo $posts['question'] ?></p>
 
             <?php 
                 foreach ($seeanwser as $anwsers) : ?>
                     <div style="background-color:pink;">
 
-                        <p> Antwoord :  <?php echo $anwsers['post_input']?></p>
+                        <p> Antwoord :  <?php echo $anwsers['comment']?></p>
                     </div>
 
                 <?php endforeach; ?>   
 
 
-                    <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
+                    <!-- <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" /> -->
                     <form method="post">
+                    <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
+
                         <input class="hide" type="text" id="textInput" value="" name="postinput"/>
                         <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
                         <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
 
                     </form>
         </div>
+        <br>
     <?php endforeach; ?>    
 </div>    
 
@@ -142,5 +146,7 @@ if(isset($_POST['btnsubmit'])){
     }
     .show{
                 display:block;
+                margin-top: 10px;
+                margin-bottom: 10px;
     }
 </style>

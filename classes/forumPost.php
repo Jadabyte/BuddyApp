@@ -2,31 +2,8 @@
 include_once(__DIR__ . "/Db.php");
 
 class Post{
-    private $username;
     private $question;
 
-
-    
-
-    /**
-     * Get the value of username
-     */ 
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set the value of username
-     *
-     * @return  self
-     */ 
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     /**
      * Get the value of question
@@ -50,14 +27,14 @@ class Post{
 
     public function submitPost(){
         $conn = Db::getConnection();
-        
-        $statement = $conn->prepare("INSERT INTO post (username, post_input) VALUES (:username, :post_input)");
 
-        $username = $this->getUsername();
+        //$id = $conn->prepare("SELECT username FROM users WHERE id ='".$_SESSION['id']."'");
+
+        $statement = $conn->prepare("INSERT INTO question (question) VALUES (:question)");
+
         $question = $this->getQuestion();
 
-        $statement->bindValue(":username", $username);
-        $statement->bindValue(":post_input", $question);
+        $statement->bindValue(":question", $question);
 
         $result = $statement->execute();
 
@@ -67,17 +44,12 @@ class Post{
         public function seePost(){
             $conn = Db::getConnection();
     
-            $statement = $conn->prepare("SELECT username, post_input FROM post");
+            $statement = $conn->prepare("SELECT question FROM question");
             $statement->execute();
             $seeposts = $statement->fetchAll(\PDO::FETCH_ASSOC);
     
             return $seeposts;
             }    
 
-
-    /**
-     * Get the value of answer
-     */ 
         }
-
 ?>

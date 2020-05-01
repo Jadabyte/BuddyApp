@@ -1,6 +1,6 @@
 <?php
 include_once(__DIR__ . "/Db.php");
-include_once(__DIR__ . "/Post.php");
+include_once(__DIR__ . "/forumPost.php");
 
 
 class Answer{
@@ -8,7 +8,7 @@ class Answer{
 private $answer;
 
     public function getAnswer()
-    {
+    { 
         return $this->answer;
     } 
 
@@ -27,11 +27,11 @@ private $answer;
     public function submitAnswer(){
         $conn = Db::getConnection();
         
-        $statement = $conn->prepare("INSERT INTO answer (post_input) VALUES (:post_input)");
+        $statement = $conn->prepare("INSERT INTO comment (comment) VALUES (:comment)");
 
         $antwoord = $this->getAnswer();
 
-        $statement->bindValue(":post_input", $antwoord);
+        $statement->bindValue(":comment", $antwoord);
 
         $result = $statement->execute();
 
@@ -42,7 +42,10 @@ private $answer;
             $conn = Db::getConnection();
     
             //$statement = $conn->prepare("SELECT a.post_input FROM answer a INNER JOIN post p ON a.post_ID = p.ID WHERE p.ID = '1' ");
-            $statement = $conn->prepare("SELECT a.post_input FROM answer a INNER JOIN post p ON a.post_ID = p.ID ");
+            //$statement = $conn->prepare("SELECT a.post_input FROM answer a INNER JOIN post p ON a.post_ID = p.ID ");
+
+            //$statement = $conn->prepare("SELECT comment FROM comment c INNER JOIN question q WHERE q.ID = c.question_id");
+            $statement = $conn->prepare("SELECT comment FROM comment");
             $statement->execute();
             $seeanwser = $statement->fetchAll(\PDO::FETCH_ASSOC);
     
