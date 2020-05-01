@@ -434,7 +434,7 @@ class User{
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         $friendId = $result['user_id_2'];
-        $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
+        $statement =$conn->prepare("select firstname, lastname from users where id = :friendId");
 
         $statement->bindParam(":friendId", $friendId);
         $statement->execute();
@@ -442,28 +442,28 @@ class User{
 
         return $result; 
 
-    }
-}
-
-function canLogin($email, $password)
-    {
-        // Connectie maken met database
-        $conn = new mysqli("localhost", "root", "root", "BuddyApp");
-        $email = $conn->real_escape_string($email);
-        $sql = "select * from users where email = '$email'";
-        $result = $conn->query($sql);
-
-        //Kijken of het gevonden wordt in de database
-        if ($result->num_rows != 1) {
-            return false;
-        }
-        $user = $result->fetch_assoc();
-        $hash = $user['password'];
-        
-        if (password_verify($password, $hash)) {
-            return true;
-        } else { 
-            return false;
         }
     }
+
+    function canLogin($email, $password)
+        {
+            // Connectie maken met database
+            $conn = new mysqli("localhost", "root", "root", "BuddyApp");
+            $email = $conn->real_escape_string($email);
+            $sql = "select * from users where email = '$email'";
+            $result = $conn->query($sql);
+
+            //Kijken of het gevonden wordt in de database
+            if ($result->num_rows != 1) {
+                return false;
+            }
+            $user = $result->fetch_assoc();
+            $hash = $user['password'];
+            
+            if (password_verify($password, $hash)) {
+                return true;
+            } else { 
+                return false;
+            }
+        }
 ?>
