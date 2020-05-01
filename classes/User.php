@@ -329,7 +329,7 @@ class User{
 
         session_start();
         $reg_no = $_SESSION['email'];
-        $statement =$conn->prepare("SELECT u.username FROM users u INNER JOIN friends f ON f.user_id_1 = u.id WHERE u.email = '$reg_no'");
+        $statement =$conn->prepare("SELECT u.username FROM users u INNER JOIN friends f ON f.user_id_1 = u.id WHERE u.email = '$reg_no'"); // nog updaten
 -                
             // moet nog een friends tabel gemaakt worden (of whatever de persoon maakt met de feature 7-8)  u.id = f.user_id_2
             //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
