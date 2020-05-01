@@ -53,4 +53,12 @@
             $result = $statement->execute();
             return $result;
         }
+
+        public static function getAllTodo(){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select * from todo");
+
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
     }

@@ -1,4 +1,6 @@
 <?php
+    include_once(__DIR__ . "/classes/Todo.php");
+    $todos = Todo::getAllTodo();
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,9 @@
 </head>
 <body>
     <ul class="todosList">
-        <li>This is a list item</li>
+        <?php foreach($todos as $todo): ?>
+            <li><?php echo $todo['text']; ?></li>
+        <?php endforeach; ?>
     </ul>
 
     <div>
