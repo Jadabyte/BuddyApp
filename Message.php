@@ -1,91 +1,30 @@
-<?php
-class Message{
-    private $text;
-    private $messageId;
-    private $userId;
-
-    /**
-     * Get the value of text
-     */ 
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Set the value of text
-     *
-     * @return  self
-     */ 
-    public function setText($text)
-    {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of postId
-     */ 
-    public function getMessageId()
-    {
-        return $this->messageId;
-    }
-
-    /**
-     * Set the value of postId
-     *
-     * @return  self
-     */ 
-    public function setMessageId($messageId)
-    {
-        $this->messageId = $messageId;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of userId
-     */ 
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Set the value of userId
-     *
-     * @return  self
-     */ 
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    public function save(){
-        $conn = new PDO("mysql:host=localhost;dbname=Buddyapp_Master,root, root");
-        $statement = $conn->prepare("insert into messages (text, messageId, userId)values(:text, :messageId, :userId");
-        $text = $this->getText();
-        $messageId = $this->getMessageId();
-        $userId = $this->getUserId();
-
-        $statement->bindValue(":text", $text);
-        $statement->bindValue(":messageId", $messageId);
-        $statement->bindValue(":userId", $userId);
-
-        $result = $statement->execute();
-        return $result;
-    }
-
-    public static function getAll($messageId){
-        $conn = new PDO("mysql:host=localhost;dbname=Buddyapp_Master,root, root");
-        $statement = $conn->prepare('select * from messages where messageId =:messageId');
-        $statement->bindValue(':messageId', $messageId);
-        $result = $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-}
-
+<?php 
+include_once(__DIR__ . "/classes/Message.php");
+$allMessages = Message::getAll(3);
+var_dump($allMessages);
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="messages">
+    <ul class="message__list">
+        <?php foreach($allMessages as $m):?>
+        <li><?php echo $m['text'];?></li>
+        <?php endforeach;?>
+    </ul>
+    </div>
+
+    <div class="messages">
+    <div class="messages__form">
+    <input type="text" id="messageText" placeholder="Type something">
+    <a href="#" class="btn" id="btnAddMessage" >Add message</a>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>

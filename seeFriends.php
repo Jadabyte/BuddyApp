@@ -51,7 +51,7 @@ include_once(__DIR__ . "/classes/Db.php");
 
     <?php foreach ($friends as $friend) : ?>
 
-        <li class="username"> <?php echo $friend['name']?></li>
+        <li class="username"> <?php echo $friend['username']?></li>
       
     <?php endforeach; ?>
 
