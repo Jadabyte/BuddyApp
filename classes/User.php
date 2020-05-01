@@ -1,7 +1,6 @@
 <?php
 
 include_once(__DIR__ . "/Db.php");
-
 class User{
     private $firstname;
     private $lastname;
@@ -90,6 +89,20 @@ class User{
     }
 
     /**
+     * Get the value of password
+     */ 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
+
+    /**
      * Get the value of username
      */ 
     public function getUsername()
@@ -112,19 +125,6 @@ class User{
         return $this;
     }
 
-    /**
-     * Get the value of password
-     */ 
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set the value of password
-     *
-     * @return  self
-     */ 
     public function setPassword($password)
     {
         if(empty($password)){
@@ -137,6 +137,7 @@ class User{
 
         return $this;
     }
+
 
     public function createUser(){
         $conn = Db::getConnection();
@@ -182,36 +183,7 @@ class User{
         $statement = $conn->prepare("SELECT * FROM users where e");
     }
 
-/*
-    public function findOthers($email){
-        $conn = Db::getConnection();
-        $statement = $conn("SELECT * FROM users where email != :email");
-        $statement->bindValue(":email", $email);
-        $statement->execute();
-        $others = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $others;
-    }
-
-    public function findPerfectMatch($others){
-        $others = $this->findOthers();
-        foreach ($others as $other => $value) {
-            $conn = Db::getConnection();
-            $statement = $conn->prepare("SELECT * FROM users where email != :email AND muziek = :muziek AND klas = :klas AND film = :film AND hobby = :hobby AND favoriet = :favoriet");
-
-            $statement->bindValue(":email", $other["email"]);
-            $statement->bindValue(":muziek", $other["muziek"]);
-            $statement->bindValue(":klas", $other["klas"]);
-            $statement->bindValue(":film", $other["film"]);
-            $statement->bindValue(":hobby", $other["hobby"]);
-            $statement->bindValue(":favoriet", $other["favoriet"]);
-            $statement->execute();
-            $perfectMatch = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-            return $perfectMatch;
-        }
-    }*/
-
+    
 
     public function canLogin($email, $password){
     // Connectie maken met database
@@ -219,21 +191,9 @@ class User{
     $email = $conn->real_escape_string($email);
     $sql = "select * from users where email = '$email'";
     $result = $conn->query($sql);
+    }
 
-    //Kijken of het gevonden wordt in de database
-    if ($result->num_rows != 1) {
-        return false;
-    }
-    $user = $result->fetch_assoc();
-    $hash = $user['password'];
-    
-    if (password_verify($password, $hash)) {
-        return true;
-    } else { 
-        return false;
-    }
-    }
-    
+
     /**
      * Get the value of klas
      */ 
@@ -369,9 +329,9 @@ class User{
 
         session_start();
         $reg_no = $_SESSION['email'];
-        $statement =$conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
-                  
-            // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
+        $statement =$conn->prepare("SELECT u.username FROM users u INNER JOIN friends f ON f.user_id_1 = u.id WHERE u.email = '$reg_no'"); // nog updaten
+-                
+            // moet nog een friends tabel gemaakt worden (of whatever de persoon maakt met de feature 7-8)  u.id = f.user_id_2
             //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
 
         //var_dump($statement);
@@ -425,6 +385,27 @@ class User{
         return $result;
     }
 
+    public static function seeUsers(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT count(*) FROM users");
+        $statement->execute();
+        $countUsers = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return reset($countUsers);
+        }
+
+    public static function seeBuddies(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT count(*) FROM friends");
+        $statement->execute();
+        $countBuddies = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return reset($countBuddies);
+        }    
+
+    
     public function fetchUser(){
         //this fetches the user details and their interests
 
@@ -463,4 +444,26 @@ class User{
 
     }
 }
+
+function canLogin($email, $password)
+    {
+        // Connectie maken met database
+        $conn = new mysqli("localhost", "root", "root", "BuddyApp");
+        $email = $conn->real_escape_string($email);
+        $sql = "select * from users where email = '$email'";
+        $result = $conn->query($sql);
+
+        //Kijken of het gevonden wordt in de database
+        if ($result->num_rows != 1) {
+            return false;
+        }
+        $user = $result->fetch_assoc();
+        $hash = $user['password'];
+        
+        if (password_verify($password, $hash)) {
+            return true;
+        } else { 
+            return false;
+        }
+    }
 ?>
