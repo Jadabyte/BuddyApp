@@ -1,40 +1,40 @@
 <?php
 
+include_once __DIR__ . "/classes/User.php";
 
-    include_once(__DIR__ . "/classes/User.php");
+if (!empty($_POST)) { 
 
+    session_start();
+    if ($_POST['captcha'] != $_SESSION['digit']) {
+        die("Sorry, u heeft de verkeerde Captcha ingegeven.");
+    }
 
-    if (!empty($_POST)) {// Wanneer form is gesubmit
-        // Kijken of alle velden zijn ingevuld
+    session_destroy();
 
-        session_start();
-        if($_POST['captcha'] != $_SESSION['digit']) die("Sorry, u heeft de verkeerde Captcha ingegeven.");
-        session_destroy();
+    if (!empty($_POST)) {
 
+       
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if (!empty($email) && !empty($password)) {
-            
-            // Kijken of email en wachtwoord overeenkomen met database
-            if (canLogin($email, $password)) {
-                
+    
+        if (!empty($email) && !empty($password)) {    
+            if (User::login($email, $password)) {
                 session_start();
                 $_SESSION["user"] = $email;
-    
-                header('Location: index.php');
+                header("Location: index.php");
             } else {
-                // user+pass don't match
-                // show error
-                $error = "⚠️ Uw email of wachtwoord is onjuist ⚠️";
+                $error = "Uw email of wachtwoord is onjuist.";
             }
+            } else {
     
-        } else {
-            $error = "⚠️ Alle velden moeten ingevuld zijn ⚠️";
+        
+        $error = "Email en wachtwoord is verplicht.";
         }
     }
-    
-     
-    ?>
+
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +51,14 @@
     <h1>Welkom bij de IMD Buddy App</h1>
         <form action="" method="post">
                     <h2>Sign In</h2>
+
+                    <?php if (isset($succes)): ?>
+                    <div>
+                        <p>
+                            <?php echo $succes; ?>
+                        </p>
+                    </div>
+                    <?php endif;?>
 
                     <?php if (isset($error)): ?>
                     <div class="error">

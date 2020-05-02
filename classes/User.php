@@ -1,7 +1,9 @@
 <?php
 
-include_once(__DIR__ . "/Db.php");
-class User{
+include_once __DIR__ . "/Db.php";
+
+class User
+{
     private $firstname;
     private $lastname;
     private $email;
@@ -14,23 +16,22 @@ class User{
     private $favoriet;
     private $buddy;
 
-
     /**
      * Get the value of firstname
-     */ 
+     */
     public function getFirstname()
     {
         return $this->firstname;
     }
- 
+
     /**
      * Set the value of firstname
      *
      * @return  self
-     */ 
+     */
     public function setFirstname($firstname)
     {
-        if(empty($firstname)){
+        if (empty($firstname)) {
             throw new Exception("Firstname cannot be empty");
         }
         $this->firstname = $firstname;
@@ -40,7 +41,7 @@ class User{
 
     /**
      * Get the value of lastname
-     */ 
+     */
     public function getLastname()
     {
         return $this->lastname;
@@ -50,10 +51,10 @@ class User{
      * Set the value of lastname
      *
      * @return  self
-     */ 
+     */
     public function setLastname($lastname)
     {
-        if(empty($lastname)){
+        if (empty($lastname)) {
             throw new Exception("Lastname cannot be empty");
         }
         $this->lastname = $lastname;
@@ -63,7 +64,7 @@ class User{
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -73,7 +74,7 @@ class User{
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         if(empty($email)){
@@ -85,7 +86,6 @@ class User{
         }
         $this->email = $email;
 
-        return $this;
     }
 
     /**
@@ -96,13 +96,7 @@ class User{
         return $this->password;
     }
 
-    /**
-     * Set the value of password
-     *
-     * @return  self
-     */ 
-
-    /**
+        /**
      * Get the value of username
      */ 
     public function getUsername()
@@ -110,6 +104,7 @@ class User{
         return $this->username;
     }
 
+    
     /**
      * Set the value of username
      *
@@ -177,138 +172,132 @@ class User{
         }
     }
 
-    
-    function matchHobby(){
-        $conn =Db::getConnection();
+
+    public function matchHobby()
+    {
+        $conn = Db::getConnection();
         $statement = $conn->prepare("SELECT * FROM users where e");
     }
 
-    
+    /*
+    public function findOthers($email){
+    $conn = Db::getConnection();
+    $statement = $conn("SELECT * FROM users where email != :email");
+    $statement->bindValue(":email", $email);
+    $statement->execute();
+    $others = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    public function canLogin($email, $password){
-    // Connectie maken met database
-    $conn = new mysqli("localhost", "root", "root", "BuddyApp");
-    $email = $conn->real_escape_string($email);
-    $sql = "select * from users where email = '$email'";
-    $result = $conn->query($sql);
+    return $others;
     }
 
+    public function findPerfectMatch($others){
+    $others = $this->findOthers();
+    foreach ($others as $other => $value) {
+    $conn = Db::getConnection();
+    $statement = $conn->prepare("SELECT * FROM users where email != :email AND muziek = :muziek AND klas = :klas AND film = :film AND hobby = :hobby AND favoriet = :favoriet");
 
-    /**
-     * Get the value of klas
-     */ 
-    public function getKlas()
+    $statement->bindValue(":email", $other["email"]);
+    $statement->bindValue(":muziek", $other["muziek"]);
+    $statement->bindValue(":klas", $other["klas"]);
+    $statement->bindValue(":film", $other["film"]);
+    $statement->bindValue(":hobby", $other["hobby"]);
+    $statement->bindValue(":favoriet", $other["favoriet"]);
+    $statement->execute();
+    $perfectMatch = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $perfectMatch;
+    }
+    }*/
+
+    public function acceptRequest($userId, $buddyId)
     {
-        return $this->klas;
-    }
-
-    /**
-     * Set the value of klas
-     *
-     * @return  self
-     */ 
-    public function setKlas($klas)
-    {
-        $this->klas = $klas;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of muziek
-     */ 
-    public function getMuziek()
-    {
-        return $this->muziek;
-    }
-
-    /**
-     * Set the value of muziek
-     *
-     * @return  self
-     */ 
-    public function setMuziek($muziek)
-    {
-        $this->muziek = $muziek;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of film
-     */ 
-    public function getFilm()
-    {
-        return $this->film;
-    }
-
-    /**
-     * Set the value of film
-     *
-     * @return  self
-     */ 
-    public function setFilm($film)
-    {
-        $this->film = $film;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of hobby
-     */ 
-    public function getHobby()
-    {
-        return $this->hobby;
-    }
-
-    /**
-     * Set the value of hobby
-     *
-     * @return  self
-     */ 
-    public function setHobby($hobby)
-    {
-        $this->hobby = $hobby;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of favoriet
-     */ 
-    public function getFavoriet()
-    {
-        return $this->favoriet;
-    }
-
-    /**
-     * Set the value of favoriet
-     *
-     * @return  self
-     */ 
-    public function setFavoriet($favoriet)
-    {
-        $this->favoriet = $favoriet;
-
-        return $this;
-    }
-
-    public function submitIntresses(){
-        //$conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
         $conn = Db::getConnection();
-        
-     if($_POST['klas'] === 'default' or $_POST['muziek'] === 'default' or $_POST['film'] === 'default' or $_POST['hobby'] === 'default' or $_POST['favoriet'] === 'default'){
-         throw new Exception("Vul het vakje in");
+        $statement = $conn->prepare();
+        $acceptRequest = $this->getAcceptRequest();
 
-    }else{
-         $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
+        $statement->bindValue(":accepted", $acceptRequest);
+
+        $result = $statement->execute();
+        return $result;
+    }
+
+    public static function login($email, $password){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $statement->bindValue(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if($result){
+            if(password_verify($password, $result['password'])){
+                return true;
+            } else {
+                return false;
+            }
+        } else{
+           return false;
+        }
+
+    }
+
+    public static function findDrinks(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'drank'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public static function findSnacks(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'broodjes'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public static function findFries(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'frietjes'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+    
+    public static function findPizza(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'pizza'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+}
+function submitIntresses()
+{
+    //$conn=new PDO("mysql:host=localhost;dbname=code3_buddyapp", "root", "root");
+    $conn = Db::getConnection();
+
+    if ($_POST['klas'] === 'default' or $_POST['muziek'] === 'default' or $_POST['film'] === 'default' or $_POST['hobby'] === 'default' or $_POST['favoriet'] === 'default') {
+        throw new Exception("Vul het vakje in");
+
+    } else {
+        $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
 
         $klas = $this->getKlas();
         $muziek = $this->getMuziek();
         $film = $this->getFilm();
-        $hobby = $this-> getHobby();
-        $favoriet = $this-> getFavoriet();
+        $hobby = $this->getHobby();
+        $favoriet = $this->getFavoriet();
 
         $statement->bindValue(":klas", $klas);
         $statement->bindValue(":muziek", $muziek);
@@ -318,152 +307,69 @@ class User{
 
         $result = $statement->execute();
 
-
         return $result;
-        }
-    }
-
-    public function pullUpFriends(){
-
-        $conn = Db::getConnection();
-
-        session_start();
-        $reg_no = $_SESSION['email'];
-        $statement =$conn->prepare("SELECT u.username FROM users u INNER JOIN friends f ON f.user_id_1 = u.id WHERE u.email = '$reg_no'"); // nog updaten
--                
-            // moet nog een friends tabel gemaakt worden (of whatever de persoon maakt met de feature 7-8)  u.id = f.user_id_2
-            //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
-
-        //var_dump($statement);
-        $statement->execute();
-        $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($friends);
-
-        return $friends; 
-
-    }
-
-    
-    /**
-     * Get the value of buddy
-     */ 
-    public function getBuddy()
-    {
-        return $this->buddy;
-    }
-
-
- 
-    /**
-     * Set the value of buddy
-     *
-     * @return  self
-     */ 
-    public function setBuddy($buddy)
-    {
-        $this->buddy = $buddy;
-
-        return $this;
-    }
-
-    public function buddyChoice(){
-        $conn = Db::getConnection();
-
-        $buddy = $this->getBuddy();
-        $email = $this->getEmail();
-
-        if($buddy == 'beBuddy'){
-            $statement = $conn->prepare("UPDATE Users SET beBuddy = 1, findBuddy = 0 WHERE email = :email");
-        }
-        else if($buddy == 'findBuddy'){
-            $statement = $conn->prepare("UPDATE Users SET beBuddy = 0, findBuddy = 1 WHERE email = :email");
-        }
-
-        $statement->bindParam(":email", $email);
-
-        $result = $statement->execute();
-        return $result;
-    }
-
-    public function seeUsers(){
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("SELECT count(*) FROM users");
-        $statement->execute();
-        $countUsers = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return reset($countUsers);
-        }
-
-    public function seeBuddies(){
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("SELECT count(*) FROM friends");
-        $statement->execute();
-        $countBuddies = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return reset($countBuddies);
-        }    
-
-    
-    public function fetchUser(){
-        //this fetches the user details and their interests
-
-        $conn = Db::getConnection();
-
-        $email = $this->getEmail();
-        $statement = $conn->prepare("SELECT * FROM interesses JOIN users ON users.email = :email AND users.interessesId = interesses.id");
-
-        $statement->bindParam(":email", $email);
-        $statement->execute();
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result;
-
-    }
-
-    public function fetchFriend(){
-        //this function fetches the most recent friend the user has made
-
-        $conn = Db::getConnection();
-
-        $email = $this->getEmail();
-        $statement =$conn->prepare("select friends.user_id_2 from friends inner join users on users.email = :email AND users.id = friends.user_id_1 ORDER BY friends.user_id_2 DESC");
-
-        $statement->bindParam(":email", $email);
-        $statement->execute();
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        $friendId = $result['user_id_2'];
-        $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
-
-        $statement->bindParam(":friendId", $friendId);
-        $statement->execute();
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return $result; 
-
     }
 }
 
-function canLogin($email, $password)
-    {
-        // Connectie maken met database
-        $conn = new mysqli("localhost", "root", "root", "BuddyApp");
-        $email = $conn->real_escape_string($email);
-        $sql = "select * from users where email = '$email'";
-        $result = $conn->query($sql);
+function pullUpFriends()
+{
 
-        //Kijken of het gevonden wordt in de database
-        if ($result->num_rows != 1) {
-            return false;
-        }
-        $user = $result->fetch_assoc();
-        $hash = $user['password'];
-        
-        if (password_verify($password, $hash)) {
-            return true;
-        } else { 
-            return false;
-        }
+    $conn = Db::getConnection();
+
+    session_start();
+    $reg_no = $_SESSION['email'];
+    $statement = $conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
+
+    // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
+    //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
+
+    //var_dump($statement);
+    $statement->execute();
+    $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($friends);
+
+    return $friends;
+
+}
+
+/**
+ * Get the value of buddy
+ */
+function getBuddy()
+{
+    return $this->buddy;
+}
+
+/**
+ * Set the value of buddy
+ *
+ * @return  self
+ */
+function setBuddy($buddy)
+{
+    if (empty($buddy)) {
+        throw new Exception("Username cannot be empty");
     }
-?>
+    $this->buddy = $buddy;
+
+    return $this;
+}
+
+function buddyChoice()
+{
+    $conn = Db::getConnection();
+
+    $buddy = $this->getBuddy();
+    $email = $this->getEmail();
+
+    if ($buddy == 'beBuddy') {
+        $statement = $conn->prepare("UPDATE Users SET beBuddy = 1, findBuddy = 0 WHERE email = :email");
+    } else if ($buddy == 'findBuddy') {
+        $statement = $conn->prepare("UPDATE Users SET beBuddy = 0, findBuddy = 1 WHERE email = :email");
+    }
+
+    $statement->bindParam(":email", $email);
+
+    $result = $statement->execute();
+    return $result;
+}
