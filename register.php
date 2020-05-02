@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
-
->>>>>>> 3f098896ad7d1daa66b3d7a55334805d49ea7ee1
 include_once(__DIR__ . "/classes/User.php");
 
 

@@ -170,6 +170,46 @@ class User
 
     }
 
+    public static function findDrinks(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'drank'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public static function findSnacks(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'broodjes'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public static function findFries(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'frietjes'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+    
+    public static function findPizza(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'pizza'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
 }
 function submitIntresses()
 {
