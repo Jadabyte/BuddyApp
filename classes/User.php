@@ -414,15 +414,19 @@ function pullUpFriends(){
 
     session_start();
     $reg_no = $_SESSION['email'];
-    $statement = $conn->prepare("SELECT f.name FROM users u INNER JOIN friend f ON u.User_ID = f.User_ID WHERE u.email = '$reg_no'");
+    $statement = $conn->prepare("SELECT u.username
+                                            FROM (
+                                            SELECT f.user_id_2
+                                            FROM users u
+                                            INNER JOIN friends f
+                                                ON u.id = f.user_id_1
+                                            WHERE u.email = '$reg_no' AND Accepted = 1
+                                            ) a
+                                            INNER JOIN users u
+                                                ON a.user_id_2 = u.id");
 
-    // moet nog een friends tabel gemaakt worden maar deze zal binnen de volgende gemaakt worden!
-    //"SELECT * FROM `friend` f INNER JOIN users u on f.User_ID = u.User_ID WHERE u.email = '$reg_no'"
-
-    //var_dump($statement);
     $statement->execute();
     $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
-    // var_dump($friends);
 
     return $friends;
 
