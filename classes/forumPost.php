@@ -9,7 +9,7 @@ class Post{
      * Get the value of question
      */ 
     public function getQuestion()
-    {
+    { 
         return $this->question;
     }
 
@@ -30,7 +30,13 @@ class Post{
 
         //$id = $conn->prepare("SELECT username FROM users WHERE id ='".$_SESSION['id']."'");
 
-        $statement = $conn->prepare("INSERT INTO question (question) VALUES (:question)");
+        session_start();
+        $reg_id = $_SESSION['email'];
+        // //var_dump($reg_id);
+
+       // $statement = $conn->prepare("INSERT INTO question (question) VALUES (:question)");
+       $statement = $conn->prepare("INSERT INTO question(question, user_id)
+                                            SELECT (:question), id FROM users WHERE email = '$reg_id'");
 
         $question = $this->getQuestion();
 
@@ -44,7 +50,7 @@ class Post{
         public function seePost(){
             $conn = Db::getConnection();
     
-            $statement = $conn->prepare("SELECT question FROM question");
+            $statement = $conn->prepare("SELECT u.username, q.question FROM question q INNER JOIN users u ON u.id = q.user_id");
             $statement->execute();
             $seeposts = $statement->fetchAll(\PDO::FETCH_ASSOC);
     

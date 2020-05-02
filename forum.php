@@ -7,22 +7,19 @@ if(isset($_POST['qstsubmit'])){
     try{
         $post = new Post();
         $post->setQuestion($_POST['question']);
-
         $post->submitPost();
         $success = "Je vraag staat op het forum!";
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
     }
-}
+} 
 
 if(isset($_POST['btnsubmit'])){
     try{
         $answer = new Answer();
         $answer->setAnswer($_POST['postinput']);
-
         $answer->submitAnswer();
-        //var_dump($answer);
         $success = "Je hebt op een vraag geantwoord";
     }
     catch (\Throwable $th) {
@@ -32,7 +29,6 @@ if(isset($_POST['btnsubmit'])){
 
     try{      
         $seepost=Post::seePost();
-
         $success = "Dit zijn alle posts👍";
         }
         catch (\Throwable $th) {
@@ -41,7 +37,6 @@ if(isset($_POST['btnsubmit'])){
 
     try{      
         $seeanwser=Answer::seeAnswer();
-    
         $success = "Dit zijn alle anwsers👍";
         }
         catch (\Throwable $th) {
@@ -94,27 +89,27 @@ if(isset($_POST['btnsubmit'])){
     <?php foreach ($seepost as $posts) : ?>
         <div style="background-color:powderblue;">
 
-                <p> <?php echo $posts['question'] ?></p>
+                <p> <?php echo $posts['question']  ?></p>
 
-            <?php 
+            <!-- <?php 
                 foreach ($seeanwser as $anwsers) : ?>
                     <div style="background-color:pink;">
 
                         <p> Antwoord :  <?php echo $anwsers['comment']?></p>
                     </div>
 
-                <?php endforeach; ?>   
+                <?php endforeach; ?>    -->
 
 
                     <!-- <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" /> -->
-                    <form method="post">
+                    <!-- <form method="post">
                     <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
 
                         <input class="hide" type="text" id="textInput" value="" name="postinput"/>
                         <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
                         <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
 
-                    </form>
+                    </form> -->
         </div>
         <br>
     <?php endforeach; ?>    
@@ -148,5 +143,10 @@ if(isset($_POST['btnsubmit'])){
                 display:block;
                 margin-top: 10px;
                 margin-bottom: 10px;
+    }
+    div{
+        margin-left: 20px;
+        padding: 5px;
+        width: 70%;
     }
 </style>
