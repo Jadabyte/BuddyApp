@@ -408,7 +408,7 @@ function submitIntresses(){
     }
 }
 
-function pullUpFriends(){
+public static function pullUpFriends(){
 
     $conn = Db::getConnection();
 
@@ -474,7 +474,7 @@ function buddyChoice()
     return $result;
 }
 
-public function seeUsers(){
+public static function seeUsers(){
     $conn = Db::getConnection();
 
     $statement = $conn->prepare("SELECT count(*) FROM users");
@@ -484,7 +484,7 @@ public function seeUsers(){
     return reset($countUsers);
     }
 
-public function seeBuddies(){
+public static function seeBuddies(){
     $conn = Db::getConnection();
 
     $statement = $conn->prepare("SELECT count(*) FROM friends");
