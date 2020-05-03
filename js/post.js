@@ -7,13 +7,14 @@ document.querySelector("#btnAddPost").addEventListener("click", function (){
     fetch("./ajax/addPost.php", {
         method: 'POST',
         body: formData
-    }).then((response) => response.json())
-    .then((result) => {
+    }).then(response => response.json())
+    .then(result => {
+        console.log(result);
         let newPost = document.createElement('li');
         newPost.innerHTML = result.body;
         document.querySelector(".posts").appendChild(newPost);
     })
-    .catch((error) => {
+    .catch(error => {
         console.error('Error:', error);
     });
 });
