@@ -7,11 +7,11 @@ if (isset($_GET['term'])){
     try {
         $conn = Db::getConnection();
         
-        $stmt = $conn->prepare('SELECT firstname, lastname FROM users WHERE firstname LIKE :term');
+        $statement = $conn->prepare('SELECT firstname, lastname FROM users WHERE firstname LIKE :term');
         
-        $stmt->execute(array('term' => '%'.$_GET['term'].'%'));
+        $statement->execute(array('term' => '%'.$_GET['term'].'%'));
         
-        while($row = $stmt->fetch()) {
+        while($row = $statement->fetch()) {
             $return_arr[] =  $row['firstname'];
 
             //$return_arr[] =  $row['firstname'] . " " .  $row['lastname'];

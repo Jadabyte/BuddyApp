@@ -1,5 +1,4 @@
 <?php
-
 include_once(__DIR__ . "/classes/User.php");
 
 
@@ -88,7 +87,7 @@ if(!empty($_POST)){
        
     </main>
 
-<script>
+<!-- <script>
 $(document).ready(function(){
    $('#Username').blur(function(){
 
@@ -115,7 +114,7 @@ $(document).ready(function(){
 
   });
  });
-</script>
+</script> -->
 
 </body>
 </html>

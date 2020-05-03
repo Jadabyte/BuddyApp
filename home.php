@@ -3,7 +3,6 @@
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/Mail.php");
 
 
 
@@ -34,10 +33,8 @@ try{
         $error = $th->getMessage();
     }   
 
-    if(isset($_POST['sendmail'])){
-
-        try{
-
+if(isset($_POST['sendmail'])){
+    try{
         session_start();
         $email = $_SESSION['email']; 
         $subject = 'Buddy Request';
@@ -47,8 +44,8 @@ try{
         $succes_mail=  "Mail has been send";
         }catch(\Throwable $th) {
             $error_mail = $th->getMessage();
-        }
-    }
+     }
+}
 
 
 ?><!DOCTYPE html>
