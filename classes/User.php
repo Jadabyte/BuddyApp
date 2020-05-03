@@ -424,9 +424,9 @@ function pullUpFriends(){
                                             ) a
                                             INNER JOIN users u
                                                 ON a.user_id_2 = u.id");
+
     $statement->execute();
     $friends = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
 
     return $friends;
 
