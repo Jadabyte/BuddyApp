@@ -183,14 +183,102 @@ class User{
         $statement = $conn->prepare("SELECT * FROM users where e");
     }
 
-    
+ /*
+    public function findOthers($email){
+    $conn = Db::getConnection();
+    $statement = $conn("SELECT * FROM users where email != :email");
+    $statement->bindValue(":email", $email);
+    $statement->execute();
+    $others = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $others;
+    }
+    public function findPerfectMatch($others){
+    $others = $this->findOthers();
+    foreach ($others as $other => $value) {
+    $conn = Db::getConnection();
+    $statement = $conn->prepare("SELECT * FROM users where email != :email AND muziek = :muziek AND klas = :klas AND film = :film AND hobby = :hobby AND favoriet = :favoriet");
+    $statement->bindValue(":email", $other["email"]);
+    $statement->bindValue(":muziek", $other["muziek"]);
+    $statement->bindValue(":klas", $other["klas"]);
+    $statement->bindValue(":film", $other["film"]);
+    $statement->bindValue(":hobby", $other["hobby"]);
+    $statement->bindValue(":favoriet", $other["favoriet"]);
+    $statement->execute();
+    $perfectMatch = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $perfectMatch;
+    }
+    }*/
 
-    public function canLogin($email, $password){
-    // Connectie maken met database
-    $conn = new mysqli("localhost", "root", "root", "BuddyApp");
-    $email = $conn->real_escape_string($email);
-    $sql = "select * from users where email = '$email'";
-    $result = $conn->query($sql);
+    public function acceptRequest($userId, $buddyId)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare();
+        $acceptRequest = $this->getAcceptRequest();
+
+        $statement->bindValue(":accepted", $acceptRequest);
+
+        $result = $statement->execute();
+        return $result;
+    }
+
+    public static function login($email, $password){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $statement->bindValue(":email", $email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if($result){
+            if(password_verify($password, $result['password'])){
+                return true;
+            } else {
+                return false;
+            }
+        } else{
+           return false;
+        }
+
+    }
+
+    public static function findDrinks(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'drank'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public static function findSnacks(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'broodjes'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public static function findFries(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'frietjes'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+    
+    public static function findPizza(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM food WHERE type = 'pizza'");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
     }
 
 
