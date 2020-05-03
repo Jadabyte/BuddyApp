@@ -58,6 +58,13 @@ if(isset($_POST['btnsubmit'])){
 </head>
 <body>
 
+<br>
+<form action="home.php">
+         <button type="submit">Go Back</button>
+      </form>
+<br>
+
+
 <h1>Mate In IMD - Forum</h1>
 <br>
 <?php if(isset($error)): ?>
