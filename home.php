@@ -4,7 +4,7 @@ include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 include_once(__DIR__ . "/classes/User.php");
 
-
+session_start();
 
 if(isset($_GET['search'])){
     $results = null;
@@ -35,7 +35,7 @@ try{
 
 if(isset($_POST['sendmail'])){
     try{
-        session_start();
+        //session_start();
         $email = $_SESSION['email']; 
         $subject = 'Buddy Request';
         $message = 'You just got send a buddy request! Go to the app to find out who wants to be your friend!';

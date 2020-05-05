@@ -67,28 +67,29 @@ if(isset($_POST['btnsubmit'])){
 
 <h1>Mate In IMD - Forum</h1>
 <br>
+
 <?php if(isset($error)): ?>
-            <div class="error" style="color: red;"><?php echo $error; ?></div>
-        <?php endif; ?>
+     <div class="error" style="color: red;"><?php echo $error; ?></div>
+<?php endif; ?>
 
-        <?php if(isset($success)) : ?>
-            <div class="success"><?php echo $success;?></div>
+<?php if(isset($success)) : ?>
+     <div class="success"><?php echo $success;?></div>
 
-        <?php endif; ?>
+<?php endif; ?>
 
 <br>
 <br>
         
 <div style="background-color:lightgrey;">
-<form method="post">
-  <label for="question">Question:</label><br>
-  <input type="text" id="question" name="question">
-  <br>
-  <br>
-  <input type="submit" value="Submit" name="qstsubmit">
-
-</form>
+    <form method="post">
+        <label for="question">Question:</label><br>
+            <input type="text" id="question" name="question">
+                <br>
+                <br>
+            <input type="submit" value="Submit" name="qstsubmit">
+    </form>
 </div>
+
 <br>
 <br>
 
@@ -96,27 +97,42 @@ if(isset($_POST['btnsubmit'])){
     <?php foreach ($seepost as $posts) : ?>
         <div style="background-color:powderblue;">
 
-                <p> <?php echo $posts['question']  ?></p>
+                <p> <?php echo $posts ['username']?> :
+                <br>
+                    <?php echo $posts['question'] ?>
+                </p>
 
-            <!-- <?php 
-                foreach ($seeanwser as $anwsers) : ?>
+         <div style="background-color:yellow;">
+            <p>Comments: </p>
+                <?php foreach ($seeanwser as $anwsers) : ?>
                     <div style="background-color:pink;">
 
-                        <p> Antwoord :  <?php echo $anwsers['comment']?></p>
+                        <p> <?php echo $anwsers ['username']?> :
+                        <br>
+                        <?php echo $anwsers['comment']?>
+                        </p>
+
                     </div>
+                 <?php endforeach; ?> 
+        </div>
 
-                <?php endforeach; ?>    -->
+    <form method="post">
+		<div class="form-group">
+            <p>Reply to post</p>
+            <input type="text"id="textInput" placeholder="Type hier" name="postinput">
+            <input type="submit" value="Submit" id="btnsubmit"  name="btnsubmit">
+        </div>
+    </form>
+    
+    <!-- <form method="post">
+            <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
 
-
-                    <!-- <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" /> -->
-                    <!-- <form method="post">
-                    <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
-
-                        <input class="hide" type="text" id="textInput" value="" name="postinput"/>
-                        <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
-                        <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
-
-                    </form> -->
+                <input class="hide" type="text" id="textInput" value="" name="postinput"/>
+                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
+                <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
+                    
+            </form>  -->
+            
         </div>
         <br>
     <?php endforeach; ?>    
@@ -129,7 +145,7 @@ if(isset($_POST['btnsubmit'])){
 </body>
 </html>
 
-<script>
+<!-- <script>
     function onButtonClick(){
         document.getElementById('textInput').className="show";
         document.getElementById('btnback').className="show";
@@ -140,7 +156,7 @@ if(isset($_POST['btnsubmit'])){
         document.getElementById('btnback').className="hide";
         document.getElementById('btnsubmit').className="hide"; 
         }
-</script>
+</script> -->
 
 <style>
     .hide{
@@ -157,3 +173,4 @@ if(isset($_POST['btnsubmit'])){
         width: 70%;
     }
 </style>
+

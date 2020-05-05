@@ -2,6 +2,7 @@
 include_once(__DIR__ . "/Db.php");
 include_once(__DIR__ . "/forumPost.php");
 
+session_start();
 
 class Answer{
 
@@ -27,14 +28,11 @@ class Answer{
 
     public function submitAnswer(){
         $conn = Db::getConnection();
-
-        session_start();
         $reg_id = $_SESSION['email'];
 
-        $statement = $conn->prepare("INSERT INTO comment(comment, user_id) 
-                                                        -- question_id moet nog gedaan worden
-                                            SELECT (:comment), id  FROM users WHERE email = '$reg_id'");
-
+        $statement = $conn->prepare("INSERT INTO comment(comment, user_id)
+                                     SELECT (:comment), id  FROM users WHERE email = '$reg_id'");
+                                     // ID FROM question 
         $antwoord = $this->getAnswer();
 
         $statement->bindValue(":comment", $antwoord);
@@ -47,10 +45,9 @@ class Answer{
         public function seeAnswer(){
             $conn = Db::getConnection();
 
-           // $post= ($_POST['postinput']);
-            $statement = $conn->prepare("SELECT comment FROM comment ");
-           // c INNER JOIN question q ON c.question_id = q.ID  
-            // WHERE $post = q.ID
+            $statement = $conn->prepare("SELECT u.username, c.comment FROM comment c INNER JOIN users u ON u.id = c.user_id 
+            INNER JOIN question q ON c.question_id = q.id");
+            
 
             $statement->execute();
             $seeanwser = $statement->fetchAll(\PDO::FETCH_ASSOC);

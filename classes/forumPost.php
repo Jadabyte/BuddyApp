@@ -28,14 +28,9 @@ class Post{
     public function submitPost(){
         $conn = Db::getConnection();
 
-        //$id = $conn->prepare("SELECT username FROM users WHERE id ='".$_SESSION['id']."'");
-
         session_start();
         $reg_id = $_SESSION['email'];
-        // //var_dump($reg_id);
-
-       // $statement = $conn->prepare("INSERT INTO question (question) VALUES (:question)");
-       $statement = $conn->prepare("INSERT INTO question(question, user_id)
+        $statement = $conn->prepare("INSERT INTO question(question, user_id)
                                             SELECT (:question), id FROM users WHERE email = '$reg_id'");
 
         $question = $this->getQuestion();
