@@ -5,9 +5,9 @@
 
     $posts = Posts::getAllPosts();
 
-    //session_start();
+    session_start();
     //$_SESSION['email'] = 't.j@student.thomasmore.be';
-    //$email = $_SESSION['email'];
+    $email = $_SESSION['email'];
 
     $user = new User;
     $user->setEmail($email);

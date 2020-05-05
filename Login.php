@@ -21,7 +21,7 @@ if (!empty($_POST)) {
             if (User::login($email, $password)) {
                 session_start();
                 $_SESSION["user"] = $email;
-                header("Location: index.php");
+                header("Location: home.php");
             } else {
                 $error = "Uw email of wachtwoord is onjuist.";
             }
@@ -48,6 +48,7 @@ if (!empty($_POST)) {
 <body
     <div id="login">
     <h1>Welkom bij de IMD Buddy App</h1>
+    <p>Nog geen account? Ga naar de <a href="register.php">registratie</a>.</p>
         <form action="" method="post">
                     <h2>Sign In</h2>
 

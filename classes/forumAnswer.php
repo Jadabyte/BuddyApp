@@ -25,7 +25,7 @@ class Answer{
     }
 
 
-    public function submitAnswer(){
+    public static function submitAnswer(){
         $conn = Db::getConnection();
 
         session_start();
@@ -44,7 +44,7 @@ class Answer{
         return $result;
         }
 
-        public function seeAnswer(){
+        public static function seeAnswer(){
             $conn = Db::getConnection();
 
            // $post= ($_POST['postinput']);

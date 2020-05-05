@@ -45,6 +45,7 @@ if(!empty($_POST)){
     <main>
      
         <h2>Register for the IMD Buddy App</h2>
+        <p>Heeft u al een account? Ga naar de <a href="Login.php">login</a>.</p>
         <?php if(isset($error)): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
