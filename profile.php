@@ -5,14 +5,12 @@
 
     $posts = Posts::getAllPosts();
 
-    session_start();
-    //$_SESSION['email'] = 't.j@student.thomasmore.be';
-    $email = $_SESSION['email'];
-
-    $user = new User;
-    $user->setEmail($email);
-    $userCreds = $user->fetchUser();
-    $userFriends = $user->fetchFriend();
+    if(isset($_GET['user'])){
+        $user = new User;
+        $user->setUserId($_GET['user']);
+        $userCreds = $user->fetchUser();
+        $userFriends = $user->fetchFriend();
+    }
 
 ?><!DOCTYPE html>
 <html lang="en">

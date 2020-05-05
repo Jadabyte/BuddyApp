@@ -29,7 +29,7 @@ class Search{
     public function findUser(){
         $conn = Db::getConnection();
         $statement = $conn->prepare(
-            "select * from users, interesses 
+            "select *, users.id from users, interesses 
                 where firstname like :searchItem
 	            OR lastname like :searchItem
                 OR users.interessesId = interesses.id AND muziek like :searchItem

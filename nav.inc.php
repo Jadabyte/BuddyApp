@@ -1,6 +1,7 @@
+<?php session_start();?>
 <nav class="navbar">
     <a href="home.php">Home</a>
-    <a href="profile.php">Profile</a> <!--doesn't exist yet-->
+    <a href="profile.php?user=<?php echo($_SESSION['user']); ?>">Profile</a>
     <a href="seeFriends.php">View Buddies</a>
     <a href="nearbyFinder.php">Find Food & Drinks</a>
     <a href="classroomSearch.php">Lokaal Vinder</a>

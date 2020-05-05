@@ -14,16 +14,18 @@ if(!empty($_POST)){
         $user->checkDuplicate();
         $user->createUser();
         $success = "Account Created!";
-        
+
+        $result = $user->fetchId();
+
         session_start();
-        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['user'] = $result['id'];
         
         header('Location: completeProfile.php');
 
         
     }
-    catch (\Throwable $th) {
-        $error = $th->getMessage();
+    catch (Exception $e) {
+        $error = $e->getMessage();
     }
 }
 
@@ -44,7 +46,7 @@ if(!empty($_POST)){
 
     <main>
      
-        <h2>Register for the IMD Buddy App</h2>
+        <h2>Registreer voor de IMD buddy app</h2>
         <p>Heeft u al een account? Ga naar de <a href="Login.php">login</a>.</p>
         <?php if(isset($error)): ?>
             <div class="error"><?php echo $error; ?></div>
