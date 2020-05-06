@@ -3,7 +3,7 @@
     include_once(__DIR__ . "/classes/User.php");
     include_once(__DIR__ . "/classes/Posts.php");
 
-    $posts = Posts::getAllPosts($_SESSION['user']);
+    $posts = Posts::getAllPosts($_GET['user']);
 
     if(isset($_GET['user'])){
         $user = new User;
@@ -41,11 +41,12 @@
                 <li>Favourite Hobby: <?php echo htmlspecialchars($userCreds['hobby'])?></li>
                 <li>IMD Preference: <?php echo htmlspecialchars($userCreds['favoriet'])?></li>
             </ul>
-
-            <div>
-                <input type="text" id="postContent" placeholder="Write a new post">
-                <a href="" id="btnAddPost">Add</a>
-            </div>
+            <?php if($_GET['user'] == $_SESSION['user']) :?>
+                <div>
+                    <input type="text" id="postContent" placeholder="Write a new post">
+                    <a href="" id="btnAddPost">Add</a>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div id="posts">
@@ -54,7 +55,9 @@
                     <div class="post">
                         <strong><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']);?> says:</strong>
                         <p id="text"><?php echo($post['text']); ?></p>
-                        <a id="btnDelPost" href="">Delete</a>
+                        <?php if($_GET['user'] == $_SESSION['user']) :?>
+                            <a id="btnDelPost" href="">Delete</a>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
