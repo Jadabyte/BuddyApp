@@ -43,9 +43,6 @@ class Search{
 
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        //var_dump($searchItem);
-        //var_dump($results);
         
         return $results;
     }

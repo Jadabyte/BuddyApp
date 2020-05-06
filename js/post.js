@@ -1,5 +1,6 @@
 document.querySelector("#btnAddPost").addEventListener("click", function (){
     let text = document.querySelector("#postContent").value;
+
     let formData = new FormData();
 
     formData.append('text', text);
