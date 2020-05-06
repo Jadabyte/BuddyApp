@@ -26,8 +26,8 @@
     <title>Profile</title>
 </head>
 <body>
-    <header id="user">
-        <h1 class="name"><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']); ?></h1>
+    <header data-id="<?php echo($_SESSION['user']); ?>" id="user">
+        <h1 id="name" class="name"><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']); ?></h1>
         <p class="name">Username: <?php echo htmlspecialchars($userCreds['username']) ?></p>
     </header>
     
@@ -49,12 +49,14 @@
         </div>
 
         <div id="posts">
-            <div>
-                <ul class="posts">
-                    <?php foreach($posts as $post): ?>
-                        <li> <?php echo $post['text']; ?></li>
-                    <?php endforeach; ?>
-                </ul>
+            <div id="userPost">
+                <?php foreach($posts as $post): ?>
+                    <div class="post">
+                        <strong><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']);?> says:</strong>
+                        <p id="text"><?php echo($post['text']); ?></p>
+                        <a id="btnDelPost" href="">Delete</a>
+                    </div>
+                <?php endforeach; ?>
             </div>
             
             <div>
@@ -67,6 +69,7 @@
             </div>
         </div>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/post.js"></script>
 </body>
 </html>
