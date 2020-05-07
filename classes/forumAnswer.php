@@ -26,7 +26,7 @@ class Answer{
     }
 
 
-    public function submitAnswer(){
+    public static function submitAnswer(){
         $conn = Db::getConnection();
         $reg_id = $_SESSION['email'];
 
@@ -42,7 +42,7 @@ class Answer{
         return $result;
         }
 
-        public function seeAnswer(){
+        public static function seeAnswer(){
             $conn = Db::getConnection();
 
             $statement = $conn->prepare("SELECT u.username, c.comment FROM comment c INNER JOIN users u ON u.id = c.user_id 

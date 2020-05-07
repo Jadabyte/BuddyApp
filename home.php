@@ -85,7 +85,7 @@ if(isset($_POST['sendmail'])){
         <?php if(isset($_GET['search'])) : ?>
             <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_GET['search'])); ?></p>
             <?php foreach($results as $result) :?>
-                <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
+                <a href="profile.php?user=<?php echo htmlspecialchars($result['id']); ?>"> <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li></a>
         <?php endforeach; endif;?>
     </ul>
 <br>

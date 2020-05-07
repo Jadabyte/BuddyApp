@@ -6,12 +6,12 @@
         $post->setContent($_POST['text']);
         $post->setUser($_POST['id']);
 
-        $post->savePost();
+        $post->deletePost();
 
         $response = [
             'status' => 'success',
-            'body' => htmlspecialchars($post->getContent()),
-            'message' => 'Todo Added'
+            'body' => htmlspecialchars($todo->getContent()),
+            'message' => 'Todo Deleted'
         ];
 
         header('Content-type: application/json');

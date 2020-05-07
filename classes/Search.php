@@ -29,13 +29,13 @@ class Search{
     public function findUser(){
         $conn = Db::getConnection();
         $statement = $conn->prepare(
-            "select * from users, interesses 
+            "select *, users.id from users, interesses 
                 where firstname like :searchItem
 	            OR lastname like :searchItem
-                OR users.interessesId = interesses.id AND muziek like :searchItem
-                OR users.interessesId = interesses.id AND film like :searchItem
-                OR users.interessesId = interesses.id AND hobby like :searchItem
-                OR users.interessesId = interesses.id AND favoriet like :searchItem
+                OR users.id = interesses.userId AND muziek like :searchItem
+                OR users.id = interesses.userId AND film like :searchItem
+                OR users.id = interesses.userId AND hobby like :searchItem
+                OR users.id = interesses.userId AND favoriet like :searchItem
                 group by users.id");
 
         $searchItem = $this->getSearchItem();
@@ -43,9 +43,6 @@ class Search{
 
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        //var_dump($searchItem);
-        //var_dump($results);
         
         return $results;
     }

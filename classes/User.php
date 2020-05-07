@@ -15,6 +15,7 @@ class User
     private $hobby;
     private $favoriet;
     private $buddy;
+    private $userId;
 
     /**
      * Get the value of firstname
@@ -126,7 +127,7 @@ class User
             throw new Exception("Please enter a password");
         }
         if(!isset($error)){
-            $password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 14]);
+            $password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 15]);
         }
         $this->password = $password;
 
@@ -388,19 +389,21 @@ function submitIntresses(){
         throw new Exception("Vul het vakje in");
 
     } else {
-        $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet) VALUES (:klas, :muziek,:film,:hobby,:favoriet)");
+        $statement = $conn->prepare("INSERT INTO interesses (klas, muziek, film, hobby, favoriet, userId) VALUES (:klas, :muziek,:film,:hobby,:favoriet,:userId)");
 
         $klas = $this->getKlas();
         $muziek = $this->getMuziek();
         $film = $this->getFilm();
         $hobby = $this->getHobby();
         $favoriet = $this->getFavoriet();
+        $userId = $this->getUserId();
 
         $statement->bindValue(":klas", $klas);
         $statement->bindValue(":muziek", $muziek);
         $statement->bindValue(":film", $film);
         $statement->bindValue(":hobby", $hobby);
         $statement->bindValue(":favoriet", $favoriet);
+        $statement->bindValue(":userId", $userId);
 
         $result = $statement->execute();
 
@@ -494,16 +497,26 @@ public static function seeBuddies(){
     return reset($countBuddies);
     }    
 
+public function fetchId(){
+    $conn = Db::getConnection();
+
+    $statement = $conn->prepare("select users.id from users where email = :email");
+    $email = $this->getEmail();
+    $statement->bindParam(":email", $email);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
 
 public function fetchUser(){
     //this fetches the user details and their interests
 
     $conn = Db::getConnection();
 
-    $email = $this->getEmail();
-    $statement = $conn->prepare("SELECT * FROM interesses JOIN users ON users.email = :email AND users.interessesId = interesses.id");
-
-    $statement->bindParam(":email", $email);
+    $userId = $this->getUserId();
+    $statement = $conn->prepare("SELECT * FROM interesses JOIN users ON users.id = :id AND users.id = interesses.userId");
+    
+    $statement->bindParam(":id", $userId);
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
@@ -532,6 +545,26 @@ public function fetchFriend(){
     return $result; 
 
 }
+
+    /**
+     * Get the value of userId
+     */ 
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */ 
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
 }
 
 ?>

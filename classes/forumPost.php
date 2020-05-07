@@ -42,7 +42,7 @@ class Post{
         return $result;
         }
 
-        public function seePost(){
+        public static function seePost(){
             $conn = Db::getConnection();
     
             $statement = $conn->prepare("SELECT u.username, q.question FROM question q INNER JOIN users u ON u.id = q.user_id");
