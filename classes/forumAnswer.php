@@ -1,12 +1,14 @@
 <?php
 include_once(__DIR__ . "/Db.php");
-include_once(__DIR__ . "/forumPost.php");
+include_once(__DIR__ . "/../forum.php");
 
 session_start();
 
 class Answer{
 
     private $answer;
+    private $questionId;
+    
 
     public function getAnswer()
     {
@@ -26,16 +28,18 @@ class Answer{
     }
 
 
-    public static function submitAnswer(){
+    public  function submitAnswer(){ 
         $conn = Db::getConnection();
-        $reg_id = $_SESSION['email'];
+        $reg_id = $_SESSION['user'];
 
-        $statement = $conn->prepare("INSERT INTO comment(comment, user_id)
-                                     SELECT (:comment), id  FROM users WHERE email = '$reg_id'");
+        $statement = $conn->prepare("INSERT INTO comment(comment, user_id, question_id)
+                                     SELECT (:comment, :id), id  FROM users WHERE id = '$reg_id'");
                                      // ID FROM question 
-        $antwoord = $this->getAnswer();
+        $comment = $this->getAnswer();
+        $q_id = $this->getQuestionId();
 
-        $statement->bindValue(":comment", $antwoord);
+        $statement->bindValue(":comment", $comment);
+        $statement->bindValue(":id", $q_id);
 
         $result = $statement->execute();
 
@@ -55,5 +59,25 @@ class Answer{
             return $seeanwser;
             }
 
+
+    /**
+     * Get the value of questionId
+     */ 
+    public function getQuestionId()
+    {
+        return $this->questionId;
+    }
+
+    /**
+     * Set the value of questionId
+     *
+     * @return  self
+     */ 
+    public function setQuestionId($questionId)
+    {
+        $this->questionId = $questionId;
+
+        return $this;
+    }
 }
 ?>

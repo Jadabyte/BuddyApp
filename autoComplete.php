@@ -13,16 +13,11 @@ if (isset($_GET['term'])){
         
         while($row = $statement->fetch()) {
             $return_arr[] =  $row['firstname'];
-
-            //$return_arr[] =  $row['firstname'] . " " .  $row['lastname'];
         }
 
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
-
-
-    /* Toss back results as json encoded array. */
     echo json_encode($return_arr);
 }
 

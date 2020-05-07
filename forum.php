@@ -1,7 +1,7 @@
 <?php
-include_once(__DIR__ . "/classes/forumPost.php");
+include_once(__DIR__ . "/classes/ForumPost.php");
 include_once(__DIR__ . "/classes/Db.php");
-include_once(__DIR__ . "/classes/forumAnswer.php");
+include_once(__DIR__ . "/classes/ForumAnswer.php");
 
 if(isset($_POST['qstsubmit'])){
     try{
@@ -18,9 +18,21 @@ if(isset($_POST['qstsubmit'])){
 if(isset($_POST['btnsubmit'])){
     try{
         $answer = new Answer();
-        $answer->setAnswer($_POST['postinput']);
+        $answer->setAnswer($_POST['comment']);
         $answer->submitAnswer();
         $success = "Je hebt op een vraag geantwoord";
+    }
+    catch (\Throwable $th) {
+        $error = $th->getMessage();
+    }
+}
+
+if(isset($_POST['pinmode'])){
+    try{
+        $pinmode = new Post();
+        //$pinmode->setQuestionId($_POST['pinmode']);
+        $pinmode->pinPost();
+        $success = "Je hebt de post gepinned";
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
@@ -42,6 +54,7 @@ if(isset($_POST['btnsubmit'])){
         catch (\Throwable $th) {
             $error = $th->getMessage();
         }
+    
     
 ?>
 
@@ -81,7 +94,7 @@ if(isset($_POST['btnsubmit'])){
 <br>
         
 <div style="background-color:lightgrey;">
-    <form method="post">
+    <form method="post" name="formQuestion">
         <label for="question">Question:</label><br>
             <input type="text" id="question" name="question">
                 <br>
@@ -94,8 +107,16 @@ if(isset($_POST['btnsubmit'])){
 <br>
 
 <div>    
+
+
     <?php foreach ($seepost as $posts) : ?>
         <div style="background-color:powderblue;">
+
+<form method="post"><input type="submit" value="Pin question" name="pinmode"></form>
+        <!-- <div style="background-color:powderblue;">
+        <form method="post"><input type="submit" value="Pin question" name="pinmode"></form>
+         -->
+
 
                 <p> <?php echo $posts ['username']?> :
                 <br>
@@ -116,17 +137,18 @@ if(isset($_POST['btnsubmit'])){
                  <?php endforeach; ?> 
         </div>
 
-    <form method="post">
+    <form  method="post" >
 		<div class="form-group">
             <p>Reply to post</p>
-            <input type="text"id="textInput" placeholder="Type hier" name="postinput">
+            <input type="text"id="textInput" placeholder="Type hier" name="comment">
             <input type="submit" value="Submit" id="btnsubmit"  name="btnsubmit">
         </div>
     </form>
     
     <!-- <form method="post">
             <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
-
+                <button  class="show"type="button" id="view" name="answer" onclick="onButtonClick()" >View comments</button>
+                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
                 <input class="hide" type="text" id="textInput" value="" name="postinput"/>
                 <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
                 <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
@@ -147,26 +169,18 @@ if(isset($_POST['btnsubmit'])){
 
 <!-- <script>
     function onButtonClick(){
-        document.getElementById('textInput').className="show";
+        document.getElementById('comment').className="show";
         document.getElementById('btnback').className="show";
-        document.getElementById('btnsubmit').className="show"; 
         }
     function onButtonBackClick(){
-        document.getElementById('textInput').className="hide";
+        //document.getElementById('view').className="hide";
+        document.getElementById('comment').className="hide";
         document.getElementById('btnback').className="hide";
-        document.getElementById('btnsubmit').className="hide"; 
+
         }
-</script> -->
+</script> --> 
 
 <style>
-    .hide{
-                display:none;
-    }
-    .show{
-                display:block;
-                margin-top: 10px;
-                margin-bottom: 10px;
-    }
     div{
         margin-left: 20px;
         padding: 5px;
