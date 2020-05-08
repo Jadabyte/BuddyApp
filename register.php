@@ -18,7 +18,7 @@ if(!empty($_POST)){
         $result = $user->fetchId();
 
         session_start();
-        $_SESSION['user'] = $result['id'];
+        $_SESSION['userId'] = $result['id'];
         $_SESSION['email'] = $_POST['email'];
         
         header('Location: completeProfile.php');

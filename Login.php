@@ -21,6 +21,13 @@ if (!empty($_POST)) {
             if (User::login($email, $password)) {
                 session_start();
                 $_SESSION["user"] = $email;
+
+                //dit stuk code is zodat mijn profile systeem werkt -- Thibaud
+                $user = new User();
+                $user->setEmail($email);
+                $result = $user->fetchId();
+                $_SESSION['userId'] = $result['id'];
+
                 header("Location: home.php");
             } else {
                 $error = "Uw email of wachtwoord is onjuist.";

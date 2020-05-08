@@ -26,7 +26,7 @@
     <title>Profile</title>
 </head>
 <body>
-    <header data-id="<?php echo($_SESSION['user']); ?>" id="user">
+    <header data-id="<?php echo($_SESSION['userId']); ?>" id="user">
         <h1 id="name" class="name"><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']); ?></h1>
         <p class="name">Username: <?php echo htmlspecialchars($userCreds['username']) ?></p>
     </header>
@@ -41,7 +41,7 @@
                 <li>Favourite Hobby: <?php echo htmlspecialchars($userCreds['hobby'])?></li>
                 <li>IMD Preference: <?php echo htmlspecialchars($userCreds['favoriet'])?></li>
             </ul>
-            <?php if($_GET['user'] == $_SESSION['user']) :?>
+            <?php if($_GET['user'] == $_SESSION['userId']) :?>
                 <div>
                     <input type="text" id="postContent" placeholder="Schrijf een nieuwe post">
                     <a href="" id="btnAddPost">Add</a>
@@ -61,7 +61,7 @@
                     <div data-postId="<?php echo($post['id']); ?>" class="post">
                         <strong><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']);?> zegt:</strong>
                         <p id="text"><?php echo($post['text']); ?></p>
-                        <?php if($_GET['user'] == $_SESSION['user']) :?>
+                        <?php if($_GET['user'] == $_SESSION['userId']) :?>
                             <a class="btnDelPost" href="#">Delete</a>
                         <?php endif; ?>
                     </div>
