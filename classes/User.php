@@ -231,7 +231,7 @@ class User
 
     }
 
-    public static function getUserId($email){
+    /*public static function getUserId($email){
         $conn = Db::getConnection();
         $statement = $conn->prepare("SELECT id FROM users where email = :email");
         $statement->bindValue(":email", $email);
@@ -240,7 +240,7 @@ class User
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         $id = $result["id"];
         return $id;
-    }
+    }*/
 
     public static function findOthers($userId){
         $conn = Db::getConnection();
@@ -544,19 +544,19 @@ public function fetchFriend(){
 
     $conn = Db::getConnection();
 
-    $email = $this->getEmail();
-    $statement =$conn->prepare("select friends.user_id_2 from friends inner join users on users.email = :email AND users.id = friends.user_id_1 ORDER BY friends.user_id_2 DESC");
+    $userId = $this->getUserId();
+    $statement =$conn->prepare("select firstname, lastname from users inner join friends on friends.user_id_1 = :id AND friends.user_id_2 = users.id AND friends.accepted = 1 ORDER BY friends.user_id_2 DESC");
 
-    $statement->bindParam(":email", $email);
+    $statement->bindParam(":id", $userId);
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-    $friendId = $result['user_id_2'];
+    /*$friendId = $result['user_id_2'];
     $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
 
     $statement->bindParam(":friendId", $friendId);
     $statement->execute();
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $result = $statement->fetch(PDO::FETCH_ASSOC);*/
 
     return $result; 
 
