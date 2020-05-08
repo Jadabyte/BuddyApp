@@ -46,9 +46,9 @@ if (!empty($_POST)) {
 
 </head>
 <body
-
     <div id="login">
     <h1>Welkom bij de IMD Buddy App</h1>
+    <p>Nog geen account? Ga naar de <a href="register.php">registratie</a>.</p>
         <form action="" method="post">
                     <h2>Sign In</h2>
 

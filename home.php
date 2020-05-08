@@ -3,16 +3,14 @@
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/Mail.php");
 
 
 
-if(isset($_POST['search'])){
+if(isset($_GET['search'])){
     $results = null;
     try {
         $search = new Search();
-        $search->setSearchItem($_POST['search']); //change this to get, it's easier to put it in the URL
-        //var_dump($_POST['search']);
+        $search->setSearchItem($_GET['search']);
         $results = $search->findUser();
     } catch (\Throwable $th) {
         $error = $th->getMessage();
@@ -35,10 +33,8 @@ try{
         $error = $th->getMessage();
     }   
 
-    if(isset($_POST['sendmail'])){
-
-        try{
-
+if(isset($_POST['sendmail'])){
+    try{
         session_start();
         $email = $_SESSION['email']; 
         $subject = 'Buddy Request';
@@ -48,8 +44,8 @@ try{
         $succes_mail=  "Mail has been send";
         }catch(\Throwable $th) {
             $error_mail = $th->getMessage();
-        }
-    }
+     }
+}
 
 
 ?><!DOCTYPE html>
@@ -65,7 +61,7 @@ try{
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="get">
         <input type="text" placeholder="Search for people or interests" name="search" class='auto'>
         <input type="submit" value="Search" name="submitSearch">
     </form> 
@@ -86,10 +82,10 @@ try{
     </script>
 
     <ul>
-        <?php if(isset($_POST['search'])) : ?>
-            <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_POST['search'])); ?></p>
+        <?php if(isset($_GET['search'])) : ?>
+            <p><?php echo "Showing results for: " . htmlspecialchars(ucfirst($_GET['search'])); ?></p>
             <?php foreach($results as $result) :?>
-                <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li>
+                <a href="profile.php?user=<?php echo htmlspecialchars($result['id']); ?>"> <li><?php echo htmlspecialchars($result['firstname']) . " " . htmlspecialchars($result['lastname']) ?></li></a>
         <?php endforeach; endif;?>
     </ul>
 <br>
