@@ -32,14 +32,14 @@ class Answer{
         $conn = Db::getConnection();
         $reg_id = $_SESSION['user'];
 
-        $statement = $conn->prepare("INSERT INTO comment(comment, user_id, question_id)
-                                     SELECT (:comment, :id), id  FROM users WHERE id = '$reg_id'");
+        $statement = $conn->prepare("INSERT INTO comment(comment, user_id)
+                                     SELECT (:comment), id  FROM users WHERE id = '$reg_id'");
                                      // ID FROM question 
         $comment = $this->getAnswer();
-        $q_id = $this->getQuestionId();
+        //$q_id = $this->getQuestionId();
 
         $statement->bindValue(":comment", $comment);
-        $statement->bindValue(":id", $q_id);
+        //$statement->bindValue(":id", $q_id);
 
         $result = $statement->execute();
 

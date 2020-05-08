@@ -94,6 +94,7 @@ if(isset($_POST['pinmode'])){
 <br>
         
 <div style="background-color:lightgrey;">
+
     <form method="post" name="formQuestion">
         <label for="question">Question:</label><br>
             <input type="text" id="question" name="question">
@@ -108,15 +109,10 @@ if(isset($_POST['pinmode'])){
 
 <div>    
 
-
     <?php foreach ($seepost as $posts) : ?>
         <div style="background-color:powderblue;">
 
-<form method="post"><input type="submit" value="Pin question" name="pinmode"></form>
-        <!-- <div style="background-color:powderblue;">
-        <form method="post"><input type="submit" value="Pin question" name="pinmode"></form>
-         -->
-
+            <form method="post"><input type="submit" value="Pin question" name="pinmode"></form>
 
                 <p> <?php echo $posts ['username']?> :
                 <br>
@@ -145,15 +141,7 @@ if(isset($_POST['pinmode'])){
         </div>
     </form>
     
-    <!-- <form method="post">
-            <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
-                <button  class="show"type="button" id="view" name="answer" onclick="onButtonClick()" >View comments</button>
-                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
-                <input class="hide" type="text" id="textInput" value="" name="postinput"/>
-                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
-                <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
-                    
-            </form>  -->
+   
             
         </div>
         <br>
@@ -188,3 +176,12 @@ if(isset($_POST['pinmode'])){
     }
 </style>
 
+ <!-- <form method="post">
+            <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
+                <button  class="show"type="button" id="view" name="answer" onclick="onButtonClick()" >View comments</button>
+                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
+                <input class="hide" type="text" id="textInput" value="" name="postinput"/>
+                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
+                <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
+                    
+            </form>  -->

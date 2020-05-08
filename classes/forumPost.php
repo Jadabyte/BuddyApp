@@ -57,7 +57,7 @@ class Post{
     public  function pinPost(){
         $conn = Db::getConnection();
             
-        $statement = $conn->prepare("UPDATE question SET pinmode='0' "); //WHERE id =... = :id
+        $statement = $conn->prepare("UPDATE question SET pinmode='1' "); //WHERE id =... = :id
 
         // $pinmode = $this->getQuestionId();
 
