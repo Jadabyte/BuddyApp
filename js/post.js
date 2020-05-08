@@ -18,7 +18,7 @@ document.querySelector("#btnAddPost").addEventListener("click", function (e){
         let newText = document.createElement("p");
         let newDel = document.createElement("a");
 
-        newName.innerHTML = name + " says:";
+        newName.innerHTML = name + " zegt:";
         newText.innerHTML = result.body;
         newDel.innerHTML = "Delete";
 

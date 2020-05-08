@@ -43,32 +43,29 @@
             </ul>
             <?php if($_GET['user'] == $_SESSION['user']) :?>
                 <div>
-                    <input type="text" id="postContent" placeholder="Write a new post">
+                    <input type="text" id="postContent" placeholder="Schrijf een nieuwe post">
                     <a href="" id="btnAddPost">Add</a>
                 </div>
             <?php endif; ?>
         </div>
 
         <div id="posts">
-            <div id="userPost">
-                <?php foreach($posts as $post): ?>
-                    <div class="post">
-                        <strong><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']);?> says:</strong>
-                        <p id="text"><?php echo($post['text']); ?></p>
-                        <?php if($_GET['user'] == $_SESSION['user']) :?>
-                            <a id="btnDelPost" href="">Delete</a>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            
-            <div>
             <?php if($userFriends == true) : ?>
-                <div>
-                    <p><?php echo htmlspecialchars($userCreds['firstname'] . " is now friends with:" )?></p>
+                <div class="post">
+                    <p><?php echo htmlspecialchars($userCreds['firstname'] . " is nu buddies met:" )?></p>
                     <h4><?php echo htmlspecialchars($userFriends['firstname'] . " " . $userFriends['lastname'])?></h4>
                 </div>
             <?php endif; ?>
+            <div id="userPost">
+                <?php foreach($posts as $post): ?>
+                    <div data-postId="<?php echo($post['id']); ?>" class="post">
+                        <strong><?php echo htmlspecialchars($userCreds['firstname'] . " " . $userCreds['lastname']);?> zegt:</strong>
+                        <p id="text"><?php echo($post['text']); ?></p>
+                        <?php if($_GET['user'] == $_SESSION['user']) :?>
+                            <a class="btnDelPost" href="#">Delete</a>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </main>
