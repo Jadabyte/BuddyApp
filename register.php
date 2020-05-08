@@ -50,7 +50,7 @@ if(!empty($_POST)){
         <?php endif; ?>
 
         <?php if(isset($success)) : ?>
-            <div class="success"><?php echo $success;?></div>
+            <div class="success"><?php echo $success;?></div> 
         <?php endif; ?>
 
         <form action="" method="post">

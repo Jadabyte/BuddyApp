@@ -1,27 +1,30 @@
 <?php 
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/nav.inc.php");
 
-/*include_once(__DIR__ . "/classes/User.php");
-
-$conn = Db::getConnection();
+session_start();
+if(isset($_SESSION["user"])){
+    $email = $_SESSION['user'];
+    $userId = User::getUserId($email);
+    $buddys = User::findOthers($userId);
+    var_dump($buddys);
     
-    if ($_SESSION["User.php"]) {
-        $user_id = $_SESSION["user_id"];
-        $query = "SELECT * ";
-        $query .= "FROM friends ";
-        $query .= "WHERE ";
-        $query .= "user_id OR friend_id = '{$user_id}' ";
-        $result = mysqli_query($connection, $query);
-        $result_set = mysqli_fetch_assoc($result);
-        print_r($result_set);
-    }
-
-
-$query = "SELECT * ";
-$query .= "FROM users ";
-
-/*
-
-*/
+} else{
+    header("Location: login.php");
+}
 
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>

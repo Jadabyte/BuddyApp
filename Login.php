@@ -21,7 +21,7 @@ if (!empty($_POST)) {
             if (User::login($email, $password)) {
                 session_start();
                 $_SESSION["user"] = $email;
-                header("Location: index.php");
+                header("Location: home.php");
             } else {
                 $error = "Uw email of wachtwoord is onjuist.";
             }
@@ -85,6 +85,7 @@ if (!empty($_POST)) {
                         <input type="submit" value="Sign in" class="btn btn--primary">
                     </div>
         </form>
+        <p>Nog geen account? <a href="register.php">Maak er een aan!</a></p>
         <p></p>
     </div>
 </body>

@@ -1,5 +1,6 @@
 <?php 
     include_once __DIR__ . "/classes/User.php";
+    include_once(__DIR__ . "/nav.inc.php");
 
     if (!empty($_GET)) {
         

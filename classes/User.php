@@ -209,17 +209,6 @@ class User
     }
     }*/
 
-    public function acceptRequest($userId, $buddyId)
-    {
-        $conn = Db::getConnection();
-        $statement = $conn->prepare();
-        $acceptRequest = $this->getAcceptRequest();
-
-        $statement->bindValue(":accepted", $acceptRequest);
-
-        $result = $statement->execute();
-        return $result;
-    }
 
     public static function login($email, $password){
         $conn = Db::getConnection();
@@ -240,6 +229,29 @@ class User
         }
 
     }
+
+    public static function getUserId($email){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT id FROM users where email = :email");
+        $statement->bindValue(":email", $email);
+
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $id = $result["id"];
+        return $id;
+    }
+
+    public static function findOthers($userId){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * FROM users where id != :userId and");
+        $statement->bindValue(":userId", $userId);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
+
+    
 
     public static function findDrinks(){
         $conn = Db::getConnection();
@@ -280,6 +292,10 @@ class User
         return $result;
 
     }
+
+    
+
+    
 
 /**
      * Get the value of klas
