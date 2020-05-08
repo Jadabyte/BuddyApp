@@ -19,6 +19,7 @@ if(!empty($_POST)){
 
         session_start();
         $_SESSION['user'] = $result['id'];
+        $_SESSION['email'] = $_POST['email'];
         
         header('Location: completeProfile.php');
 
@@ -53,7 +54,7 @@ if(!empty($_POST)){
         <?php endif; ?>
 
         <?php if(isset($success)) : ?>
-            <div class="success"><?php echo $success;?></div>
+            <div class="success"><?php echo $success;?></div> 
         <?php endif; ?>
 
         <form action="" method="post">

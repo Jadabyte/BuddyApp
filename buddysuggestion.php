@@ -1,27 +1,59 @@
 <?php 
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/nav.inc.php");
 
-/*include_once(__DIR__ . "/classes/User.php");
+session_start();
+if(isset($_SESSION["user"])){
+    $id = $_SESSION['user'];
+    $user = new User();
+    $user->setUserId($id);
 
-$conn = Db::getConnection();
-    
-    if ($_SESSION["User.php"]) {
-        $user_id = $_SESSION["user_id"];
-        $query = "SELECT * ";
-        $query .= "FROM friends ";
-        $query .= "WHERE ";
-        $query .= "user_id OR friend_id = '{$user_id}' ";
-        $result = mysqli_query($connection, $query);
-        $result_set = mysqli_fetch_assoc($result);
-        print_r($result_set);
-    }
+    $interests = $user->fetchUser();
+   
+    $user->setKlas($interests["klas"]);
+    $user->setMuziek($interests["muziek"]);
+    $user->setFilm($interests["film"]);
+    $user->setHobby($interests["hobby"]);
+    $user->setFavoriet($interests["favoriet"]);
 
-
-$query = "SELECT * ";
-$query .= "FROM users ";
-
-/*
-
-*/
+    $match = $user->findMatch();
+ 
+} else{
+    header("Location: login.php");
+}
 
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>U heeft een match met de volgende personen</h1>
+
+<ul>
+<?php 
+
+foreach ($match as $key => $value):?>
+<li>
+    <?php 
+        $matchInfo = $user->getMatchInfo($value["userId"]);
+
+        $fnMatch = $matchInfo["firstname"];
+        $lnMatch = $matchInfo["lastname"];
+        echo $fnMatch . " " . $lnMatch
+    ?>
+</li>
+<?php endforeach;?>
+</ul>
+        
+        
+    
+</body>
+</html>

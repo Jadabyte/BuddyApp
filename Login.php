@@ -85,6 +85,7 @@ if (!empty($_POST)) {
                         <input type="submit" value="Sign in" class="btn btn--primary">
                     </div>
         </form>
+        <p>Nog geen account? <a href="register.php">Maak er een aan!</a></p>
         <p></p>
     </div>
 </body>

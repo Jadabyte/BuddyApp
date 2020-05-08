@@ -17,6 +17,7 @@ class User
     private $favoriet;
     private $buddy;
     private $userId;
+    
 
     
     /**
@@ -212,17 +213,7 @@ class User
     }
     }*/
 
-    public function acceptRequest($userId, $buddyId)
-    {
-        $conn = Db::getConnection();
-        $statement = $conn->prepare();
-        $acceptRequest = $this->getAcceptRequest();
 
-        $statement->bindValue(":accepted", $acceptRequest);
-
-        $result = $statement->execute();
-        return $result;
-    }
 
     public static function login($email, $password){
         $conn = Db::getConnection();
@@ -244,6 +235,70 @@ class User
 
     }
 
+
+    public static function findOthers($id){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * FROM users where id != '$id'");
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function findMatch(){
+        $conn = Db::getConnection();
+
+        $klas = $this->getKlas();
+        $muziek = $this->getMuziek();
+        $film = $this->getFilm();
+        $hobby = $this->getHobby();
+        $favorite = $this->getFavoriet();
+        $userId = $this->getUserId();
+
+        $statKlas = $conn->prepare("SELECT * FROM interesses where klas = '$klas' and userId != '$userId' ");
+        $statKlas->execute();
+        $klasMatch = $statKlas->fetchAll(PDO::FETCH_ASSOC);
+
+        $statMuziek = $conn->prepare("SELECT * FROM interesses where muziek = '$muziek' and userId != '$userId' ");
+        $statMuziek->execute();
+        $muziekMatch = $statMuziek->fetchAll(PDO::FETCH_ASSOC);
+
+        $statFilm = $conn->prepare("SELECT * FROM interesses where film = '$film' and userId != '$userId' ");
+        $statFilm->execute();
+        $filmMatch = $statFilm->fetchAll(PDO::FETCH_ASSOC);
+
+        $statHobby = $conn->prepare("SELECT * FROM interesses where hobby = '$hobby' and userId != '$userId' ");
+        $statHobby->execute();
+        $hobbyMatch = $statHobby->fetchAll(PDO::FETCH_ASSOC);
+
+        $statFavorite = $conn->prepare("SELECT * FROM interesses where favoriet = '$favorite' and userId != '$userId' ");
+        $statFavorite->execute();
+        $favoriteMatch = $statFavorite->fetchAll(PDO::FETCH_ASSOC);
+       
+
+        if($klasMatch){
+            return $klasMatch;
+        }else if($muziekMatch){
+            return $muziekMatch;
+        } else if($filmMatch){
+            return $filmMatch;
+        }else if($hobbyMatch){
+            return $hobbyMatch;
+        }else if($favoriteMatch){
+            return $favoriteMatch;
+        }
+
+        
+    }
+
+    public function getMatchInfo($matchId){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM users WHERE id = '$matchId'");
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
     public static function findDrinks(){
         $conn = Db::getConnection();
 
@@ -283,6 +338,10 @@ class User
         return $result;
 
     }
+
+    
+
+    
 
 /**
      * Get the value of klas
@@ -460,6 +519,31 @@ function setBuddy($buddy)
     return $this;
 }
 
+    /**
+     * Get the value of userId
+     */ 
+    
+
+    /**
+     * Get the value of userId
+     */ 
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */ 
+     function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
 function buddyChoice()
 {
     $conn = Db::getConnection();
@@ -530,43 +614,26 @@ public function fetchFriend(){
 
     $conn = Db::getConnection();
 
-    $email = $this->getEmail();
-    $statement =$conn->prepare("select friends.user_id_2 from friends inner join users on users.email = :email AND users.id = friends.user_id_1 ORDER BY friends.user_id_2 DESC");
+    $userId = $this->getUserId();
+    $statement =$conn->prepare("select firstname, lastname from users inner join friends on friends.user_id_1 = :id AND friends.user_id_2 = users.id AND friends.accepted = 1 ORDER BY friends.user_id_2 DESC");
 
-    $statement->bindParam(":email", $email);
+    $statement->bindParam(":id", $userId);
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-    $friendId = $result['user_id_2'];
+    /*$friendId = $result['user_id_2'];
     $statement =$conn->prepare("select firstname, lastname from users where id = '34'");
 
     $statement->bindParam(":friendId", $friendId);
     $statement->execute();
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $result = $statement->fetch(PDO::FETCH_ASSOC);*/
 
     return $result; 
 
 }
 
-    /**
-     * Get the value of userId
-     */ 
-    public function getUserId()
-    {
-        return $this->userId;
-    }
+    
 
-    /**
-     * Set the value of userId
-     *
-     * @return  self
-     */ 
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
 }
 
 ?>
