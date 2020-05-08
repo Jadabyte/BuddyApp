@@ -1,0 +1,22 @@
+.search, #show{
+    margin-left: 15px;
+}
+#input{
+    width: 300px;
+}
+#result{
+    width: 500px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    display: inline-block;
+    border: 1px solid black;
+}
+#result ul{
+    list-style-type: none;
+    padding: 10px 20px 10px 20px;
+    margin: 0;
+}
+#results{
+    display: flex;
+    flex-direction: column;
+}
