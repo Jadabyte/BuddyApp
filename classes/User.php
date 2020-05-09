@@ -1,7 +1,6 @@
 <?php
 
 include_once __DIR__ . "/Db.php";
-//session_start();
 
 class User
 {
@@ -19,7 +18,6 @@ class User
     private $userId;
     
 
-    
     /**
      * Get the value of firstname
      */
@@ -477,14 +475,14 @@ public static function pullUpFriends(){
     $conn = Db::getConnection();
 
     session_start();
-    $reg_no = $_SESSION['user'];
+    $reg_no = $_SESSION['userId'];
     $statement = $conn->prepare("SELECT u.username
                                             FROM (
                                             SELECT f.user_id_2
                                             FROM users u
                                             INNER JOIN friends f
                                                 ON u.id = f.user_id_1
-                                            WHERE u.id = '$reg_no' AND Accepted = 1
+                                            WHERE u.email = '$reg_no' AND Accepted = 1
                                             ) a
                                             INNER JOIN users u
                                                 ON a.user_id_2 = u.id");

@@ -91,7 +91,7 @@ if(!empty($_POST)){
        
     </main>
 
-<!-- <script>
+<script>
 $(document).ready(function(){
    $('#Username').blur(function(){
 
@@ -118,7 +118,7 @@ $(document).ready(function(){
 
   });
  });
-</script> -->
+</script> 
 
 </body>
 </html>

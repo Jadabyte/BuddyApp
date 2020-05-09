@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php //session_start();?>
 <nav class="navbar">
     <a href="home.php">Home</a>
     <a href="profile.php?user=<?php echo($_SESSION['userId']); ?>">Profile</a>

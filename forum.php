@@ -2,6 +2,8 @@
 include_once(__DIR__ . "/classes/ForumPost.php");
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/ForumAnswer.php");
+include_once(__DIR__ . "/nav.inc.php");
+
 
 if(isset($_POST['qstsubmit'])){
     try{
@@ -19,8 +21,10 @@ if(isset($_POST['btnsubmit'])){
     try{
         $answer = new Answer();
         $answer->setAnswer($_POST['comment']);
+        $answer->setQuestionId($_POST ['questionId']);
         $answer->submitAnswer();
         $success = "Je hebt op een vraag geantwoord";
+        
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
@@ -30,7 +34,7 @@ if(isset($_POST['btnsubmit'])){
 if(isset($_POST['pinmode'])){
     try{
         $pinmode = new Post();
-        //$pinmode->setQuestionId($_POST['pinmode']);
+        $pinmode->setQuestionId($_POST ['questionId']);
         $pinmode->pinPost();
         $success = "Je hebt de post gepinned";
     }
@@ -48,13 +52,13 @@ if(isset($_POST['pinmode'])){
         }
 
     try{      
-        $seeanwser=Answer::seeAnswer();
-        $success = "Dit zijn alle anwsers👍";
+        $seeanswer=Answer::seeAnswer($questionId);
+        $success = "Dit zijn alle answers👍";
         }
         catch (\Throwable $th) {
             $error = $th->getMessage();
         }
-    
+
     
 ?>
 
@@ -71,11 +75,11 @@ if(isset($_POST['pinmode'])){
 </head>
 <body>
 
-<br>
+<!-- <br>
 <form action="home.php">
          <button type="submit">Go Back</button>
       </form>
-<br>
+<br> -->
 
 
 <h1>Mate In IMD - Forum</h1>
@@ -110,9 +114,13 @@ if(isset($_POST['pinmode'])){
 <div>    
 
     <?php foreach ($seepost as $posts) : ?>
+        <?php //var_dump($posts ['ID'])?> 
+
         <div style="background-color:powderblue;">
 
-            <form method="post"><input type="submit" value="Pin question" name="pinmode"></form>
+            <form method="post"><input type="submit" value="Pin question" name="pinmode">
+            <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
+</form>
 
                 <p> <?php echo $posts ['username']?> :
                 <br>
@@ -121,12 +129,12 @@ if(isset($_POST['pinmode'])){
 
          <div style="background-color:yellow;">
             <p>Comments: </p>
-                <?php foreach ($seeanwser as $anwsers) : ?>
+                <?php foreach ($seeanswer as $answers) : ?>
                     <div style="background-color:pink;">
 
-                        <p> <?php echo $anwsers ['username']?> :
+                        <p> <?php echo $answers ['username']?> :
                         <br>
-                        <?php echo $anwsers['comment']?>
+                        <?php echo $answers['comment']?>
                         </p>
 
                     </div>
@@ -138,6 +146,7 @@ if(isset($_POST['pinmode'])){
             <p>Reply to post</p>
             <input type="text"id="textInput" placeholder="Type hier" name="comment">
             <input type="submit" value="Submit" id="btnsubmit"  name="btnsubmit">
+            <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
         </div>
     </form>
     
@@ -155,19 +164,6 @@ if(isset($_POST['pinmode'])){
 </body>
 </html>
 
-<!-- <script>
-    function onButtonClick(){
-        document.getElementById('comment').className="show";
-        document.getElementById('btnback').className="show";
-        }
-    function onButtonBackClick(){
-        //document.getElementById('view').className="hide";
-        document.getElementById('comment').className="hide";
-        document.getElementById('btnback').className="hide";
-
-        }
-</script> --> 
-
 <style>
     div{
         margin-left: 20px;
@@ -175,13 +171,3 @@ if(isset($_POST['pinmode'])){
         width: 70%;
     }
 </style>
-
- <!-- <form method="post">
-            <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
-                <button  class="show"type="button" id="view" name="answer" onclick="onButtonClick()" >View comments</button>
-                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
-                <input class="hide" type="text" id="textInput" value="" name="postinput"/>
-                <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
-                <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
-                    
-            </form>  -->

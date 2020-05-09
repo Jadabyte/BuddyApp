@@ -1,11 +1,13 @@
 <?php
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/Faq.php");
+include_once(__DIR__ . "/nav.inc.php");
+
 
 try{
          
     $pin=Faq::viewPin();
-    $success = "hier zijn de meest gestelde vragen";
+    $success = " hier zijn de meest gestelde vragen";
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
@@ -17,15 +19,18 @@ try{
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
     <title>Document</title>
 </head>
 <body>
 
-<br>
+<!-- <br>
 <form action="home.php">
          <button type="submit">Go Back</button>
       </form>
-<br>
+<br> -->
 
     <h1>Freqently asked questions</h1>
 

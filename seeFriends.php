@@ -1,5 +1,5 @@
 <?php
-
+include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Db.php");
 
@@ -27,11 +27,11 @@ include_once(__DIR__ . "/classes/Db.php");
 </head>
 <body>
 
-<br>
+<!-- <br>
 <form action="home.php">
          <button type="submit">Go Back</button>
       </form>
-<br>
+<br> -->
 
 <br>
 

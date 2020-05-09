@@ -30,33 +30,34 @@ class Answer{
 
     public  function submitAnswer(){ 
         $conn = Db::getConnection();
-        $reg_id = $_SESSION['user'];
+        $reg_id = $_SESSION['userId'];
 
-        $statement = $conn->prepare("INSERT INTO comment(comment, user_id)
-                                     SELECT (:comment), id  FROM users WHERE id = '$reg_id'");
-                                     // ID FROM question 
+        $statement = $conn->prepare("INSERT INTO comment(comment, question_id, user_id)
+                                     SELECT (:comment), (:question), id  FROM users WHERE id = '$reg_id'");
+                                      
         $comment = $this->getAnswer();
-        //$q_id = $this->getQuestionId();
+        $question = $this->getQuestionId();
+        
 
         $statement->bindValue(":comment", $comment);
-        //$statement->bindValue(":id", $q_id);
+        $statement->bindValue(":question", $question);
 
         $result = $statement->execute();
 
         return $result;
         }
 
-        public static function seeAnswer(){
+        public function seeAnswer($questionId){
             $conn = Db::getConnection();
 
             $statement = $conn->prepare("SELECT u.username, c.comment FROM comment c INNER JOIN users u ON u.id = c.user_id 
-            INNER JOIN question q ON c.question_id = q.id");
-            
+            INNER JOIN question q ON c.question_id = q.ID WHERE q.ID = $questionId");
+
 
             $statement->execute();
-            $seeanwser = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $seeanswer = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-            return $seeanwser;
+            return $seeanswer;
             }
 
 
