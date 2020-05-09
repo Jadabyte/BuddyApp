@@ -1,0 +1,21 @@
+#search, #resultSum, #stats, #messageBtn{
+    margin-left: 15px;
+}
+#searchField{
+    width: 250px;
+}
+#searchBtn{
+    background-color: #004afe;
+    color: white;
+    border-radius: 30px;
+    padding: 5px 10px 5px 10px;
+    border: none;
+}
+::placeholder {
+    padding-left: 5px;
+}
+#resultList{
+    list-style-type: none;
+    margin: 0px 0px 0px 25px;
+    padding: 0;
+}
