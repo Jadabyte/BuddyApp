@@ -1,10 +1,7 @@
 <?php
-
 include_once(__DIR__ . "/nav.inc.php");
 include_once(__DIR__ . "/classes/Search.php");
 include_once(__DIR__ . "/classes/User.php");
-
-session_start();
 
 if(isset($_GET['search'])){
     $results = null;

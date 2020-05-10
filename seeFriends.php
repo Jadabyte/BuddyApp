@@ -14,7 +14,7 @@ include_once(__DIR__ . "/classes/Db.php");
       }
 
 
-    session_start();
+    //session_start();
     if(isset($_SESSION["user"])){
         $id = $_SESSION['user'];
         $user = new User();

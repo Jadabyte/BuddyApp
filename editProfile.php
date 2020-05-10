@@ -1,7 +1,8 @@
 <?php
+    include_once(__DIR__ . "/nav.inc.php");
     include_once(__DIR__ . "/classes/User.php");
 
-    session_start();
+    //session_start();
     $email = $_SESSION['email'];
 
     if(isset($_POST['buddy'])){

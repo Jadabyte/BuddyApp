@@ -551,7 +551,7 @@ public static function pullUpFriends(){
 
     $conn = Db::getConnection();
 
-    session_start();
+    //session_start();
     $reg_no = $_SESSION['userId'];
     $statement = $conn->prepare("SELECT u.username
                                             FROM (

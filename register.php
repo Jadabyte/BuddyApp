@@ -20,6 +20,7 @@ if(!empty($_POST)){
         session_start();
         $_SESSION['userId'] = $result['id'];
         $_SESSION['email'] = $_POST['email'];
+        $_SESSION["user"] = $_POST['email'];
         
         $user->setUserId($result['id']);
         $user->tom();

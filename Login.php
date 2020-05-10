@@ -21,6 +21,7 @@ if (!empty($_POST)) {
             if (User::login($email, $password)) {
                 session_start();
                 $_SESSION["user"] = $email;
+                $_SESSION['email'] = $email;
 
                 //dit stuk code is zodat mijn profile systeem werkt -- Thibaud
                 $user = new User();

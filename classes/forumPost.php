@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 
-session_start();
+//session_start();
 
 class Post{
     private $question;   
