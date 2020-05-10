@@ -13,6 +13,27 @@ include_once(__DIR__ . "/classes/Db.php");
           $error = $th->getMessage();
       }
 
+
+    session_start();
+    if(isset($_SESSION["user"])){
+        $id = $_SESSION['user'];
+        $user = new User();
+        $user->setUserId($id);
+
+        $interests = $user->fetchUser();
+    
+        $user->setKlas($interests["klas"]);
+        $user->setMuziek($interests["muziek"]);
+        $user->setFilm($interests["film"]);
+        $user->setHobby($interests["hobby"]);
+        $user->setFavoriet($interests["favoriet"]);
+
+        $match = $user->findMatch();
+    
+    } else{
+        header("Location: login.php");
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -28,12 +49,26 @@ include_once(__DIR__ . "/classes/Db.php");
 </head>
 <body>
 
-<!-- <br>
-<form action="home.php">
-         <button type="submit">Go Back</button>
-      </form>
-<br> -->
+<h1>U heeft een match met de volgende personen</h1>
 
+<ul>
+<?php 
+
+foreach ($match as $key => $value):?>
+<li>
+    <?php 
+        $matchInfo = $user->getMatchInfo($value["userId"]);
+
+        $fnMatch = $matchInfo["firstname"];
+        $lnMatch = $matchInfo["lastname"];
+        echo $fnMatch . " " . $lnMatch
+    ?>
+</li>
+<?php endforeach;?>
+
+</ul>
+        
+        
 <br>
 
     <h1 id="h1">Here are all the buddies</h1>
