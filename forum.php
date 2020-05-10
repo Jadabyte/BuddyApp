@@ -3,6 +3,7 @@ include_once(__DIR__ . "/classes/ForumPost.php");
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/ForumAnswer.php");
 include_once(__DIR__ . "/nav.inc.php");
+//include_once(__DIR__ . "/classes/forumSeeAnswer.php");
 
 
 if(isset($_POST['qstsubmit'])){
@@ -51,15 +52,33 @@ if(isset($_POST['pinmode'])){
             $error = $th->getMessage();
         }
 
-    try{      
-        $seeanswer=Answer::seeAnswer($questionId);
-        $success = "Dit zijn alle answers👍";
+if(isset($_POST ['btnsubmit'])){
+    if($seeanswer=Answer::seeAnswer()){
+        try{      
+        
+        $success = "Dit zijn alle antwoorden";
         }
         catch (\Throwable $th) {
             $error = $th->getMessage();
         }
+    }
+    }
+     
 
-    
+    // if(isset($_POST ['btnsubmit'])){
+    //     try{      
+    //         $seeanswer=new seeAnswer();
+    //         $seeanswer->setQuestionId($_POST['questionId']);
+    //         $seeanswer->seeAnswer();
+    //         $success = "Dit zijn alle answers👍";
+    //          }
+    //         catch (\Throwable $th) {
+    //             $error = $th->getMessage();
+    //         }
+    //     }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -79,23 +98,23 @@ if(isset($_POST['pinmode'])){
 <h1 id="h1">Mate In IMD - Forum</h1>
 <br>
 
-<?php if(isset($error)): ?>
-     <div class="error" style="color: red;"><?php echo $error; ?></div>
-<?php endif; ?>
+        <?php if(isset($error)): ?>
+            <div class="error" style="color: red;"><?php echo $error; ?></div>
+        <?php endif; ?>
 
-<?php if(isset($success)) : ?>
-     <div class="success"><?php echo $success;?></div>
+        <?php if(isset($success)) : ?>
+            <div class="success"><?php echo $success;?></div>
 
-<?php endif; ?>
+        <?php endif; ?>
 
 <br>
 <br>
         
-<div class="div_question"">
+<div class="div_question">
 
     <form method="post" name="formQuestion" class="form_question">
         <label for="question" id="question_label">Question:</label><br>
-            <input type="text" id="question_input" name="question" value="Type here" class="post_form">
+            <input type="text" id="question_input" name="question" placeholder="Type here" class="post_form">
                 <br>
                 <br>
             <input id="submit" type="submit" value="Submit" name="qstsubmit">
@@ -105,15 +124,13 @@ if(isset($_POST['pinmode'])){
 <br>
 <br>
 
-<!-- <div id="post">     -->
 
     <?php foreach ($seepost as $posts) : ?>
-        <?php //var_dump($posts ['ID'])?> 
 
         <div id="seepost">
 
             <form method="post" class="form_seepost"><input class="pin_seepost" type="submit" value="Pin question" name="pinmode">
-            <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
+                <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
             </form>
 
                 <p class="post"> <?php echo $posts ['username']?> : </p>
@@ -121,47 +138,32 @@ if(isset($_POST['pinmode'])){
                 <p class="post_q" ><?php echo $posts['question'] ?></p>   
                 
 
-         <div id="seeanswer">
-            <p class="answer"> Comments: </p>
-                <?php foreach ($seeanswer as $answers) : ?>
-                    <div style="background-color:pink;">
+            <div id="seeanswer">
+                <p class="answer"> Comments: </p>
+                    <?php foreach ($seeanswer as $answers) : ?>
+                        <div>
 
-                        <p class="answer"> <?php echo $answers ['username']?> :
-                        <br>
-                        <?php echo $answers['comment']?>
-                        </p>
+                            <p class="answer"> <?php echo $answers ['username']?> -
 
-                    </div>
-                 <?php endforeach; ?> 
-        </div>
+                            <?php echo $answers['comment']?>
+                            </p>
 
-    <form  method="post" id="form_answer" >
-		<div class="form-group">
-            <p>Reply to post</p>
-            <input type="text"id="textInput" placeholder="Type hier" name="comment">
-            <input type="submit" value="Submit" id="btnsubmit"  name="btnsubmit">
-            <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
-        </div>
-    </form>
-    
-   
-            
+                         </div>
+                    <?php endforeach; ?> 
+            </div>
+
+            <form  method="post" id="form_answer" >
+                <div class="form-group">
+                    <p>Reply to post</p>
+                        <input type="text"id="textInput" placeholder="Type hier" name="comment">
+                        <input type="submit" value="Submit" id="btnsubmit"  name="btnsubmit">
+                        <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
+                </div>
+            </form>
+     
         </div>
         <br>
     <?php endforeach; ?>    
-<!-- </div>     -->
-
-<br>
-<br>
-
 
 </body>
 </html>
-
-<style>
-    div{
-        margin-left: 20px;
-        padding: 5px;
-        width: 70%;
-    }
-</style>

@@ -10,7 +10,7 @@ class Post{
      */ 
     public function getQuestion()
     { 
-        return $this->question;
+        return $this->question; 
     }
 
     /**
@@ -21,6 +21,26 @@ class Post{
     public function setQuestion($question)
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of questionId
+     */ 
+    public function getQuestionId()
+    {
+        return $this->questionId;
+    }
+
+    /**
+     * Set the value of questionId
+     *
+     * @return  self
+     */ 
+    public function setQuestionId($questionId)
+    {
+        $this->questionId = $questionId;
 
         return $this;
     }
@@ -67,24 +87,5 @@ class Post{
         return $result ;
     }        
 
-    /**
-     * Get the value of questionId
-     */ 
-    public function getQuestionId()
-    {
-        return $this->questionId;
-    }
-
-    /**
-     * Set the value of questionId
-     *
-     * @return  self
-     */ 
-    public function setQuestionId($questionId)
-    {
-        $this->questionId = $questionId;
-
-        return $this;
-    }
 }
 ?>

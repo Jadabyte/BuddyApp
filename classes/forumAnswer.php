@@ -8,7 +8,7 @@ class Answer{
 
     private $answer;
     private $questionId;
-    
+     
 
     public function getAnswer()
     {
@@ -27,40 +27,6 @@ class Answer{
         return $this;
     }
 
-
-    public  function submitAnswer(){ 
-        $conn = Db::getConnection();
-        $reg_id = $_SESSION['userId'];
-
-        $statement = $conn->prepare("INSERT INTO comment(comment, question_id, user_id)
-                                     SELECT (:comment), (:question), id  FROM users WHERE id = '$reg_id'");
-                                      
-        $comment = $this->getAnswer();
-        $question = $this->getQuestionId();
-        
-
-        $statement->bindValue(":comment", $comment);
-        $statement->bindValue(":question", $question);
-
-        $result = $statement->execute();
-
-        return $result;
-        }
-
-        public function seeAnswer($questionId){
-            $conn = Db::getConnection();
-
-            $statement = $conn->prepare("SELECT u.username, c.comment FROM comment c INNER JOIN users u ON u.id = c.user_id 
-            INNER JOIN question q ON c.question_id = q.ID WHERE q.ID = $questionId");
-
-
-            $statement->execute();
-            $seeanswer = $statement->fetchAll(\PDO::FETCH_ASSOC);
-
-            return $seeanswer;
-            }
-
-
     /**
      * Get the value of questionId
      */ 
@@ -77,8 +43,60 @@ class Answer{
     public function setQuestionId($questionId)
     {
         $this->questionId = $questionId;
+        //$questionId = $_POST ['questionId'];
+
 
         return $this;
     }
-}
-?>
+
+
+    public  function submitAnswer(){ 
+        $conn = Db::getConnection();
+        $reg_id = $_SESSION['userId'];
+        
+
+        $statement = $conn->prepare("INSERT INTO comment(comment, question_id, user_id)
+                                     SELECT (:comment), (:question), id  FROM users WHERE id = '$reg_id'");
+                                      
+        $comment = $this->getAnswer();
+        $question = $this->getQuestionId();
+        
+        $statement->bindValue(":comment", $comment);
+        $statement->bindValue(":question", $question);
+
+        $result = $statement->execute();
+
+        return $result;
+        }
+
+    public static function seeAnswer(){
+        $conn = Db::getConnection();
+
+        $question= $_POST ['questionId'];
+                
+        $statement = $conn->prepare("SELECT u.username, c.comment FROM comment c INNER JOIN users u ON u.id = c.user_id 
+                    INNER JOIN question q ON c.question_id = q.ID WHERE q.ID = '$question'");
+
+        $statement->execute();
+        $seeanswer = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $seeanswer;
+        
+        }
+
+    // public static function seeAnswer($questionId){
+    //         $conn = Db::getConnection();
+                    
+    //         $statement = $conn->prepare("SELECT u.username, c.comment FROM comment c INNER JOIN users u ON u.id = c.user_id 
+    //                     INNER JOIN question q ON c.question_id = q.ID WHERE q.ID = :question");
+
+    //         $statement->bindValue(":question", $questionId);
+    
+    //         $statement->execute();
+    //         $seeanswer = $statement->fetchAll(\PDO::FETCH_ASSOC);
+    
+    //         return $seeanswer;
+            
+    //         }
+
+    }

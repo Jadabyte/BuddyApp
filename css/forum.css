@@ -4,6 +4,13 @@
     padding-bottom: 30px;
 }
 
+
+div{
+    margin-left: 20px;
+    padding: 5px;
+    width: 70%;
+}
+
 .div_question{
     border-style: solid;
     border-color: #004afe;
