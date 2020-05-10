@@ -475,7 +475,7 @@ public static function pullUpFriends(){
     $conn = Db::getConnection();
 
     session_start();
-    $reg_no = $_SESSION['user'];
+    $reg_no = $_SESSION['email'];
     $statement = $conn->prepare("SELECT u.username
                                             FROM (
                                             SELECT f.user_id_2
@@ -630,8 +630,16 @@ public function fetchFriend(){
 
 }
 
-    
+public function tom(){
+    $conn = Db::getConnection();
+    $userId = $this->getUserId();
+    $statement=$conn->prepare('INSERT INTO friends (user_id_1, user_id_2, accepted) VALUES (:id, 1, 1)');
 
+    $statement->bindValue(':id', $userId);
+    $result = $statement->execute();
+
+    return $result;
+}
 }
 
 ?>

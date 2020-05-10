@@ -36,7 +36,7 @@ try{
 if(isset($_POST['sendmail'])){
     try{
         //session_start();
-        $email = $_SESSION['user']; 
+        $email = $_SESSION['email']; 
         $subject = 'Buddy Request';
         $message = 'You just got send a buddy request! Go to the app to find out who wants to be your friend!';
         $headers = 'From: mateinimd@gmail.com';

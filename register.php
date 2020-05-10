@@ -21,6 +21,8 @@ if(!empty($_POST)){
         $_SESSION['userId'] = $result['id'];
         $_SESSION['email'] = $_POST['email'];
         
+        $user->setUserId($result['id']);
+        $user->tom();
         header('Location: completeProfile.php');
 
         

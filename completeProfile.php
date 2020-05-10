@@ -12,7 +12,7 @@ if(!empty($_POST)){
         $user->setFilm($_POST['film']);
         $user->setHobby($_POST['hobby']);
         $user->setFavoriet($_POST['favoriet']);
-        $user->setUserId($_SESSION['user']);
+        $user->setUserId($_SESSION['userId']);
 
         $user->submitIntresses();;
         $success = "Interesses zijn toegevoegd!";

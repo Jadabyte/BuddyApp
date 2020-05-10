@@ -58,7 +58,8 @@
 
         public static function getAllPosts($user){
             $conn = Db::getConnection();
-            $statement = $conn->prepare("select * from posts where active = '1' and user_id = $user order by id desc");
+            $statement = $conn->prepare("select * from posts where active = '1' and user_id = :user order by id desc");
+            $statement->bindValue(":user", $user);
 
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
