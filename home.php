@@ -35,7 +35,6 @@ try{
 
 if(isset($_POST['sendmail'])){
     try{
-        //session_start();
         $email = $_SESSION['email']; 
         $subject = 'Buddy Request';
         $message = 'You just got send a buddy request! Go to the app to find out who wants to be your friend!';
@@ -99,9 +98,9 @@ if(isset($_POST['sendmail'])){
 <br>
     <div id="stats">
 
-        <p>At the moment there are <strong><?php echo $usersCount ?></strong> registered.</p>
+        <p>At the moment there are <strong><?php echo htmlspecialchars( $usersCount) ?></strong> registered.</p>
 
-        <p>At the moment there are <strong><?php echo $buddiesCount ?></strong> buddies.</p>
+        <p>At the moment there are <strong><?php echo htmlspecialchars($buddiesCount)?></strong> buddies.</p>
 
     </div>
 
@@ -111,11 +110,11 @@ if(isset($_POST['sendmail'])){
 <form method="post"action="">
 
 <?php if(isset($error_mail)): ?>
-            <div class="error_mail"><?php echo $error_mail; ?></div>
+            <div class="error_mail"><?php echo htmlspecialchars ($error_mail); ?></div>
         <?php endif; ?>
 
 <?php if(isset($succes_mail)) : ?>
-            <div class="succes_mail"><?php echo $succes_mail;?></div>
+            <div class="succes_mail"><?php echo htmlspecialchars($succes_mail);?></div>
         <?php endif; ?>
 
 <input id="messageBtn" type="submit" name="sendmail" value="Send Message">

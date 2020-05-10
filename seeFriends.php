@@ -76,7 +76,7 @@ foreach ($match as $key => $value):?>
     <br>
 
      <?php if(isset($error)): ?>
-            <div class="error" style="color: red;"><?php echo $error; ?></div>
+            <div class="error" style="color: red;"><?php echo htmlspecialchars ($error); ?></div>
         <?php endif; ?>
 
         <br>
@@ -85,7 +85,7 @@ foreach ($match as $key => $value):?>
 
         <div class="username">
             
-            <?php echo $friend['username']?>
+            <?php echo htmlspecialchars ($friend['username'])?>
         </div>
 
         <br>
