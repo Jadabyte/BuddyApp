@@ -7,7 +7,7 @@ include_once(__DIR__ . "/classes/Db.php");
       try{
          
       $friends=User::pullUpFriends();
-      $success = "Je hebt nog geen buddies!";
+     // $success = "Hier zijn je buddies!";
       }
       catch (\Throwable $th) {
           $error = $th->getMessage();
@@ -24,6 +24,7 @@ include_once(__DIR__ . "/classes/Db.php");
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="css/seeFriends.css">
 </head>
 <body>
 
@@ -35,7 +36,7 @@ include_once(__DIR__ . "/classes/Db.php");
 
 <br>
 
-    <h1>Here are all the buddies</h1>
+    <h1 id="h1">Here are all the buddies</h1>
 
     <br>
 
@@ -43,15 +44,16 @@ include_once(__DIR__ . "/classes/Db.php");
             <div class="error" style="color: red;"><?php echo $error; ?></div>
         <?php endif; ?>
 
-        <?php if(isset($success)) : ?>
-            <div class="success"><?php echo $success;?></div>
-        <?php endif; ?>
-
         <br>
 
     <?php foreach ($friends as $friend) : ?>
 
-        <li class="username"> <?php echo $friend['username']?></li>
+        <div class="username">
+            
+            <?php echo $friend['username']?>
+        </div>
+
+        <br>
       
     <?php endforeach; ?>
 

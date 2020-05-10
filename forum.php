@@ -67,22 +67,16 @@ if(isset($_POST['pinmode'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="css/forum.css">
    
 </head>
 <body>
 
-<!-- <br>
-<form action="home.php">
-         <button type="submit">Go Back</button>
-      </form>
-<br> -->
 
-
-<h1>Mate In IMD - Forum</h1>
+<h1 id="h1">Mate In IMD - Forum</h1>
 <br>
 
 <?php if(isset($error)): ?>
@@ -97,42 +91,42 @@ if(isset($_POST['pinmode'])){
 <br>
 <br>
         
-<div style="background-color:lightgrey;">
+<div class="div_question"">
 
-    <form method="post" name="formQuestion">
-        <label for="question">Question:</label><br>
-            <input type="text" id="question" name="question">
+    <form method="post" name="formQuestion" class="form_question">
+        <label for="question" id="question_label">Question:</label><br>
+            <input type="text" id="question_input" name="question" value="Type here" class="post_form">
                 <br>
                 <br>
-            <input type="submit" value="Submit" name="qstsubmit">
+            <input id="submit" type="submit" value="Submit" name="qstsubmit">
     </form>
 </div>
 
 <br>
 <br>
 
-<div>    
+<!-- <div id="post">     -->
 
     <?php foreach ($seepost as $posts) : ?>
         <?php //var_dump($posts ['ID'])?> 
 
-        <div style="background-color:powderblue;">
+        <div id="seepost">
 
-            <form method="post"><input type="submit" value="Pin question" name="pinmode">
+            <form method="post" class="form_seepost"><input class="pin_seepost" type="submit" value="Pin question" name="pinmode">
             <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
-</form>
+            </form>
 
-                <p> <?php echo $posts ['username']?> :
-                <br>
-                    <?php echo $posts['question'] ?>
-                </p>
+                <p class="post"> <?php echo $posts ['username']?> : </p>
+                
+                <p class="post_q" ><?php echo $posts['question'] ?></p>   
+                
 
-         <div style="background-color:yellow;">
-            <p>Comments: </p>
+         <div id="seeanswer">
+            <p class="answer"> Comments: </p>
                 <?php foreach ($seeanswer as $answers) : ?>
                     <div style="background-color:pink;">
 
-                        <p> <?php echo $answers ['username']?> :
+                        <p class="answer"> <?php echo $answers ['username']?> :
                         <br>
                         <?php echo $answers['comment']?>
                         </p>
@@ -141,7 +135,7 @@ if(isset($_POST['pinmode'])){
                  <?php endforeach; ?> 
         </div>
 
-    <form  method="post" >
+    <form  method="post" id="form_answer" >
 		<div class="form-group">
             <p>Reply to post</p>
             <input type="text"id="textInput" placeholder="Type hier" name="comment">
@@ -155,7 +149,7 @@ if(isset($_POST['pinmode'])){
         </div>
         <br>
     <?php endforeach; ?>    
-</div>    
+<!-- </div>     -->
 
 <br>
 <br>

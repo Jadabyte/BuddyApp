@@ -482,7 +482,7 @@ public static function pullUpFriends(){
                                             FROM users u
                                             INNER JOIN friends f
                                                 ON u.id = f.user_id_1
-                                            WHERE u.email = '$reg_no' AND Accepted = 1
+                                            WHERE u.id = '$reg_no' AND Accepted = 1
                                             ) a
                                             INNER JOIN users u
                                                 ON a.user_id_2 = u.id");
@@ -630,7 +630,14 @@ public function fetchFriend(){
 
 }
 
-    
+    public function deleteFriend(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("UPDATE friends SET accepted = '0'");
+
+        $statement->execute();
+        return;
+    }
 
 }
 
