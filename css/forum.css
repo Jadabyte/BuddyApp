@@ -1,0 +1,132 @@
+#h1{
+    padding-left: 50px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+
+div{
+    margin-left: 20px;
+    padding: 5px;
+    width: 70%;
+}
+
+.div_question{
+    border-style: solid;
+    border-color: #004afe;
+    background-color: #ECF5FC;
+    border-width: 6px;
+    border-radius: 20px;
+    padding-top: 10px;
+}
+
+#question_label{
+    padding-left: 30px;
+    font-size: 20px;
+}
+
+#question_input{
+    margin-left: 70px;
+    width: 80%;
+    height: 40px;
+}
+
+#submit{
+    background-color: #004afe;
+    border-color: #004afe;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 50px;
+    margin-left: 70%;
+}
+
+#seepost{
+    /* background-color: slateblue; */
+    border-style: solid;
+    border-color: steelblue;
+    border-width: 6px;
+    border-radius: 30px;
+    margin-left: 100px;
+    width: 85%;
+}
+
+.form_seepost{
+    margin-left: 90%;
+    padding-top: 20px;
+}
+
+.pin_seepost{
+    background-color: #F6FF66;
+    color: black;
+    border-color: #F6FF66;
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+}
+
+.post{
+    font-weight: bold;
+    font-size: 24px;
+    padding-left: 40px;
+    text-decoration: underline solid #004afe;
+}
+
+.post_form{
+    font-size: large;
+}
+
+.post_q{
+    font-size: large;
+    padding-left: 40px;
+}
+
+#seeanswer{
+    border-style: solid;
+    border-color: #A6F2DD;
+    background-color: #A6F2DD;
+    border-width: 3px;
+    border-radius: 10px;
+    margin-left: 50px;
+    width: 85%;
+}
+
+.answer{
+    font-size: large;
+    padding-left: 10px;
+}
+
+#form_answer{
+    background-color:#ECF5FC ;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-left: 100px;
+    font-size: large;
+    margin-top: 20px;
+    border-radius: 20px;
+    margin-right: 140px;
+    font-weight: bold;
+}
+
+#textInput{
+    margin-left: 20px;
+    width: 115%;
+    height: 35px;
+}
+
+#btnsubmit{
+    background-color: #004afe;
+    border-color: #004afe;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 50px;
+    margin-left: 95%;
+    margin-top: 20px;
+}
+
+.form-group{
+    width: 80%;
+    margin-right: 10px;
+}
+

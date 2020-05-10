@@ -37,15 +37,18 @@ if(!empty($_POST)){
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="css/completeProfile.css">
 
 </head>
 <body>
-<h1>Vervolledig Je Account</h1>
+
+<div class="main">
+<h1 id="h1">Vervolledig Je Account</h1>
 <h2>Door een paar vragen te beantwoorden</h2>
 
 <br>
 <?php if(isset($error)): ?>
-            <div class="error" style="color: red;"><?php echo $error; ?></div>
+            <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
 
         <?php if(isset($success)) : ?>
@@ -59,25 +62,25 @@ if(!empty($_POST)){
     <form action="" method="post">
       <label>In welke klas zit je?</label><br>
       <select name="klas">
-        <option value="default">--Maak een keuze--</option>
-        <option value="1IMDA">1IMDA</option>
-        <option value="1IMDB">1IMDB</option>
-        <option value="1IMDC">1IMDC</option>
-        <option value="2IMDA">2IMDA</option>
-        <option value="2IMDB">2IMDB</option>
-        <option value="3IMDA">3IMDA</option>
+        <option class="option"  value="default">--Maak een keuze--</option>
+        <option  class="option" value="1IMDA">1IMDA</option>
+        <option  class="option" value="1IMDB">1IMDB</option>
+        <option  class="option" value="1IMDC">1IMDC</option>
+        <option  class="option" value="2IMDA">2IMDA</option>
+        <option  class="option" value="2IMDB">2IMDB</option>
+        <option  class="option" value="3IMDA">3IMDA</option>
       </select>
       <br>
       <br>
 
       <label>Van wat voor soort muziek houdt je?</label><br>
       <select name="muziek">
-        <option value="default">--Maak een keuze--</option>
-        <option value="rap">Rap</option>
-        <option value="pop">Pop</option>
-        <option value="jazz">Jazz</option>
-        <option value="rock">Rock</option>
-        <option value="schlager">Schlager😍</option>
+        <option class="option" value="default">--Maak een keuze--</option>
+        <option class="option" value="rap">Rap</option>
+        <option class="option" value="pop">Pop</option>
+        <option class="option" value="jazz">Jazz</option>
+        <option class="option" value="rock">Rock</option>
+        <option class="option" value="schlager">Schlager</option>
       </select>
 
       <br>
@@ -85,14 +88,14 @@ if(!empty($_POST)){
 
       <label>Van wat voor soort films houdt je?</label><br>
       <select name="film">
-        <option  value="default">--Maak een keuze--</option>
-        <option value="horror">Horror</option>
-        <option value="comic">Komedie</option>
-        <option value="actie">Actie</option>
-        <option value="avonturen">Avonturen</option>
-        <option value="romcom">RomCom</option>
-        <option value="science fiction">Science Fiction</option>
-        <option value="drama">Drama</option>
+        <option class="option"  value="default">--Maak een keuze--</option>
+        <option class="option" value="horror">Horror</option>
+        <option class="option" value="comic">Komedie</option>
+        <option class="option" value="actie">Actie</option>
+        <option class="option" value="avonturen">Avonturen</option>
+        <option class="option" value="romcom">RomCom</option>
+        <option class="option" value="science fiction">Science Fiction</option>
+        <option class="option" value="drama">Drama</option>
       </select>
 
       <br>
@@ -100,30 +103,31 @@ if(!empty($_POST)){
 
       <label>Wat doet je in uw vrije tijd?</label><br>
       <select name="hobby">
-        <option  value="default">--Maak een keuze--</option>
-        <option value="sporten">Sporten</option>
-        <option value="netflixen">Netflixen</option>
-        <option value="uitgaan">Uitgaan</option>
-        <option value="gamen">Gamen</option>
-        <option value="coderen">Coderen</option>
-        <option value="niksen">Niksen</option>
+        <option class="option"  value="default">--Maak een keuze--</option>
+        <option class="option" value="sporten">Sporten</option>
+        <option class="option" value="netflixen">Netflixen</option>
+        <option class="option" value="uitgaan">Uitgaan</option>
+        <option class="option"value="gamen">Gamen</option>
+        <option class="option" value="coderen">Coderen</option>
+        <option class="optio value="niksen">Niksen</option>
       </select>
       <br>
       <br>
 
-      <h4>Last but not least🤣</h4>
+      <h3 class="h3">Last but not least</h4>
         <label>Wie zijn de beste?</label><br>
         <select name="favoriet" >
-          <option  value="default">--Maak een keuze--</option>
-          <option value="designer">Designer</option>
-          <option value="developer">Developer</option>
+          <option class="option"  value="default">--Maak een keuze--</option>
+          <option class="option" value="designer">Designer</option>
+          <option class="option" value="developer">Developer</option>
         </select>
         <br>
         <br>
 
-      <button type="submit" name ="insert">Vervolledig</button>
+      <button type="submit" id="submit" name ="insert">Vervolledig</button>
 
     </form>
+  </div>
   </div>
 </body>
 </html>

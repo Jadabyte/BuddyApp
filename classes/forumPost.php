@@ -1,16 +1,18 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 
-class Post{
-    private $question;
+session_start();
 
+class Post{
+    private $question;   
+    private $questionId;
 
     /**
      * Get the value of question
      */ 
     public function getQuestion()
     { 
-        return $this->question;
+        return $this->question; 
     }
 
     /**
@@ -25,18 +27,33 @@ class Post{
         return $this;
     }
 
+    /**
+     * Get the value of questionId
+     */ 
+    public function getQuestionId()
+    {
+        return $this->questionId;
+    }
+
+    /**
+     * Set the value of questionId
+     *
+     * @return  self
+     */ 
+    public function setQuestionId($questionId)
+    {
+        $this->questionId = $questionId;
+
+        return $this;
+    }
+
+
     public function submitPost(){
         $conn = Db::getConnection();
 
-        //$id = $conn->prepare("SELECT username FROM users WHERE id ='".$_SESSION['id']."'");
-
-        session_start();
-        $reg_id = $_SESSION['email'];
-        // //var_dump($reg_id);
-
-       // $statement = $conn->prepare("INSERT INTO question (question) VALUES (:question)");
-       $statement = $conn->prepare("INSERT INTO question(question, user_id)
-                                            SELECT (:question), id FROM users WHERE email = '$reg_id'");
+        $reg_id = $_SESSION['userId'];
+        $statement = $conn->prepare("INSERT INTO question(question, user_id)
+                                            SELECT (:question), id FROM users WHERE id = '$reg_id'");
 
         $question = $this->getQuestion();
 
@@ -45,17 +62,32 @@ class Post{
         $result = $statement->execute();
 
         return $result;
+        
         }
 
-        public static function seePost(){
-            $conn = Db::getConnection();
+    public static function seePost(){
+        $conn = Db::getConnection();
     
-            $statement = $conn->prepare("SELECT u.username, q.question FROM question q INNER JOIN users u ON u.id = q.user_id");
-            $statement->execute();
-            $seeposts = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $statement = $conn->prepare("SELECT u.username, q.question, q.ID  FROM question q INNER JOIN users u ON u.id = q.user_id");
+        $statement->execute();
+        $seeposts = $statement->fetchAll(\PDO::FETCH_ASSOC);
     
-            return $seeposts;
-            }    
+         return $seeposts;
+         }   
+            
+    public  function pinPost(){
+        $conn = Db::getConnection();
+            
+        $statement = $conn->prepare("UPDATE question SET pinmode='1' WHERE id = (:id) "); 
 
-        }
+        $pinmode = $this->getQuestionId();
+        
+        $statement->bindValue(":id", $pinmode);
+
+        $result = $statement->execute();   
+
+        return $result ;
+    }        
+
+}
 ?>

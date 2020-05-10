@@ -1,7 +1,8 @@
 <?php
-include_once(__DIR__ . "/classes/forumPost.php");
+include_once(__DIR__ . "/classes/ForumPost.php");
 include_once(__DIR__ . "/classes/Db.php");
-include_once(__DIR__ . "/classes/forumAnswer.php");
+include_once(__DIR__ . "/nav.inc.php");
+
 
 if(isset($_POST['qstsubmit'])){
     try{
@@ -15,17 +16,18 @@ if(isset($_POST['qstsubmit'])){
     }
 } 
 
-if(isset($_POST['btnsubmit'])){
+if(isset($_POST['pinmode'])){
     try{
-        $answer = new Answer();
-        $answer->setAnswer($_POST['postinput']);
-        $answer->submitAnswer();
-        $success = "Je hebt op een vraag geantwoord";
+        $pinmode = new Post();
+        $pinmode->setQuestionId($_POST ['questionId']);
+        $pinmode->pinPost();
+        $success = "Je hebt de post gepinned";
     }
     catch (\Throwable $th) {
         $error = $th->getMessage();
     }
-}
+} 
+
 
     try{      
         $seepost=Post::seePost();
@@ -33,16 +35,7 @@ if(isset($_POST['btnsubmit'])){
         }
         catch (\Throwable $th) {
             $error = $th->getMessage();
-        }
-
-    try{      
-        $seeanwser=Answer::seeAnswer();
-        $success = "Dit zijn alle anwsers👍";
-        }
-        catch (\Throwable $th) {
-            $error = $th->getMessage();
-        }
-    
+        }     
 ?>
 
 <!DOCTYPE html>
@@ -50,24 +43,19 @@ if(isset($_POST['btnsubmit'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="css/forum.css">
    
 </head>
 <body>
 
-<br>
-<form action="home.php">
-         <button type="submit">Go Back</button>
-      </form>
+
+<h1 id="h1">Mate In IMD - Forum</h1>
 <br>
 
-
-<h1>Mate In IMD - Forum</h1>
-<br>
-<?php if(isset($error)): ?>
+        <?php if(isset($error)): ?>
             <div class="error" style="color: red;"><?php echo $error; ?></div>
         <?php endif; ?>
 
@@ -79,81 +67,37 @@ if(isset($_POST['btnsubmit'])){
 <br>
 <br>
         
-<div style="background-color:lightgrey;">
-<form method="post">
-  <label for="question">Question:</label><br>
-  <input type="text" id="question" name="question">
-  <br>
-  <br>
-  <input type="submit" value="Submit" name="qstsubmit">
+<div class="div_question">
 
-</form>
+    <form method="post" name="formQuestion" class="form_question">
+        <label for="question" id="question_label">Question:</label><br>
+            <input type="text" id="question_input" name="question" placeholder="Type here" class="post_form">
+                <br>
+                <br>
+            <input id="submit" type="submit" value="Submit" name="qstsubmit">
+    </form>
 </div>
+
 <br>
 <br>
 
-<div>    
+
     <?php foreach ($seepost as $posts) : ?>
-        <div style="background-color:powderblue;">
 
-                <p> <?php echo $posts['question']  ?></p>
+        <div id="seepost">
 
-            <!-- <?php 
-                foreach ($seeanwser as $anwsers) : ?>
-                    <div style="background-color:pink;">
+            <form method="post" class="form_seepost"><input class="pin_seepost" type="submit" value="Pin question" name="pinmode">
+                <input type="hidden" value="<?php echo $posts ['ID'] ?>" name="questionId">
+            </form>
 
-                        <p> Antwoord :  <?php echo $anwsers['comment']?></p>
-                    </div>
-
-                <?php endforeach; ?>    -->
-
-
-                    <!-- <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" /> -->
-                    <!-- <form method="post">
-                    <input type="button" name="answer" value="Reply to question" onclick="onButtonClick()" />
-
-                        <input class="hide" type="text" id="textInput" value="" name="postinput"/>
-                        <button class="hide" id="btnback"onclick="onButtonBackClick()">Close</button>
-                        <input class="hide" id="btnsubmit" type="submit" value="Submit" name="btnsubmit">
-
-                    </form> -->
+                <p class="post"> <?php echo htmlspecialchars($posts ['username'])?> : </p>
+                
+                <p class="post_q" ><?php echo htmlspecialchars($posts['question']) ?></p>   
+                
+     
         </div>
         <br>
     <?php endforeach; ?>    
-</div>    
-
-<br>
-<br>
-
 
 </body>
 </html>
-
-<script>
-    function onButtonClick(){
-        document.getElementById('textInput').className="show";
-        document.getElementById('btnback').className="show";
-        document.getElementById('btnsubmit').className="show"; 
-        }
-    function onButtonBackClick(){
-        document.getElementById('textInput').className="hide";
-        document.getElementById('btnback').className="hide";
-        document.getElementById('btnsubmit').className="hide"; 
-        }
-</script>
-
-<style>
-    .hide{
-                display:none;
-    }
-    .show{
-                display:block;
-                margin-top: 10px;
-                margin-bottom: 10px;
-    }
-    div{
-        margin-left: 20px;
-        padding: 5px;
-        width: 70%;
-    }
-</style>

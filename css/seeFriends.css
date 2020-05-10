@@ -1,0 +1,18 @@
+#h1{
+    padding-left: 50px;
+}
+
+.username{
+    margin-left: 80px;
+    padding-left: 60px;
+    box-shadow: 7px 7px 3px rgba(173, 173, 173, 0.25);
+    border-style: solid;
+    border-color: #004afe;
+    background-color: #ECF5FC;
+    border-width: 5px;
+    border-radius: 50px;
+    width: 50%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 20px;
+}

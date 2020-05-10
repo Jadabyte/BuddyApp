@@ -93,14 +93,14 @@ if(!empty($_POST)){
        
     </main>
 
-<!-- <script>
+<script>
 $(document).ready(function(){
    $('#Username').blur(function(){
 
      var username = $(this).val();
 
      $.ajax({
-      url:'checkUsername.php',
+      url:'classes/checkUsername.php',
       method:"POST",
       data:{user_name:username},
       success:function(data)
@@ -120,7 +120,7 @@ $(document).ready(function(){
 
   });
  });
-</script> -->
+</script> 
 
 </body>
 </html>
