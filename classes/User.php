@@ -630,15 +630,6 @@ public function fetchFriend(){
 
 }
 
-    public function deleteFriend(){
-        $conn = Db::getConnection();
-
-        $statement = $conn->prepare("UPDATE friends SET accepted = '0'");
-
-        $statement->execute();
-        return;
-    }
-
 }
 
 ?>
