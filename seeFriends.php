@@ -28,7 +28,11 @@ include_once(__DIR__ . "/classes/Db.php");
         $user->setHobby($interests["hobby"]);
         $user->setFavoriet($interests["favoriet"]);
 
-        $match = $user->findMatch();
+        $klasMatch = $user->findKlasMatch();
+        $muziekMatch = $user->findMuziekMatch();
+        $filmMatch = $user->findFilmMatch();
+        $hobbyMatch = $user->findHobbyMatch();
+        $favoriteMatch = $user->findFavoriteMatch();
     
     } else{
         header("Location: login.php");
@@ -50,24 +54,106 @@ include_once(__DIR__ . "/classes/Db.php");
 
 <h1>U heeft een match met de volgende personen</h1>
 
-<ul>
-<?php 
+    <div id="klas">
+        <h2>Op basis van uw klas:</h2>
+        <ul>
+        <?php 
 
-foreach ($match as $key => $value):?>
-<li>
-    <?php 
-        $matchInfo = $user->getMatchInfo($value["userId"]);
+        foreach ($klasMatch as $key => $value):?>
+        <li>
+            <?php 
+                $matchInfo = $user->getMatchInfo($value["userId"]);
 
-        $fnMatch = $matchInfo["firstname"];
-        $lnMatch = $matchInfo["lastname"];
-        echo $fnMatch . " " . $lnMatch
-    ?>
-</li>
-<?php endforeach;?>
+                $fnMatch = $matchInfo["firstname"];
+                $lnMatch = $matchInfo["lastname"];
+                echo $fnMatch . " " . $lnMatch;
+            ?>
+        </li>
+        <?php endforeach;?>
 
-</ul>
-        
-        
+        </ul>
+    </div>
+
+    <div id="muziek">
+        <h2>Op basis van uw muzieksmaak:</h2>
+        <ul>
+        <?php 
+
+        foreach ($muziekMatch as $key => $value):?>
+        <li>
+            <?php 
+                $matchInfo = $user->getMatchInfo($value["userId"]);
+
+                $fnMatch = $matchInfo["firstname"];
+                $lnMatch = $matchInfo["lastname"];
+                echo $fnMatch . " " . $lnMatch;
+            ?>
+        </li>
+        <?php endforeach;?>
+
+        </ul>
+    </div>
+
+    <div id="film">
+        <h2>Op basis van uw filmsmaak:</h2>
+        <ul>
+        <?php 
+
+        foreach ($filmMatch as $key => $value):?>
+        <li>
+            <?php 
+                $matchInfo = $user->getMatchInfo($value["userId"]);
+
+                $fnMatch = $matchInfo["firstname"];
+                $lnMatch = $matchInfo["lastname"];
+                echo $fnMatch . " " . $lnMatch;
+            ?>
+        </li>
+        <?php endforeach;?>
+
+        </ul>
+    </div>
+
+    <div id="hobby">
+        <h2>Op basis van uw hobby:</h2>
+        <ul>
+        <?php 
+
+        foreach ($hobbyMatch as $key => $value):?>
+        <li>
+            <?php 
+                $matchInfo = $user->getMatchInfo($value["userId"]);
+
+                $fnMatch = $matchInfo["firstname"];
+                $lnMatch = $matchInfo["lastname"];
+                echo $fnMatch . " " . $lnMatch;
+            ?>
+        </li>
+        <?php endforeach;?>
+
+        </ul>
+    </div>
+
+    <div id="favoriet">
+        <h2>Op basis van uw keuze tussen designer en developer:</h2>
+        <ul>
+        <?php 
+
+        foreach ($favoriteMatch as $key => $value):?>
+        <li>
+            <?php 
+                $matchInfo = $user->getMatchInfo($value["userId"]);
+
+                $fnMatch = $matchInfo["firstname"];
+                $lnMatch = $matchInfo["lastname"];
+                echo $fnMatch . " " . $lnMatch;
+            ?>
+        </li>
+        <?php endforeach;?>
+
+        </ul>
+    </div>
+  
 <br>
 
     <h1>Here are all the buddies</h1>

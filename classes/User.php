@@ -242,7 +242,84 @@ class User
         return $result;
     }
 
-    public function findMatch(){
+    public function findKlasMatch(){
+        $conn = Db::getConnection();
+
+        $klas = $this->getKlas();
+        $userId = $this->getUserId();
+
+        $statKlas = $conn->prepare("SELECT * FROM interesses where klas = '$klas' and userId != '$userId' ");
+        $statKlas->execute();
+        $klasMatch = $statKlas->fetchAll(PDO::FETCH_ASSOC);
+
+        if($klasMatch){
+            return $klasMatch;
+        }        
+    }
+
+    public function findMuziekMatch(){
+        $conn = Db::getConnection();
+
+        $muziek = $this->getMuziek();
+        $userId = $this->getUserId();
+
+        $statMuziek = $conn->prepare("SELECT * FROM interesses where muziek = '$muziek' and userId != '$userId' ");
+        $statMuziek->execute();
+        $muziekMatch = $statMuziek->fetchAll(PDO::FETCH_ASSOC);
+
+        if($muziekMatch){
+            return $muziekMatch;
+        }        
+    }
+
+    public function findFilmMatch(){
+        $conn = Db::getConnection();
+
+        $film = $this->getFilm();
+        $userId = $this->getUserId();
+
+        $statFilm = $conn->prepare("SELECT * FROM interesses where film = '$film' and userId != '$userId' ");
+        $statFilm->execute();
+        $filmMatch = $statFilm->fetchAll(PDO::FETCH_ASSOC);
+
+        if($filmMatch){
+            return $filmMatch;
+        }        
+    }
+
+    public function findHobbyMatch(){
+        $conn = Db::getConnection();
+
+        $hobby = $this->getHobby();
+        $userId = $this->getUserId();
+
+        $statHobby = $conn->prepare("SELECT * FROM interesses where hobby = '$hobby' and userId != '$userId' ");
+        $statHobby->execute();
+        $hobbyMatch = $statHobby->fetchAll(PDO::FETCH_ASSOC);
+
+        if($hobbyMatch){
+            return $hobbyMatch;
+        }        
+    }
+
+    public function findFavoriteMatch(){
+        $conn = Db::getConnection();
+
+        $favorite = $this->getFavoriet();
+        $userId = $this->getUserId();
+
+        $statFavorite = $conn->prepare("SELECT * FROM interesses where favoriet = '$favorite' and userId != '$userId' ");
+        $statFavorite->execute();
+        $favoriteMatch = $statFavorite->fetchAll(PDO::FETCH_ASSOC);
+
+        if($favoriteMatch){
+            return $favoriteMatch;
+        }        
+    }
+
+
+/*
+    public function findMatchSubject(){
         $conn = Db::getConnection();
 
         $klas = $this->getKlas();
@@ -274,19 +351,19 @@ class User
        
 
         if($klasMatch){
-            return $klasMatch;
+            return "klas";
         }else if($muziekMatch){
-            return $muziekMatch;
+            return "muziek";
         } else if($filmMatch){
-            return $filmMatch;
+            return "film";
         }else if($hobbyMatch){
-            return $hobbyMatch;
+            return "hobby";
         }else if($favoriteMatch){
-            return $favoriteMatch;
+            return "designer/developer";
         }
 
         
-    }
+    }*/
 
     public function getMatchInfo($matchId){
         $conn = Db::getConnection();
