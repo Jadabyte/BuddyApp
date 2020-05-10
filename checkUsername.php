@@ -1,18 +1,4 @@
-<?php
-//check.php
-include_once(__DIR__ . "/classes/Db.php");
-if (isset($_POST["user_name"])) {
-    $username= $_POST["user_name"];
 
-    $statement = $conn->prepare("SELECT * FROM users WHERE username = :username");
-    $statement->bindValue(":username", $username);
-    $result = $statement->execute();
-    echo rowCount($result);
-    
-}
-
-
-/*
 <?php
 //check.php
 $connect = mysqli_connect("localhost", "root", "root", "BuddyApp");
@@ -23,4 +9,3 @@ if (isset($_POST["user_name"])) {
     echo mysqli_num_rows($result);
 }
 
-*/
